@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/08 23:14:28 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/09 00:28:43 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ unsigned int	hash(char *name)
 	}
 	return (hash);
 }
-
-// void	init_hash_table(t_env **hash_table[TABLE_SIZE])
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < TABLE_SIZE)
-// 	{
-// 		*hash_table[i] = NULL;
-// 		i++;
-// 	}
-// }
 
 int	hash_table_insert(t_data *data, char *env)
 {
