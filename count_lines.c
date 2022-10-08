@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   table_rows.c                                       :+:      :+:    :+:   */
+/*   count_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 02:56:21 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/09/28 01:20:11 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 16:47:38 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	table_rows(char **table)
+int	count_lines(char **array)
 {
-	int		i;
+	int		n;
 
-	i = 0;
-	while (*table++)
-		i++;
-	return (i);
+	n = 0;
+	while (*array)
+	{
+		array++;
+		n++;
+	}
+	return (n);
 }

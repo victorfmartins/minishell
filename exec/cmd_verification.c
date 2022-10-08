@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_verifycation.c                                 :+:      :+:    :+:   */
+/*   cmd_verification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:20:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:29 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 18:56:25 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ int	is_absolute_path(t_data *data)
 
 void	set_exec_paths(t_data *data)
 {
-	char	**path_table;
+	char	*value;
+	char	**paths;
+	int		lines;
 	int		i;
 
-	path_table = ft_split(get_env(data, "PATH"), ':');
-	data->path = malloc((table_rows(path_table) + 1) * sizeof(char *));
-	i = -1;
-	while (path_table[++i])
-		data->path[i] = ft_strjoin(path_table[i], "/");
-	data->path[i] = NULL;
-	free_table(path_table);
+	value = get_env_var(data, "PATH");
+	paths = ft_split(value, ':');
+	lines = count_lines(paths) + 1;
+	data->path = malloc(lines * sizeof(char *));
+	i = 0;
+	while (paths[i])
+	{
+		data->path[i] = ft_strjoin(paths[i], "/");
+		i++;
+	}
+	data->path[i] = 0;
+	free_array(paths);
 }
 
 int	verify_cmd(t_data *data)

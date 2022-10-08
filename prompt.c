@@ -6,33 +6,35 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/09/28 02:51:08 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 17:30:39 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	free_lst(t_env **env)
-{
-	t_env	*aux;
-	t_env	*tmp;
+// free hastable***
+// void	free_lst(t_env **env)
+// {
+// 	t_env	*aux;
+// 	t_env	*tmp;
 
-	aux = *env;
-	tmp = *env;
-	while (aux)
-	{
-		free(tmp->key);
-		free(tmp->value);
-		aux = tmp->next;
-		free(tmp);
-		tmp = aux; 
-	}
-	*env = 0;
-}
+// 	aux = *env;
+// 	tmp = *env;
+// 	while (aux)
+// 	{
+// 		free(tmp->key);
+// 		free(tmp->value);
+// 		aux = tmp->next;
+// 		free(tmp);
+// 		tmp = aux; 
+// 	}
+// 	*env = 0;
+// }
 
 void	exit_program(t_data *data)
 {
-	free_lst(&data->env);
+	// free_lst(&data->env);
+	(void)data;
 	exit(0);
 }
 

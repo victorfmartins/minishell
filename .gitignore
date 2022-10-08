@@ -1,1 +1,6 @@
 .gitignore
+envp_lst/a.out
+vg*
+env_var_utils/.alloc_env.c
+../vg*
+env_vara_utils/.get_env.c

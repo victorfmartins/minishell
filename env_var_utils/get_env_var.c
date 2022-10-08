@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alloc_env.c                                        :+:      :+:    :+:   */
+/*   get_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 21:50:00 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:06 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 16:54:26 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/08 19:08:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	alloc_env(char **envp, t_env **env)
+char	*get_env_var(t_data *data, char *key)
 {
-	char	**split_line;
-	int		i;
+	unsigned int	i;
+	int				len;
+	t_env			*aux;
 
-	i = 0;
-	while (envp[i])
+	i = hash(key);
+	len = ft_strlen(key);
+	aux = data->hash_table[i];
+	while (ft_strncmp(key, aux->key, len))
 	{
-		split_line = ft_split(envp[i], '=');
-		add_back(env, create_var(split_line[0], split_line[1]));
-		free_table(split_line);
-		i++;
+		if (!aux->next)
+			return (0);
+		aux = aux->next;
 	}
+	return (aux->value);
 }
