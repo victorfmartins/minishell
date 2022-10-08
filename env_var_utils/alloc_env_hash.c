@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/08 19:32:22 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 21:24:37 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,28 @@ void	init_hash_table(t_env **hash_table[TABLE_SIZE])
 	}
 }
 
-int	hash_table_insert(t_env **hash_table, t_env *env)
+int	hash_table_insert(t_data *data, char *env)
 {
-	int	index;
+	unsigned int	index;
+	t_env			*node;
+	char			**split_line;
 
-	if (env == NULL)
-		return (0);
-	index = hash(env->key);
-	add_back(&hash_table[index], env);
+	split_line = ft_split(env, '=');
+	index = hash(split_line[0]);
+	node = create_var(split_line[0], split_line[1]);
+	add_back(&data->hash_table[index], node);
 	return (1);
 }
 
-void	alloc_env_hash(char **envp, t_env ***hash_table)
+void	alloc_env_hash(char **envp, t_data *data)
 {
-	char	**split_line;
-	t_env	*new;
 	int		i;
 
 	i = 0;
+	data->hash_table = ft_calloc(sizeof(t_env *), TABLE_SIZE);
 	while (envp[i])
 	{
-		split_line = ft_split(envp[i], '=');
-		new = create_var(split_line[0], split_line[1]);
-		hash_table_insert(*hash_table, new);
-		free_and_count_array(split_line, free);
+		hash_table_insert(data, envp[i]);
 		i++;
 	}
 }

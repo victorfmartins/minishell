@@ -37,10 +37,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)creating ./minishell$(RESET)"
-	@$(CC) $(WFLAGS) $(READ_FLAG) $(OBJ) -L ./ -lft -o $(NAME)
+	@$(CC) $(WFLAGS) -g3 $(READ_FLAG) $(OBJ) -L ./ -lft -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(WFLAGS) -c $< -o $@
+	@$(CC) -g3 $(WFLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft

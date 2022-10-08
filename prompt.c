@@ -6,34 +6,49 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/08 17:30:39 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 21:31:38 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// free hastable***
-// void	free_lst(t_env **env)
-// {
-// 	t_env	*aux;
-// 	t_env	*tmp;
+void	free_lst(t_env **env)
+{
+	t_env	*aux;
+	t_env	*tmp;
 
-// 	aux = *env;
-// 	tmp = *env;
-// 	while (aux)
-// 	{
-// 		free(tmp->key);
-// 		free(tmp->value);
-// 		aux = tmp->next;
-// 		free(tmp);
-// 		tmp = aux; 
-// 	}
-// 	*env = 0;
-// }
+	aux = *env;
+	tmp = *env;
+	while (aux)
+	{
+		free(tmp->key);
+		free(tmp->value);
+		aux = tmp->next;
+		free(tmp);
+		tmp = aux;
+	}
+	*env = 0;
+}
+
+void	free_hash_table(t_data *data)
+{
+	int		i;
+	t_env *lst;
+
+	i = 0;
+	lst = data->hash_table[i];
+	while (i < TABLE_SIZE)
+	{
+		free_lst(&lst);
+		i++;
+		lst = data->hash_table[i];
+	}
+	free(lst);
+}
 
 void	exit_program(t_data *data)
 {
-	// free_lst(&data->env);
+	free_hash_table(data);
 	(void)data;
 	exit(0);
 }

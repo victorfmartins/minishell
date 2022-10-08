@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 19:34:56 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 20:55:01 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_env
 typedef struct s_data
 {
 	char	*line;
-	t_env	**hash_table;
 	char	**path;
 	char	*cmd;
 	char	**exec_cmd;
+	t_env	**hash_table;
 	t_proc	proc;
 }	t_data;
 
@@ -59,7 +59,7 @@ void			print_env(t_env *env);
 
 unsigned int	hash(char *name);
 char			*get_env_var(t_data *data, char *key);
-void			alloc_env_hash(char **envp, t_env ***hash_table);
+void			alloc_env_hash(char **envp, t_data *data);
 void			print_table(t_env *hash_table[TABLE_SIZE]);
 
 void			set_exec_paths(t_data *data);
