@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/08 22:17:19 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:14 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/08 22:27:33 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	analize_line(t_data *data)
+void	exit_program(t_data *data)
 {
-	exec_cmd(data);
-	free_and_count_array(data->exec_cmd, free);
-}
-
-void	prompt(t_data *data)
-{
-	char	*path;
-
-	path = getcwd(0, 0);
-	printf("%s\n", path);
-	free(path);
-	data->line = readline("❯ ");
-	if (*data->line)
-		add_history(data->line);
-	else
-		return ;
-	if (!ft_strncmp("exit", data->line, 4))
-		exit_program(data);
-	analize_line(data);
+	free_and_count_array(data->path, free);
+	free_hash_table(data);
+	(void)data;
+	exit(0);
 }

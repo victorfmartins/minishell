@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:24:11 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 19:32:48 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 22:16:04 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	wait_and_free(t_data *data)
 		ft_printf("Wait fail %s\n", strerror(errno));
 		return (0);
 	}
-	free_and_count_array(data->exec_cmd, free);
 	if (WIFEXITED(data->proc.status))
 		data->proc.ret = WEXITSTATUS(data->proc.status);
 	return (1);
