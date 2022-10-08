@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 22:18:47 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 22:58:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int				wait_and_free(t_data *data);
 
 int				free_and_count_array(char **array, void (*f)(void *));
 void			free_hash_table(t_data *data);
-void			free_lst(t_env **env);
+void			free_lst(t_env *env);
 
 #endif

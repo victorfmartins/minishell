@@ -47,6 +47,7 @@ $(LIBFT):
 	make -C libft
 
 re: fclean all
+	@make clean
 
 fclean: clean
 	rm -rf $(NAME)
