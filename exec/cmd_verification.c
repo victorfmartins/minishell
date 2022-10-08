@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:20:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 18:56:25 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 19:32:12 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_exec_paths(t_data *data)
 
 	value = get_env_var(data, "PATH");
 	paths = ft_split(value, ':');
-	lines = count_lines(paths) + 1;
+	lines = free_and_count_array(paths, 0) + 1;
 	data->path = malloc(lines * sizeof(char *));
 	i = 0;
 	while (paths[i])
@@ -37,7 +37,7 @@ void	set_exec_paths(t_data *data)
 		i++;
 	}
 	data->path[i] = 0;
-	free_array(paths);
+	free_and_count_array(paths, free);
 }
 
 int	verify_cmd(t_data *data)

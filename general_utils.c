@@ -6,21 +6,24 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:16:57 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 18:47:50 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 19:29:53 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	free_array(char **array)
+int	free_and_count_array(char **array, void (*f)(void *))
 {
-	int	i;
+	int	n;
 
-	i = 0;
-	while (array[i])
+	n = 0;
+	while (array[n])
 	{
-		free(array[i]);
-		i++;
+		if (f)
+			f(array[n]);
+		n++;
 	}
-	free(array);
+	if (f)
+		f(array);
+	return (n);
 }

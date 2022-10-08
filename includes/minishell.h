@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 19:12:15 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 19:34:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int				verify_cmd(t_data *data);
 void			exec_cmd(t_data *data);
 int				wait_and_free(t_data *data);
 
-int				count_lines(char **array);
-void			free_array(char **array);
+int				free_and_count_array(char **array, void (*f)(void *));
 
 #endif
