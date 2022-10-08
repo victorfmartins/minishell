@@ -6,14 +6,14 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 11:52:24 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:41:27 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#define TABLE_SIZE 10
+#define TABLE_SIZE 1000
 
 # include <unistd.h>
 # include <stdio.h>
@@ -43,7 +43,8 @@ typedef struct s_env
 typedef struct s_data
 {
 	char	*line;
-	t_env	*hash_table[TABLE_SIZE];
+	t_env	**hash_table;
+	t_env	*env;
 	char	**path;
 	char	*cmd;
 	char	**exec_cmd;
