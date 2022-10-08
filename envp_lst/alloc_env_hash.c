@@ -3,32 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_env_hash.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/08 12:39:17 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:33:24 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/libft.h"
 
 unsigned int	hash(char *name)
 {
-	int				length;
-	int				i;
-	unsigned int	hash_value;
-	
-	length = ft_strlen(name);
-	hash_value = 0;
-	i = 0;
-	while (i < length)
+	unsigned int	hash;
+	int	c;
+
+	hash = 5381;
+	while (*name)
 	{
-		hash_value += name[i];
-		hash_value = (hash_value * name[i]) % TABLE_SIZE;
-		i++;
+		c = *name;
+		hash = (((hash << 5) + hash) + c) % TABLE_SIZE;
+		name++;
 	}
-	return (hash_value);
+	return (hash);
 }
 
 void	init_hash_table(t_env **hash_table[TABLE_SIZE])
@@ -41,7 +37,6 @@ void	init_hash_table(t_env **hash_table[TABLE_SIZE])
 		*hash_table[i] = NULL;
 		i++;
 	}
-	//table is empty
 }
 
 int	hash_table_insert(t_env **hash_table, t_env *env)
@@ -83,18 +78,16 @@ void	print_table(t_env *hash_table[TABLE_SIZE])
 		{
 			ft_printf("\t%i\t", i);
 			print_env(hash_table[i]);
-			//ft_printf("\t%i\t%s\t%s\n", i, hash_table[i]->key, hash_table[i]->value);
 		}
 		i++;
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	data;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_data	data;
 
-	// init_hash_table(&data.hash_table);
-	data.hash_table = ft_calloc(sizeof(t_env), TABLE_SIZE);
-	alloc_env_hash(envp, &data.hash_table);
-	print_table(data.hash_table);
-}
+// 	data.hash_table = ft_calloc(sizeof(t_env), TABLE_SIZE);
+// 	alloc_env_hash(envp, &data.hash_table);
+// 	print_table(data.hash_table);
+// }

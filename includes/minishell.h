@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 12:41:27 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:49:13 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_data
 {
 	char	*line;
 	t_env	**hash_table;
-	t_env	*env;
+	// t_env	*env;
 	char	**path;
 	char	*cmd;
 	char	**exec_cmd;
@@ -53,14 +53,15 @@ typedef struct s_data
 
 void	prompt(t_data *data);
 void	print_env(t_env *env);
-void	free_table(char **table);
+void	free_array(char **array);
 void	add_back(t_env **lst, t_env *new);
 void	delone(t_env *lst, void (*del)(void*));
 t_env	*last_var(t_env *lst);
 t_env	*create_var(char	*key, char *value);
-void	alloc_env(char **envp, t_env **env);
+void	alloc_env_hash(char **envp, t_env ***hash_table);
+// void	alloc_env(char **envp, t_env **env);
 char	*get_env(t_data *data, char *env);
-int		table_rows(char **table);
+int		count_lines(char **array);
 
 void	set_exec_paths(t_data *data);
 void	exec_cmd_son(t_data *data);
