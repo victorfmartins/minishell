@@ -6,39 +6,16 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/09/28 02:51:08 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/08 22:17:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	free_lst(t_env **env)
-{
-	t_env	*aux;
-	t_env	*tmp;
-
-	aux = *env;
-	tmp = *env;
-	while (aux)
-	{
-		free(tmp->key);
-		free(tmp->value);
-		aux = tmp->next;
-		free(tmp);
-		tmp = aux; 
-	}
-	*env = 0;
-}
-
-void	exit_program(t_data *data)
-{
-	free_lst(&data->env);
-	exit(0);
-}
-
 void	analize_line(t_data *data)
 {
 	exec_cmd(data);
+	free_and_count_array(data->exec_cmd, free);
 }
 
 void	prompt(t_data *data)

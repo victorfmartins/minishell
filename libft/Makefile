@@ -26,6 +26,7 @@ SRC =	ft_itoa.c \
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)
+	@make clean
 
 $(NAME): $(OBJ)
 	@ar -r $(NAME) $(OBJ)
@@ -34,6 +35,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 re: fclean all
+	@make clean
 
 fclean: clean
 	rm -rf $(NAME)

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_staff.c                                      :+:      :+:    :+:   */
+/*   create_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 22:16:57 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:20:31 by asoler           ###   ########.fr       */
+/*   Created: 2022/04/18 20:42:25 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/08 20:24:52 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-void	free_table(char **table)
+t_env	*create_var(char	*key, char *value)
 {
-	char	**tmp;
+	t_env	*result;
 
-	tmp = table;
-	while (*table)
-		free(*table++);
-	free(tmp);
+	result = malloc(sizeof(t_env));
+	if (!result)
+		return (0);
+	result->key = ft_strdup(key);
+	result->value = ft_strdup(value);
+	result->next = NULL;
+	return (result);
 }

@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/22 22:55:15 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/09/28 01:24:02 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:14 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/09 00:25:53 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "includes/minishell.h"
 
-char	*get_env(t_data *data, char *env)
+void	exit_program(t_data *data)
 {
-	t_env	*tmp;
-
-	tmp = data->env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, env, ft_strlen(env)) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
+	free_and_count_array(data->path, free);
+	free_hash_table(data);
+	(void)data;
+	exit(0);
 }

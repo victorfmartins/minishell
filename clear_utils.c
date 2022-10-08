@@ -1,23 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   table_rows.c                                       :+:      :+:    :+:   */
+/*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 02:56:21 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/09/28 01:20:11 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:51 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/08 23:14:45 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	table_rows(char **table)
+void	free_lst(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env != NULL)
+	{
+		tmp = env;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+		env = env->next;
+	}
+}
+
+void	free_hash_table(t_data *data)
 {
 	int		i;
 
 	i = 0;
-	while (*table++)
+	while (i < TABLE_SIZE)
+	{
+		if (data->hash_table[i])
+			free_lst(data->hash_table[i]);
 		i++;
-	return (i);
+	}
+	free(data->hash_table);
 }

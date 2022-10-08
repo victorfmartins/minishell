@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_var.c                                       :+:      :+:    :+:   */
+/*   get_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 20:42:25 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:10 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 16:54:26 by asoler            #+#    #+#             */
+/*   Updated: 2022/10/08 19:08:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*create_var(char	*key, char *value)
+char	*get_env_var(t_data *data, char *key)
 {
-	t_env	*result;
+	unsigned int	i;
+	int				len;
+	t_env			*aux;
 
-	result = malloc(sizeof(t_env));
-	if (!result)
-		return (0);
-	result->key = ft_strdup(key);
-	result->value = ft_strdup(value);
-	result->next = NULL;
-	return (result);
+	i = hash(key);
+	len = ft_strlen(key);
+	aux = data->hash_table[i];
+	while (ft_strncmp(key, aux->key, len))
+	{
+		if (!aux->next)
+			return (0);
+		aux = aux->next;
+	}
+	return (aux->value);
 }

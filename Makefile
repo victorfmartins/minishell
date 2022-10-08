@@ -24,10 +24,11 @@ READ_FLAG = -lreadline
 
 LIBFT = libft.a
 
-SRC =	minishell.c prompt.c clear_staff.c envp_lst/alloc_env.c \
-		envp_lst/print_env.c envp_lst/add_back.c envp_lst/last_var.c \
-		envp_lst/create_var.c envp_lst/get_env.c \
-		table_rows.c exec/process_cares.c exec/cmd_verifycation.c \
+SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
+		env_var_utils/alloc_env_hash.c env_var_utils/print_env.c \
+		env_var_utils/add_back.c env_var_utils/last_var.c \
+		env_var_utils/create_var.c env_var_utils/get_env_var.c \
+		exec/process_cares.c exec/cmd_verification.c \
 		exec/cmd_execution.c
 
 OBJ = $(SRC:.c=.o)
@@ -36,23 +37,24 @@ all: $(NAME)
 	@make clean
 
 $(NAME): $(OBJ) $(LIBFT)
-	@echo "$(GREEN)creating ./minishell$(RESET)"
-	@$(CC) $(WFLAGS) $(READ_FLAG) $(OBJ) -L ./ -lft -o $(NAME)
+	@echo "$(YELLOW)creating ./minishell$(RESET)"
+	@$(CC) $(WFLAGS) -g3 $(READ_FLAG) $(OBJ) -L ./ -lft -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(WFLAGS) -c $< -o $@
+	@$(CC) -g3 $(WFLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft
 
 re: fclean all
+	@make clean
 
 fclean: clean
 	rm -rf $(NAME)
 
 clean:
 	@rm -rf *.o
-	@rm -rf envp_lst/*.o
+	@rm -rf env_var_utils/*.o
 	@rm -rf exec/*.o
 
 fclean_all: fclean
