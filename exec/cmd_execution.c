@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:14:02 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 22:16:52 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/10 17:14:24 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exec_cmd_son(t_data *data)
 {
-	if (execve(data->exec_cmd[0], data->exec_cmd, NULL) < 0)
+	if (execve(data->exec_cmd[0], data->exec_cmd, NULL) < 0) // a ausencia de envp não pode prejudicar a exec. de algum programa?
 	{
 		data->proc.pid = -1;
 		ft_printf("bash: %s: %s\n", data->exec_cmd[0], strerror(errno));
@@ -23,7 +23,7 @@ void	exec_cmd_son(t_data *data)
 
 void	exec_cmd_parent(t_data *data)
 {
-	fork_process(data);
+	fork_process(data); //faz o fork e chama a execução do process filho
 	if (data->proc.pid != -1)
 		wait_and_free(data);
 }
