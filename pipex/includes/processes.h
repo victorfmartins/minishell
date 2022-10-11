@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:25:37 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/10 13:19:55 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/11 03:02:18 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/wait.h>
-# include "../includes/pipes.h"
-# include "../includes/split_pass.h"
-# include "../.dependencies/libft/libft.h"
+# include "pipes.h"
+# include "split_pass.h"
+# include "../../includes/libft.h"
 
 int		enter_process_op(int fd[][2], int process_idx, char **argv, char **envp, int connections);
 int		process_error(char ***args, char **cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/10 17:01:01 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/11 03:14:09 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	char	**envp;
 	char	*line;
 	char	**path;
 	char	*cmd; // variavel dispensavel - não esta sendo usada de verdade. Ver linha 59 do cmd_verification.c

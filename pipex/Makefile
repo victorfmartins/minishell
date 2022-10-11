@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+         #
+#    By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:09:55 by vfranco-          #+#    #+#              #
-#    Updated: 2022/10/07 16:42:53 by vfranco-         ###   ########.fr        #
+#    Updated: 2022/10/11 03:08:34 by asoler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ FILES		=	pipex.c \
 OBJS_PATH	=	objs
 OBJS		=	$(addprefix $(OBJS_PATH)/,$(notdir $(FILES:.c=.o)))
 FLAGS		=	-Wall -Wextra -Werror
-LIBFT_PATH	=	.dependencies/libft
-LIBFT		=	$(LIBFT_PATH)/libft.a
+LIBFT_PATH	=	../libft
+LIBFT		=	../libft.a
 RM			=	rm -f
 
 ###################################################################

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/10 13:21:54 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/11 03:57:09 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	open_pipes(int argc, char **argv, int fd[][2])
 	return (0);
 }
 
-void	manage_pipes(int fd[][2], int process, int pipes_qtd)
+void	manage_pipes(int fd[][2], int process, int pipes_qtd)//dup_fds*** or manage_dup
 {
 	int	i;
 

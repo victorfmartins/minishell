@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_pass.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:38:05 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/07 17:21:21 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/11 03:06:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_split_pass(char const *s, char c, char l)
 	char	*cpy;
 	char	**arr;
 
-	cpy = ft_strtrimc(s, c);
+	cpy = ft_strtrim((char *)s, &c);
 	if (!cpy || c == l)
 	{
 		free(cpy);
