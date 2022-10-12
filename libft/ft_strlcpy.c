@@ -1,52 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 15:24:25 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 03:18:10 by asoler           ###   ########.fr       */
+/*   Created: 2022/04/06 20:20:09 by asoler            #+#    #+#             */
+/*   Updated: 2022/05/24 14:28:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-static int	chr_cmp(const char	*s, char c)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	while (*s)
-	{
-		if (c == *s)
-			return (0);
-		else
-			s++;
-	}
-	return (1);
-}
+	unsigned int	i;
 
-char	*ft_strtrim(char *s1, char const *set)
-{
-	int		i;
-	int		beg;
-	int		mark;
-	char	*result;
-
-	mark = 0;
+	if (size <= 0)
+		return (ft_strlen(src));
 	i = 0;
-	while (mark != 1)
+	while (i < size)
 	{
-		mark = chr_cmp(set, s1[i]);
+		if (src[i] == '\0')
+		{
+			dest[i] = src[i];
+			return (ft_strlen(src));
+		}
+		dest[i] = src[i];
 		i++;
 	}
-	beg = i - 1 ;
-	i = ft_strlen(s1) - 1;
-	mark = 0;
-	while (mark != 1)
-	{
-		mark = chr_cmp(set, s1[i]);
-		i--;
-	}
-	i++;
-	result = ft_substr(s1, beg, ((i - beg) + 1));
-	return (result);
+	dest[i - 1] = '\0';
+	return (ft_strlen(src));
 }

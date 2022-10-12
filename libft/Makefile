@@ -21,7 +21,9 @@ SRC =	ft_itoa.c \
 		get_next_line_utils.c \
 		ft_printf.c \
 		ft_printf_other_convs.c \
-		ft_printf_int_convs.c
+		ft_printf_int_convs.c \
+		ft_putstr_fd.c \
+		ft_strlcpy.c
 
 OBJ=$(SRC:.c=.o)
 
