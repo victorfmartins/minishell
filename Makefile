@@ -59,6 +59,7 @@ clean:
 
 fclean_all: fclean
 	make fclean -C libft
+	make fclean -C pipex
 
 commit: fclean_all
 	@$(GIT)
