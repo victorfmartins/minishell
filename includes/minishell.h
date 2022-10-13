@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 03:14:09 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/11 11:46:27 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,8 @@ int				wait_and_free(t_data *data);
 int				free_and_count_array(char **array, void (*f)(void *));
 void			free_hash_table(t_data *data);
 void			free_lst(t_env *env);
+
+void			print_lst(t_list *lst);
+t_list			*tokenization(t_data *data);
 
 #endif
