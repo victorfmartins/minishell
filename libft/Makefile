@@ -30,7 +30,9 @@ SRC =	ft_itoa.c \
 		ft_lstadd_back.c \
 		ft_lstnew.c \
 		ft_memcpy.c \
-		ft_isalnum.c
+		ft_isalnum.c \
+		ft_isspace.c \
+		ft_isredirect.c
 
 OBJ=$(SRC:.c=.o)
 

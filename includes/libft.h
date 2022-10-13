@@ -114,4 +114,8 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
 
 char	*ft_worddup(const char *s1);
 
+int		ft_isredirect(int c);
+
+int		ft_isspace(int c);
+
 #endif

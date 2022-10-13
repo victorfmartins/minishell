@@ -19,8 +19,12 @@ char	*ft_worddup(const char *s1)
 	if (!s1)
 		return (NULL);
 	n = 0;
-	while (s1[n] != '\0' && !((s1[n] >= 9 && s1[n] <= 13) || s1[n] == 32))
+	while (s1[n] != '\0' && !ft_isspace(s1[n]) && !ft_isredirect(s1[n]))
+	{
+		if (s1[n] == '\'' && ft_strchr(s1 + n + 1, '\''))
+			n = ft_strchr(s1 + n + 1, '\'') - s1;
 		n++;
+	}
 	s2 = malloc(sizeof(char) * n + 1);
 	if (!s2)
 		return (NULL);

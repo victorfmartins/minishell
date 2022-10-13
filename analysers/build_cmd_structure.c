@@ -1,77 +1,95 @@
 #include "../includes/minishell.h"
 
-// macros
 // # define'<'  1
 // # define'<<' 2
 // # define'>'  3
 // # define'>>' 4
-// # define'|'  5
 
-// typedef enum //um para opp e otro para words
-
-typedef struct s_cmd {
+typedef struct s_cmd
+{
+	char	*line
 	char	*exec_cmd;
 	char	*args;
 	int		type; //builtin or not ou se é um comando absoluto (que começa com /)
+	t_file	*infiles
+	t_file	*outfiles
 	void	*next;
-	void	*previews;
-} t_cmd;
+}			t_cmd;
 
-typedef struct s_file {
-	char *file;
-	void *next;
-	void *previwes;
-} t_file;
-
-typedef struct s_opperators {
-	int type;
-	void *next;
-	void *previwes;
-} t_opperators;
-
-t_list	*tokenization(t_data *data)
+typedef struct s_file
 {
-	t_list	*token_lst;
-	int		i;
+	char	*name;
+	int		type;
+	void	*next;
+}			t_file;
 
-	token_lst = NULL;
-	i = 0;
-	while (data->line[i])
+// exemplos de comandos suportados:
+// echo "infile2\nsecond file" >>infile4>>infile5
+// cat >>infile3<infile4>>file5
+// cat <infile >>'infile3<infile4>>file5'
+
+// essa função recebe a linha lida
+// quebra essa linha entre os comandos (frases) usando a split no '|'
+// essas frases estão dentro da estrutura t_cmd que esta em formato de lista
+// cada nodulo dessa lista aponta para uma lista de infiles e uma de outfiles
+char	**get_file_structures(t_data data)
+{
+	t_cmd	*frases;
+
+	frases = ft_split_to_cmd_lst(data->line, '|'); //e se tiver || (ou)
+	while (frases)
 	{
-		// ft_printf("%d\t", i);
-		// ft_printf("%c\t", data->line[i]);
-		// ft_printf("%p\n", data->line + i);
-		if (data->line[i] == '|')
-			ft_lstadd_back(&token_lst, ft_lstnew("|"));
-		else if (data->line[i] == '&')
-			ft_lstadd_back(&token_lst, ft_lstnew("&"));
-		else if (ft_strncmp(data->line + i, "<<", 2) == 0 && i++)
-			ft_lstadd_back(&token_lst, ft_lstnew("<<"));
-		else if (data->line[i] == '<')
-			ft_lstadd_back(&token_lst, ft_lstnew("<"));
-		else if (ft_strncmp(data->line + i, ">>", 2) == 0 && i++)
-			ft_lstadd_back(&token_lst, ft_lstnew(">>"));
-		else if (data->line[i] == '>')
-			ft_lstadd_back(&token_lst, ft_lstnew(">"));
-		else if (data->line[i] == '\'')
-			ft_lstadd_back(&token_lst, ft_lstnew("\'"));
-		else if (data->line[i] == '\"')
-			ft_lstadd_back(&token_lst, ft_lstnew("\""));
-		else if (data->line[i] == '-')
-			ft_lstadd_back(&token_lst, ft_lstnew("-"));
-		else if (ft_isalnum(data->line[i]))
-			ft_lstadd_back(&token_lst, ft_lstnew(ft_worddup(data->line + i)));
+		frases.outfiles = extract_out_files(&frases);
+		frases.infiles = extract_in_files(&frases);
+		frases = frases->next;
 		i++;
 	}
-	return (token_lst);
 }
-		// else if (data->line[i] == '-' && data->line[i + 1] && ft_isalnum(data->line[i + 1]) && i++)
 
-void	print_lst(t_list *lst)
+// codigo que cria a lista de outfiles (o codigo para os infiles será similar)
+// a frase atual na estrutura t_cmd é alterada (limpa) para uma frase 
+//sem os '>', '>>' e sem os nomes dos arquivos
+// a ft_worddup foi melhorada. 
+// ainda existem alterações para serem feitas tais como suporte para aspas duplas e 
+//remoção das aspas dos nomes dos arquivos
+t_file	*extract_out_files(t_cmd **frase)
 {
-	while (lst)
+	t_file	*file_lst;
+	t_cmd	**frase_ptr;
+	char	*new_frase_content;
+	char	*word;
+	int		i;
+	int		j;
+
+	frase_ptr = frase;
+	new_frase_content = malloc(sizeof(char) * ft_new_frase_size(((*frase)->line), "out"));
+	i = 0;
+	j = 0;
+	while (((*frase)->line)[i])
 	{
-		printf("%s\n", (char *)lst->content);
-		lst = lst->next;
+		if (ft_strncmp(((*frase)->line) + i, ">>", 2) == 0) //word to be expanded
+		{
+			if (!((*frase)->line)[i + 2])
+				return (ERROR);
+			word = ft_worddup(((*frase)->line)[i + 2]);
+			ft_fileadd_back(&file_lst, ft_filenew(word, ">>"));
+			i += ft_strlen(word) + 2;
+		}
+		else if (((*frase)->line)[i] == '>') //word to be expanded
+		{
+			if (!((*frase)->line)[i + 1])
+				return (ERROR);
+			word = ft_worddup(((*frase)->line)[i + 1]);
+			ft_fileadd_back(&file_lst, ft_filenew(word, ">"));
+			i += ft_strlen(word) + 1;
+		}
+		if (((*frase)->line)[i])
+		new_frase_content[j] = ((*frase)->line)[i];
+		i++;
+		j++;
 	}
+	free((*frase)->line);
+	(*frase)->line = new_frase_content;
+	return (file_lst);
 }
+
