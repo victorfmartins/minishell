@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/12 13:10:13 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:29:57 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 static int	get_files_fds(t_main *data)
 {
 	data->inter.fd[0][0] = open(data->argv[1], O_RDONLY);
-	if (data->inter.fd[0][0] == -1)
-		perror(data->argv[1]);
 	data->inter.fd[0][1] = open(data->argv[data->argc - 1], O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	if (data->inter.fd[0][1] == -1)
-		perror(data->argv[data->argc - 1]);
+	if (data->inter.fd[0][1] == -1 || data->inter.fd[0][0] == -1)
+	{
+		if (data->inter.fd[0][0] == -1)
+			perror(data->argv[1]);
+		else if (data->inter.fd[0][1] == -1)
+			perror(data->argv[data->argc - 1]);
+	}
 	return (1);
 }
 

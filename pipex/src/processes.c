@@ -6,21 +6,32 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/12 13:10:39 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:01:39 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/processes.h"
 
-static void	free_args(char ***args, char **cmd)
+void	free_args(char ***args, char **cmd, t_main *data)
 {
 	int	i;
 
 	i = 0;
-	while ((*args)[i])
-		free((*args)[i++]);
-	free(*args);
-	free(*cmd);
+	if (args && cmd)
+	{
+		while ((*args)[i])
+			free((*args)[i++]);
+		free(*args);
+		free(*cmd);
+	}
+	i = 0;
+	while (i < data->n_args)
+	{
+		free(data->inter.fd[i]);
+		i++;
+	}
+	free(data->inter.fd);
+	free(data->inter.id);
 }
 
 int	enter_process_op(t_main *data, int process_idx)
@@ -32,31 +43,23 @@ int	enter_process_op(t_main *data, int process_idx)
 	args = ft_split_pass(data->argv[process_idx + 2], ' ', '\''); //parsing cmds and its args
 	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
 	execve(cmd, args, data->envp);
-	exit(process_error(&args, &cmd));
+	exit(process_error(&args, &cmd, data));
 	return (1);
 }
 
-int	process_error(char ***args, char **cmd)
+int	process_error(char ***args, char **cmd, t_main *data)
 {
-	if (!(*args)[0])
+	if (access(*cmd, F_OK) == -1 || !(*args)[0])
 	{
 		write(2, "pipex: ", 7);
-		ft_putstr_fd("", 2);
+		if ((*args)[0])
+			ft_putstr_fd((*args)[0], 2);
 		write(2, ": command not found\n", 20);
-		free_args(args, cmd);
+		free_args(args, cmd, data);
 		return (127);
 	}
-	else if (access(*cmd, F_OK) == -1)
-	{
-		write(2, "pipex: ", 7);
-		ft_putstr_fd((*args)[0], 2);
-		write(2, ": command not found\n", 20);
-		free_args(args, cmd);
-		return (127);
-	}
-	else
-		perror("pipex"); //"error" ou strerror(perror);
-	free_args(args, cmd);
+	perror("pipex"); //"error" ou strerror(perror);
+	free_args(args, cmd, data);
 	return (1);
 }
 

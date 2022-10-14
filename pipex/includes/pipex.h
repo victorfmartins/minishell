@@ -6,13 +6,12 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/12 13:12:19 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:11:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # include "pipes.h"
-# include "processes.h"
 # include "split_pass.h"
 # include "split_utils.h"
 # include "../../includes/libft.h"
@@ -20,7 +19,6 @@
 # define PIPES 1
 # define REDIR 2
 # define N_CMD 2
-# define N_ARGS PIPES + (REDIR / 2)
 
 // typedef struct s_pipes
 // {

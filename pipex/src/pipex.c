@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/12 13:13:53 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:08:46 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ int	pipex(t_main *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_main	data;
-	int i = 0;
+	int i;
 
+	i = 0;
 	data.argc = argc;
 	data.n_args = argc - 3;
 	data.argv = argv;
@@ -60,5 +61,6 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_printf("not enought args\n"));
 	if (pipex(&data) == -1)
 		return (EXIT_FAILURE);
+	free_args(0, 0, &data);
 	exit(WEXITSTATUS(data.status));
 }
