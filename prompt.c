@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/08 22:17:19 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 11:15:40 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 void	analize_line(t_data *data)
-{
-	exec_cmd(data);
-	free_and_count_array(data->exec_cmd, free);
+{	
+	data->cmds = get_file_structures(data);
+	print_cmd_lst(data->cmds);
+	// exec_cmd(data);
+	// free_and_count_array(data->exec_cmd, free);
 }
 
 void	prompt(t_data *data)

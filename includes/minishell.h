@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 11:46:27 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/15 11:15:03 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,30 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_file
+{
+	char	*name;
+	int		type;
+	void	*next;
+}	t_file;
+
+typedef struct s_cmd
+{
+	char	*line;
+	char	*exec_cmd;
+	char	*args;
+	int		type; //builtin or not ou se é um comando absoluto (que começa com /)
+	t_file	*infiles;
+	t_file	*outfiles;
+	void	*next;
+}	t_cmd;
+
 typedef struct s_data
 {
 	char	**envp;
 	char	*line;
 	char	**path;
+	t_cmd	*cmds;
 	char	*cmd; // variavel dispensavel - não esta sendo usada de verdade. Ver linha 59 do cmd_verification.c
 	char	**exec_cmd;
 	t_env	**hash_table;
@@ -77,6 +96,6 @@ void			free_hash_table(t_data *data);
 void			free_lst(t_env *env);
 
 void			print_lst(t_list *lst);
-t_list			*tokenization(t_data *data);
-
+t_cmd			*get_file_structures(t_data *data);
+void			print_cmd_lst(t_cmd *lst);
 #endif
