@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:08:46 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 20:46:27 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	pipex(t_main *data)
 {
-	// 	int	pipe_fd[PIPES][2];
-	// int	redir[REDIR]
-	// int	id[N_CMD];
 	int	i;
 
 	if (open_pipes(data) == -1)
@@ -36,7 +33,7 @@ int	pipex(t_main *data)
 		i++;
 	}
 	close_pipes_until(data->inter.fd, data->n_args);
-	wait_all_child_finish(data->inter.id, data->n_args, &data->status); //N_ARGS
+	wait_all_child_finish(data->inter.id, data->n_args, &data->status);
 	return (1);
 }
 
@@ -60,7 +57,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 		return (ft_printf("not enought args\n"));
 	if (pipex(&data) == -1)
+	{
+		free_args(0, 0, &data);
 		return (EXIT_FAILURE);
+	}
 	free_args(0, 0, &data);
 	exit(WEXITSTATUS(data.status));
 }

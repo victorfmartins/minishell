@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:29:57 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 21:00:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipes.h"
+#include "../includes/pipex.h"
 
 static int	get_files_fds(t_main *data)
 {
@@ -33,8 +33,10 @@ void	close_pipes_until(int **fd, int n)
 	i = 0;
 	while (i < n)
 	{
-		close(fd[i][0]);
-		close(fd[i][1]);
+		if (fd[i][0] >= 0)
+			close(fd[i][0]);
+		if (fd[i][1] >= 0)
+			close(fd[i][1]);
 		i++;
 	}
 	return ;
@@ -59,21 +61,24 @@ int	open_pipes(t_main *data)
 	return (0);
 }
 
-void	manage_pipes(int **fd, int process, int pipes_qtd)//dup_fds*** or manage_dup
+void	manage_pipes(t_main *data, int process)//dup_fds*** or manage_dup
 {
 	int	i;
 
 	i = 0;
-	if ((process == 0 && fd[0][0] == -1) || (process == 1 && fd[0][1] == -1))
+	if ((process == 0 && data->inter.fd[0][0] == -1) || (process == 1 && data->inter.fd[0][1] == -1))
+	{
+		free_args(0, 0, data);
 		exit(1);
-	while (i < pipes_qtd)
+	}
+	while (i < data->n_args)
 	{
 		if ((process != 0 && i == process) || (process == 0 && i == 0))
-			dup2(fd[i][0], STDIN_FILENO);
-		if (i == process + 1 || (process == pipes_qtd - 1 && i == 0))
-			dup2(fd[i][1], STDOUT_FILENO);
+			dup2(data->inter.fd[i][0], STDIN_FILENO);
+		if (i == process + 1 || (process == data->n_args - 1 && i == 0))
+			dup2(data->inter.fd[i][1], STDOUT_FILENO);
 		i++;
 	}
-	close_pipes_until(fd, pipes_qtd);
+	close_pipes_until(data->inter.fd, data->n_args);
 	return ;
 }

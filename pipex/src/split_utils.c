@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:36:08 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/07 17:21:29 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:29:55 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/split_utils.h"
+#include "../includes/pipex.h"
 
 static void	pass_l(char **str, char c, char l, size_t *i)
 {

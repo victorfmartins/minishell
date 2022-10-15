@@ -6,19 +6,43 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:11:19 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 20:52:25 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
-# include "pipes.h"
-# include "split_pass.h"
-# include "split_utils.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
 # include "../../includes/libft.h"
 # define PIPEX_H
 # define PIPES 1
 # define REDIR 2
 # define N_CMD 2
+
+
+typedef struct s_inter
+{
+	// t_proc	*cmd;
+	// t_files	*files;
+	int	**fd; //os fds de io_files estao em [0] o pipe em [1]-> that means that [0] cloud be used dinamic alloc so it had the redir fd only?
+	int	*id;
+}	t_inter;
+
+typedef struct s_main
+{
+	char	**argv;
+	char	**envp;
+	int		argc;
+	int		n_args;
+	int		status;
+	t_inter	inter;
+}	t_main;
 
 // typedef struct s_pipes
 // {
@@ -45,5 +69,19 @@
 // 	int		type;
 // }	t_redir;
 
+void	free_args(char ***args, char **cmd, t_main *data);
+int		enter_process_op(t_main *data, int process_idx);
+int		process_error(char ***args, char **cmd, t_main *data);
+void	wait_all_child_finish(int id[], int child_qtd, int *status);
+
+int		open_pipes(t_main *data);
+void	close_pipes_until(int **fd, int n);
+void	manage_pipes(t_main *data, int process_idx);
+
+char	**ft_split_pass(char const *s, char c, char l);
+
+size_t	count_words(char *str, char c, char l);
+size_t	word_lenght(char *str, char c, char l);
+void	free_until(char **arr, int n);
 
 #endif

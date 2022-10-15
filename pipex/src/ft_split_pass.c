@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:38:05 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/11 03:06:56 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 20:29:47 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/split_pass.h"
+#include "../includes/pipex.h"
 
 static void	build_word(char ***arr, char **cpy, int word, int word_len)
 {

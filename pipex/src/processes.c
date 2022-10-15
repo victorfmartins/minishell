@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:01:39 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/15 20:50:33 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/processes.h"
+#include "../includes/pipex.h"
 
 void	free_args(char ***args, char **cmd, t_main *data)
 {
@@ -39,7 +39,7 @@ int	enter_process_op(t_main *data, int process_idx)
 	char	**args;
 	char	*cmd;
 
-	manage_pipes(data->inter.fd, process_idx, data->n_args);
+	manage_pipes(data, process_idx);
 	args = ft_split_pass(data->argv[process_idx + 2], ' ', '\''); //parsing cmds and its args
 	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
 	execve(cmd, args, data->envp);
