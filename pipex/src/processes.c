@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/15 20:50:33 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/16 01:45:12 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,36 @@ void	free_args(char ***args, char **cmd, t_main *data)
 	free(data->inter.id);
 }
 
-int	enter_process_op(t_main *data, int process_idx)
+int	verify_cmd_access(char ***args, char **cmd)
 {
-	char	**args;
-	char	*cmd;
-
-	manage_pipes(data, process_idx);
-	args = ft_split_pass(data->argv[process_idx + 2], ' ', '\''); //parsing cmds and its args
-	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
-	execve(cmd, args, data->envp);
-	exit(process_error(&args, &cmd, data));
-	return (1);
-}
-
-int	process_error(char ***args, char **cmd, t_main *data)
-{
-	if (access(*cmd, F_OK) == -1 || !(*args)[0])
+	if (access(*cmd, F_OK) < 0 || !(*args)[0])
 	{
-		write(2, "pipex: ", 7);
+		write(2, "bash: ", 6);
 		if ((*args)[0])
 			ft_putstr_fd((*args)[0], 2);
 		write(2, ": command not found\n", 20);
-		free_args(args, cmd, data);
 		return (127);
 	}
-	perror("pipex"); //"error" ou strerror(perror);
-	free_args(args, cmd, data);
+	return (0);
+}
+
+int	enter_process_op(t_main *data, int process_idx) // receber stuckt com out e in fds cmd e envp (deve estar atualizado) ta no data
+{
+	char	**args;
+	char	*cmd;
+	int		code;
+
+	manage_fds(data, process_idx);
+	args = ft_split_pass(data->argv[process_idx + 2], ' ', '\''); //apagar
+	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
+	code = verify_cmd_access(&args, &cmd);
+	if (!code)
+	{
+		execve(cmd, args, data->envp);
+		perror("Execve fail");
+	}
+	free_args(&args, &cmd, data);
+	exit(code);
 	return (1);
 }
 

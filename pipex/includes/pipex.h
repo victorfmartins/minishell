@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/15 20:52:25 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/16 01:46:10 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include "../../includes/libft.h"
+# include "../../includes/minishell.h"
 # define PIPEX_H
 # define PIPES 1
 # define REDIR 2
@@ -69,14 +70,15 @@ typedef struct s_main
 // 	int		type;
 // }	t_redir;
 
+int		verify_access(char *path, int mode);
+
 void	free_args(char ***args, char **cmd, t_main *data);
 int		enter_process_op(t_main *data, int process_idx);
-int		process_error(char ***args, char **cmd, t_main *data);
 void	wait_all_child_finish(int id[], int child_qtd, int *status);
 
-int		open_pipes(t_main *data);
-void	close_pipes_until(int **fd, int n);
-void	manage_pipes(t_main *data, int process_idx);
+int		open_fds(t_main *data);
+void	close_fds_until(int **fd, int n);
+void	manage_fds(t_main *data, int process_idx);
 
 char	**ft_split_pass(char const *s, char c, char l);
 

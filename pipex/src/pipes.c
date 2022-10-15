@@ -6,27 +6,27 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/15 21:00:35 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/16 01:47:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static int	get_files_fds(t_main *data)
+static int	get_files_fds(t_main *data)//recebe struct q contein path, mode, e fd que sera alocado
 {
-	data->inter.fd[0][0] = open(data->argv[1], O_RDONLY);
-	data->inter.fd[0][1] = open(data->argv[data->argc - 1], O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	if (data->inter.fd[0][1] == -1 || data->inter.fd[0][0] == -1)
-	{
-		if (data->inter.fd[0][0] == -1)
-			perror(data->argv[1]);
-		else if (data->inter.fd[0][1] == -1)
-			perror(data->argv[data->argc - 1]);
-	}
+	char	*infile;
+	char	*outfile;
+
+	infile = data->argv[1];
+	outfile = data->argv[data->argc - 1];
+	data->inter.fd[0][0] = open(infile, O_RDONLY);
+	data->inter.fd[0][1] = open(outfile, O_TRUNC | O_CREAT | O_WRONLY, 0644);
+	verify_access(infile, R_OK);
+	verify_access(outfile, W_OK);
 	return (1);
 }
 
-void	close_pipes_until(int **fd, int n)
+void	close_fds_until(int **fd, int n)
 {
 	int	i;
 
@@ -42,7 +42,7 @@ void	close_pipes_until(int **fd, int n)
 	return ;
 }
 
-int	open_pipes(t_main *data)
+int	open_fds(t_main *data)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ int	open_pipes(t_main *data)
 	{
 		if (pipe(data->inter.fd[i]) == -1) // here there is just pipes
 		{
-			close_pipes_until(data->inter.fd, i);
+			close_fds_until(data->inter.fd, i);
 			perror("");
 			return (-1);
 		}
@@ -61,7 +61,7 @@ int	open_pipes(t_main *data)
 	return (0);
 }
 
-void	manage_pipes(t_main *data, int process)//dup_fds*** or manage_dup
+void	manage_fds(t_main *data, int process)//dup_fds*** or manage_dup
 {
 	int	i;
 
@@ -79,6 +79,6 @@ void	manage_pipes(t_main *data, int process)//dup_fds*** or manage_dup
 			dup2(data->inter.fd[i][1], STDOUT_FILENO);
 		i++;
 	}
-	close_pipes_until(data->inter.fd, data->n_args);
+	close_fds_until(data->inter.fd, data->n_args);
 	return ;
 }

@@ -17,7 +17,8 @@ FILES		=	pipex.c \
 				pipes.c \
 				processes.c \
 				ft_split_pass.c \
-				split_utils.c
+				split_utils.c \
+				access_utils.c
 OBJS_PATH	=	objs
 OBJS		=	$(addprefix $(OBJS_PATH)/,$(notdir $(FILES:.c=.o)))
 FLAGS		=	-Wall -Wextra -Werror
