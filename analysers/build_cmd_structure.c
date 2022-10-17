@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 11:08:04 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:24:25 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	i = 0;
 	while (frases[i])
 	{
-		ft_cmd_addback(&lst, ft_cmdnew(line));
+		ft_cmd_addback(&lst, ft_cmdnew(frases[i]));
 		i++;
 	}
 	return (lst);
@@ -175,7 +175,7 @@ t_file	*extract_out_files(t_cmd **frase)
 	exemplos de comandos suportados:
 	echo "infile2\nsecond file" >>infile4>>infile5
 	cat >>infile3<infile4>>file5| ls -la |ls
-	cat <infile >>'infile3<infile4>>file5'
+	cat <infile >>'infile3<infile4>>file5'abc| ls -la |ls
 	ls <<infile>>outfile2
 	cat <infile2<<infile>>outfile2
 
