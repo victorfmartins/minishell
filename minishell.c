@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 03:14:40 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/17 06:31:35 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	alloc_env_hash(envp, &data);
+	// alloc_env_hash(envp, &data);
 	//print_table(data.hash_table);
 	data.envp = envp;
-	set_exec_paths(&data); // observação: colocar dentro do loop para caso o usuario altere algum path
+	// set_exec_paths(&data); // observação: colocar dentro do loop para caso o usuario altere algum path
 	while (1)
 	{
 		prompt(&data);

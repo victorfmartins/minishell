@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 11:24:25 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/17 07:13:35 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,12 @@ t_file	*extract_out_files(t_cmd **frase)
 	j = 0;
 	while (((*frase)->line)[i])
 	{
+		if (((*frase)->line)[i] == '\'' && ft_strchr(((*frase)->line) + i + 1, '\''))
+		{
+			new_frase_content[j++] = ((*frase)->line)[i++];
+			while (((*frase)->line)[i] && ((*frase)->line)[i] != '\'')
+				new_frase_content[j++] = ((*frase)->line)[i++];
+		}
 		if (ft_strncmp(((*frase)->line) + i, ">>", 2) == 0)
 		{
 			if (!((*frase)->line)[i + 2])
@@ -176,6 +182,7 @@ t_file	*extract_out_files(t_cmd **frase)
 	echo "infile2\nsecond file" >>infile4>>infile5
 	cat >>infile3<infile4>>file5| ls -la |ls
 	cat <infile >>'infile3<infile4>>file5'abc| ls -la |ls
+	cat <infile >>'infile3<infile4>>file5'abc|grep cmd_exec '>file'| ls -la |ls
 	ls <<infile>>outfile2
 	cat <infile2<<infile>>outfile2
 
