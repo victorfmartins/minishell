@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 07:13:35 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:22:15 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_file	*ft_filenew(char *name, int type)
 {
 	t_file	*lst;
 
-	lst = malloc(sizeof(t_list));
+	lst = malloc(sizeof(t_file));
 	if (!lst)
 		return (NULL);
 	lst->name = name;
@@ -52,7 +52,7 @@ t_cmd	*ft_cmdnew(char *frase)
 {
 	t_cmd	*lst;
 
-	lst = malloc(sizeof(t_list));
+	lst = malloc(sizeof(t_cmd));
 	if (!lst)
 		return (NULL);
 	lst->line = frase;
@@ -166,7 +166,55 @@ t_file	*extract_out_files(t_cmd **frase)
 			i += ft_strlen(word) + 1;
 		}
 		if (!((*frase)->line)[i]) // se for fim da frase coninua para não incrementar j
-			break;
+			break ;
+		new_frase_content[j] = ((*frase)->line)[i];
+		i++;
+		j++;
+	}
+	new_frase_content[j] = '\0';
+	free((*frase)->line);
+	(*frase)->line = new_frase_content;
+	return (file_lst);
+}
+
+t_file	*extract_in_files(t_cmd **frase)
+{
+	t_file	*file_lst;
+	char	*new_frase_content;
+	char	*word;
+	int		i;
+	int		j;
+
+	new_frase_content = malloc(sizeof(char) * ft_new_frase_size(((*frase)->line), DIR));
+	file_lst = NULL;
+	i = 0;
+	j = 0;
+	while (((*frase)->line)[i])
+	{
+		if (((*frase)->line)[i] == '\'' && ft_strchr(((*frase)->line) + i + 1, '\''))
+		{
+			new_frase_content[j++] = ((*frase)->line)[i++];
+			while (((*frase)->line)[i] && ((*frase)->line)[i] != '\'')
+				new_frase_content[j++] = ((*frase)->line)[i++];
+		}
+		// if (ft_strncmp(((*frase)->line) + i, "<<", 2) == 0)
+		// {
+		// 	if (!((*frase)->line)[i + 2])
+		// 		return (ERROR);
+		// 	word = ft_worddup(((*frase)->line) + i + 2);
+		// 	ft_fileadd_back(&file_lst, ft_filenew(word, HERE_DIR?));
+		// 	i += ft_strlen(word) + 2;
+		// }
+		if (((*frase)->line)[i] == '<')
+		{
+			if (!((*frase)->line)[i + 1])
+				return (ERROR);
+			word = ft_worddup(((*frase)->line) + i + 1);
+			ft_fileadd_back(&file_lst, ft_filenew(word, DIR));
+			i += ft_strlen(word) + 1;
+		}
+		if (!((*frase)->line)[i]) // se for fim da frase coninua para não incrementar j
+			break ;
 		new_frase_content[j] = ((*frase)->line)[i];
 		i++;
 		j++;
@@ -201,7 +249,7 @@ t_cmd	*get_file_structures(t_data *data)
 	while (frases_iter)
 	{
 		frases_iter->outfiles = extract_out_files(&frases_iter);
-		// frases_iter->infiles = extract_in_files(&frases_iter);
+		frases_iter->infiles = extract_in_files(&frases_iter);
 		frases_iter = frases_iter->next;
 	}
 	return (frases);
@@ -222,7 +270,7 @@ void	print_cmd_lst(t_cmd *lst)
 	{
 		ft_printf("%s\n", (char *)lst->line);
 		print_file_lst(lst->outfiles);
-		// print_file_lst(lst->infiles);
+		print_file_lst(lst->infiles);
 		lst = lst->next;
 	}
 }

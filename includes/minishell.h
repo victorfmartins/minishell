@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/15 11:15:03 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:04:16 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ typedef struct s_env
 
 typedef struct s_file
 {
-	char	*name;
-	int		type;
-	void	*next;
+	char			*name;
+	int				type;
+	struct s_file	*next;
 }	t_file;
 
 typedef struct s_cmd
 {
-	char	*line;
-	char	*exec_cmd;
-	char	*args;
-	int		type; //builtin or not ou se é um comando absoluto (que começa com /)
-	t_file	*infiles;
-	t_file	*outfiles;
-	void	*next;
+	char			*line;
+	char			*exec_cmd;
+	char			*args;
+	int				type; //builtin or not ou se é um comando absoluto (que começa com /)
+	t_file			*infiles;
+	t_file			*outfiles;
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_data
