@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/16 01:52:15 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/17 12:25:31 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	pipex(t_main *data)
 {
 	int	i;
 
-	if (open_fds(data) == -1)// alloc fds de aquivos e pipes arquivos e pipes
+	if (open_fds(data) == -1)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
-	while (i < data->n_args)//n_args => quantidade de cmds e froks que serão executado
+	while (i < data->n_args)//n_args => quantidade de cmds e forks que serão executado
 	{
 		data->inter.id[i] = fork();
 		if (data->inter.id[i] == -1)
 		{
-			close_fds_until(data->inter.fd, data->n_args); 
+			close_fds_until(data->inter.fd, data->n_args);
 			perror("");
 			return (-2);
 		}
@@ -37,10 +37,15 @@ int	pipex(t_main *data)
 	return (1);
 }
 
+// void init_struct(t_main *data)
+// {
+	
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_main	data;
-	int i;
+	int		i;
 
 	i = 0;
 	data.argc = argc;

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/16 01:45:12 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/17 12:11:17 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,29 @@ void	free_args(char ***args, char **cmd, t_main *data)
 	free(data->inter.id);
 }
 
-int	verify_cmd_access(char ***args, char **cmd)
+int	verify_cmd_access(char **args, char **cmd)
 {
-	if (access(*cmd, F_OK) < 0 || !(*args)[0])
+	if (access(*cmd, F_OK) < 0 || !args[0])
 	{
 		write(2, "bash: ", 6);
-		if ((*args)[0])
-			ft_putstr_fd((*args)[0], 2);
+		if (args[0])
+			ft_putstr_fd(args[0], 2);
 		write(2, ": command not found\n", 20);
 		return (127);
 	}
 	return (0);
 }
 
-int	enter_process_op(t_main *data, int process_idx) // receber stuckt com out e in fds cmd e envp (deve estar atualizado) ta no data
+int	enter_process_op(t_main *data, int iter) // receber stuct com out e in fds cmd e envp (deve estar atualizado) ta no data
 {
 	char	**args;
 	char	*cmd;
 	int		code;
 
-	manage_fds(data, process_idx);
-	args = ft_split_pass(data->argv[process_idx + 2], ' ', '\''); //apagar
+	manage_fds(data, iter);
+	args = ft_split_pass(data->argv[iter + 2], ' ', '\''); //apagar
 	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
-	code = verify_cmd_access(&args, &cmd);
+	code = verify_cmd_access(args, &cmd);
 	if (!code)
 	{
 		execve(cmd, args, data->envp);

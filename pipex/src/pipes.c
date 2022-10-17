@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/16 01:47:36 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/17 12:24:05 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,22 @@ int	open_fds(t_main *data)
 	return (0);
 }
 
-void	manage_fds(t_main *data, int process)//dup_fds*** or manage_dup
+void	manage_fds(t_main *data, int iter)//dup_fds*** or manage_dup
 {
 	int	i;
 
 	i = 0;
-	if ((process == 0 && data->inter.fd[0][0] == -1) || (process == 1 && data->inter.fd[0][1] == -1))
+	// se os fds de infile e outfile retornam -1 não se faz dup
+	if ((iter == 0 && data->inter.fd[0][0] == -1) || (iter == 1 && data->inter.fd[0][1] == -1))
 	{
 		free_args(0, 0, data);
 		exit(1);
 	}
 	while (i < data->n_args)
 	{
-		if ((process != 0 && i == process) || (process == 0 && i == 0))
-			dup2(data->inter.fd[i][0], STDIN_FILENO);
-		if (i == process + 1 || (process == data->n_args - 1 && i == 0))
+		if (i == iter)
+			dup2(data->inter.fd[iter][0], STDIN_FILENO);
+		if (i == iter + 1 || (iter == data->n_args - 1 && i == 0)) // a segunda condição corresponde ao dup ultimo comando a primeira é dup de pipes
 			dup2(data->inter.fd[i][1], STDOUT_FILENO);
 		i++;
 	}
