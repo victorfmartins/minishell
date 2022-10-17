@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/15 11:15:57 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:08:04 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define REDIR 3
 #define O_REDIR 4
 
-t_file	*ft_filenew(void *name, int type)
+t_file	*ft_filenew(char *name, int type)
 {
 	t_file	*lst;
 
@@ -48,14 +48,14 @@ void	ft_fileadd_back(t_file **lst, t_file *new)
 	}
 }
 
-t_cmd	*ft_cmdnew(void *line)
+t_cmd	*ft_cmdnew(char *frase)
 {
 	t_cmd	*lst;
 
 	lst = malloc(sizeof(t_list));
 	if (!lst)
 		return (NULL);
-	lst->line = line;
+	lst->line = frase;
 	lst->next = NULL;
 	return (lst);
 }
@@ -84,6 +84,7 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	int		i;
 
 	frases = ft_split(line, delimiter);
+	lst = NULL;
 	i = 0;
 	while (frases[i])
 	{
@@ -106,11 +107,13 @@ size_t	ft_new_frase_size(char *str, int mode)
 	{
 		if (str[i] == '>' * (mode == REDIR) + '<' * (mode == DIR))
 			while (str[i] && !ft_isspace(str[i])
-				&& str[i] == '<' * (mode == REDIR) + '>' * (mode == DIR))
+				&& str[i] != '<' * (mode == REDIR) + '>' * (mode == DIR))
 			{
 				if (str[i] == '\'' && ft_strchr(str + i + 1, '\''))
 					i = ft_strchr(str + i + 1, '\'') - str;
 				i++;
+				if (!str[i])
+					return (size);
 			}
 		i++;
 		size++;
@@ -129,14 +132,13 @@ size_t	ft_new_frase_size(char *str, int mode)
 t_file	*extract_out_files(t_cmd **frase)
 {
 	t_file	*file_lst;
-	t_cmd	**frase_ptr;
 	char	*new_frase_content;
 	char	*word;
 	int		i;
 	int		j;
 
-	frase_ptr = frase;
 	new_frase_content = malloc(sizeof(char) * ft_new_frase_size(((*frase)->line), REDIR));
+	file_lst = NULL;
 	i = 0;
 	j = 0;
 	while (((*frase)->line)[i])
@@ -157,11 +159,13 @@ t_file	*extract_out_files(t_cmd **frase)
 			ft_fileadd_back(&file_lst, ft_filenew(word, REDIR));
 			i += ft_strlen(word) + 1;
 		}
-		if (((*frase)->line)[i])
-			new_frase_content[j] = ((*frase)->line)[i];
+		if (!((*frase)->line)[i]) // se for fim da frase coninua para não incrementar j
+			break;
+		new_frase_content[j] = ((*frase)->line)[i];
 		i++;
 		j++;
 	}
+	new_frase_content[j] = '\0';
 	free((*frase)->line);
 	(*frase)->line = new_frase_content;
 	return (file_lst);
@@ -170,7 +174,7 @@ t_file	*extract_out_files(t_cmd **frase)
 /*
 	exemplos de comandos suportados:
 	echo "infile2\nsecond file" >>infile4>>infile5
-	cat >>infile3<infile4>>file5
+	cat >>infile3<infile4>>file5| ls -la |ls
 	cat <infile >>'infile3<infile4>>file5'
 	ls <<infile>>outfile2
 	cat <infile2<<infile>>outfile2
@@ -183,13 +187,15 @@ t_file	*extract_out_files(t_cmd **frase)
 t_cmd	*get_file_structures(t_data *data)
 {
 	t_cmd	*frases;
+	t_cmd	*frases_iter;
 
 	frases = ft_split_to_cmd_lst(data->line, '|'); //e se tiver || (ou)
-	while (frases)
+	frases_iter = frases;
+	while (frases_iter)
 	{
-		frases->outfiles = extract_out_files(&frases);
-		// frases->infiles = extract_in_files(&frases);
-		frases = frases->next;
+		frases_iter->outfiles = extract_out_files(&frases_iter);
+		// frases_iter->infiles = extract_in_files(&frases_iter);
+		frases_iter = frases_iter->next;
 	}
 	return (frases);
 }
@@ -198,7 +204,7 @@ void	print_file_lst(t_file *lst)
 {
 	while (lst)
 	{
-		ft_printf("file:%s\ttype%i\n", (char *)lst->name, lst->type);
+		ft_printf("file: %s\ttype: %i\n", (char *)lst->name, lst->type);
 		lst = lst->next;
 	}
 }

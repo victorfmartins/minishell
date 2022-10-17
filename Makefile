@@ -38,7 +38,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)creating ./minishell$(RESET)"
-	@$(CC) $(WFLAGS) -g3 $(READ_FLAG) $(OBJ) -L ./ -lft -o $(NAME)
+	@$(CC) $(WFLAGS) -g3 $(OBJ) $(READ_FLAG) -L ./ -lft -o $(NAME)
 
 %.o: %.c
 	@$(CC) -g3 $(WFLAGS) -c $< -o $@
