@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:05:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/18 22:05:21 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:14:19 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_file_lst(t_file *lst)
 {
 	while (lst)
 	{
-		ft_printf("file: %s\ttype: %i\n", (char *)lst->name, lst->type);
+		ft_printf("\tfile: %s\ttype: %i\n", (char *)lst->name, lst->type);
 		lst = lst->next;
 	}
 }

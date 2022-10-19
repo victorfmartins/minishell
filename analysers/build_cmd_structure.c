@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 14:05:13 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:37:56 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 		if (!line[(*i) + 2])
 			return (ERROR);
 		word = ft_worddup(line + (*i) + 2);
-		ft_fileadd_back(file_lst, ft_filenew(word, t + 1));
+		ft_file_addback(file_lst, ft_filenew(word, t + 1));
 		(*i) += ft_strlen(word) + 2;
 		return (CONTINUE);
 	}
@@ -47,7 +47,7 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 		if (!line[(*i) + 1])
 			return (ERROR);
 		word = ft_worddup(line + (*i) + 1);
-		ft_fileadd_back(file_lst, ft_filenew(word, t));
+		ft_file_addback(file_lst, ft_filenew(word, t));
 		(*i) += ft_strlen(word) + 1;
 		return (CONTINUE);
 	}
@@ -93,6 +93,16 @@ t_file	*extract_files(t_cmd **frase, int type)
 	(*frase)->line = new_line;
 	return (file_lst);
 }
+
+// int	get_cmd_type(char *line)
+// {
+// 	return (0);
+// }
+
+// int	get_exec_cmd_and_args(char *line)
+// {
+// 	return (0);
+// }
 
 t_cmd	*get_file_structures(t_data *data)
 {

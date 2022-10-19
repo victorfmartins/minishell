@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/19 15:24:34 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:36:44 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_cmd
 {
 	char			*line;
 	char			*exec_cmd;
-	char			*args;
+	char			**args;
 	int				type; //builtin or not ou is_abs_command (que começa com /)
 	t_file			*infiles;
 	t_file			*outfiles;
@@ -108,9 +108,14 @@ t_cmd			*ft_split_to_cmd_lst(char *line, char delimiter);
 size_t			ft_new_frase_size(char *str, int mode);
 
 t_file			*ft_filenew(char *name, int type);
-void			ft_fileadd_back(t_file **lst, t_file *new);
+void			ft_file_addback(t_file **lst, t_file *new);
 t_cmd			*ft_cmdnew(char *frase);
 void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
+void			print_file_lst(t_file *lst);
 void			print_cmd_lst(t_cmd *lst);
+void			ft_filedelone(t_file *file, void (*del)(void *));
+void			ft_fileclear(t_file **file, void (*del)(void *));
+void			ft_cmddelone(t_cmd *cmd, void (*del)(void *));
+void			ft_cmdclear(t_cmd **lst, void (*del)(void *));
 
 #endif
