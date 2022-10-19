@@ -6,11 +6,12 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 12:41:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/11 11:58:33 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:21:14 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*p;

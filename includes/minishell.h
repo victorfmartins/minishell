@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/19 13:10:42 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:24:34 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 # include <sys/wait.h>
 # include "libft.h"
 
-#define ERROR 0
-#define DIR 1
-#define HERE_DIR 2
-#define REDIR 3
-#define O_REDIR 4
-#define CONTINUE 5
+# define ERROR 0
+# define DIR 1
+# define HERE_DIR 2
+# define REDIR 3
+# define O_REDIR 4
+# define CONTINUE 5
 
 typedef struct s_proc
 {
@@ -59,7 +59,7 @@ typedef struct s_cmd
 	char			*line;
 	char			*exec_cmd;
 	char			*args;
-	int				type; //builtin or not ou se é um comando absoluto (que começa com /)
+	int				type; //builtin or not ou is_abs_command (que começa com /)
 	t_file			*infiles;
 	t_file			*outfiles;
 	struct s_cmd	*next;
@@ -71,7 +71,7 @@ typedef struct s_data
 	char	*line;
 	char	**path;
 	t_cmd	*cmds;
-	char	*cmd; // variavel dispensavel - não esta sendo usada de verdade. Ver linha 59 do cmd_verification.c
+	char	*cmd;
 	char	**exec_cmd;
 	t_env	**hash_table;
 	t_proc	proc;

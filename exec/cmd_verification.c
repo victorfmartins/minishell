@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_verification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:20:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 15:04:44 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/19 15:25:40 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	is_absolute_path(t_data *data)
 {
-	if (*data->line == '.' || *data->line == '/') //apenas executa arquivos executavel e absolutos
+	if (*data->line == '.' || *data->line == '/')
 		return (1);
 	return (0);
 }
 
-void	set_exec_paths(t_data *data) // poderia ir para os arquivos de env_var_utils
+void	set_exec_paths(t_data *data) // poderia ir para env_var_utils
 {
 	char	*value;
 	char	**paths;
@@ -49,14 +49,14 @@ int	verify_cmd(t_data *data) //veirfy_alloc_cmd --> nota: vamos separar o comand
 	data->exec_cmd = ft_split(data->line, ' ');
 	if (is_absolute_path(data))
 		return (1);
-	data->cmd = ft_strdup(data->exec_cmd[0]); //só manda um comando
+	data->cmd = ft_strdup(data->exec_cmd[0]);
 	while (data->path[i])
 	{
 		join_cmd = ft_strjoin(data->path[i], data->cmd);
 		if (!access(join_cmd, F_OK))
 		{
 			free(data->exec_cmd[0]);
-			data->exec_cmd[0] = ft_strdup(join_cmd); //guarda o comando antes de parsear -> um comando nao absoluto
+			data->exec_cmd[0] = ft_strdup(join_cmd);
 			free(join_cmd);
 			return (1);
 		}

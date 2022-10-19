@@ -6,11 +6,12 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:21:38 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/14 23:26:23 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:19:45 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+
 char	*ft_worddup(const char *s1)
 {
 	char	*s2;
