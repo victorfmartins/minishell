@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/17 20:04:16 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:10:42 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
+
+#define ERROR 0
+#define DIR 1
+#define HERE_DIR 2
+#define REDIR 3
+#define O_REDIR 4
+#define CONTINUE 5
 
 typedef struct s_proc
 {
@@ -97,5 +104,13 @@ void			free_lst(t_env *env);
 
 void			print_lst(t_list *lst);
 t_cmd			*get_file_structures(t_data *data);
+t_cmd			*ft_split_to_cmd_lst(char *line, char delimiter);
+size_t			ft_new_frase_size(char *str, int mode);
+
+t_file			*ft_filenew(char *name, int type);
+void			ft_fileadd_back(t_file **lst, t_file *new);
+t_cmd			*ft_cmdnew(char *frase);
+void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
 void			print_cmd_lst(t_cmd *lst);
+
 #endif

@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   print_structures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/18 20:55:02 by vfranco-         ###   ########.fr       */
+/*   Created: 2022/10/18 22:05:10 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/18 22:05:21 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	print_file_lst(t_file *lst)
 {
-	t_data	data;
-
-	alloc_env_hash(envp, &data);
-	// print_table(data.hash_table);
-	data.envp = envp;
-	set_exec_paths(&data); // observação: colocar dentro do loop para caso o usuario altere algum path
-	while (1)
+	while (lst)
 	{
-		prompt(&data);
+		ft_printf("file: %s\ttype: %i\n", (char *)lst->name, lst->type);
+		lst = lst->next;
 	}
-	(void)argc;
-	(void)argv;
+}
+
+void	print_cmd_lst(t_cmd *lst)
+{
+	while (lst)
+	{
+		ft_printf("%s\n", (char *)lst->line);
+		print_file_lst(lst->outfiles);
+		print_file_lst(lst->infiles);
+		lst = lst->next;
+	}
 }

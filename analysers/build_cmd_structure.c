@@ -6,271 +6,109 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 20:22:15 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:05:13 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-#define ERROR 0
-#define DIR 1
-#define HERE_DIR 2
-#define REDIR 3
-#define O_REDIR 4
-
-t_file	*ft_filenew(char *name, int type)
+static void	copy_through_quotes(char *line, char **new_line, int *i, int *j)
 {
-	t_file	*lst;
-
-	lst = malloc(sizeof(t_file));
-	if (!lst)
-		return (NULL);
-	lst->name = name;
-	lst->type = type;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	ft_fileadd_back(t_file **lst, t_file *new)
-{
-	t_file	*p;
-
-	if (!lst || !new)
-		return ;
-	if (!(*lst))
-		*lst = new;
-	else
+	if (line[*i] == '\'' && ft_strchr(line + *i + 1, '\''))
 	{
-		p = *lst;
-		while (p->next)
-			p = p->next;
-		p->next = new;
+		(*new_line)[(*j)++] = line[(*i)++];
+		while (line[*i] && line[*i] != '\'')
+			(*new_line)[(*j)++] = line[(*i)++];
+	}
+	if (line[*i] == '\"' && ft_strchr(line + *i + 1, '\"'))
+	{
+		(*new_line)[(*j)++] = line[(*i)++];
+		while (line[*i] && line[*i] != '\"')
+			(*new_line)[(*j)++] = line[(*i)++];
 	}
 }
 
-t_cmd	*ft_cmdnew(char *frase)
+static int	build_file(char *line, int *i, t_file **file_lst, int t)
 {
-	t_cmd	*lst;
+	char	*word;
 
-	lst = malloc(sizeof(t_cmd));
-	if (!lst)
-		return (NULL);
-	lst->line = frase;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	ft_cmd_addback(t_cmd **lst, t_cmd *new)
-{
-	t_cmd	*p;
-
-	if (!lst || !new)
-		return ;
-	if (!(*lst))
-		*lst = new;
-	else
+	if (line[(*i)] == '>' * (t == REDIR) + '<' * (t == DIR) && line[(*i + 1)]
+		&& line[(*i + 1)] == '>' * (t == REDIR) + '<' * (t == DIR))
 	{
-		p = *lst;
-		while (p->next)
-			p = p->next;
-		p->next = new;
+		if (!line[(*i) + 2])
+			return (ERROR);
+		word = ft_worddup(line + (*i) + 2);
+		ft_fileadd_back(file_lst, ft_filenew(word, t + 1));
+		(*i) += ft_strlen(word) + 2;
+		return (CONTINUE);
 	}
+	else if (line[(*i)] == '>' * (t == REDIR) + '<' * (t == DIR))
+	{
+		if (!line[(*i) + 1])
+			return (ERROR);
+		word = ft_worddup(line + (*i) + 1);
+		ft_fileadd_back(file_lst, ft_filenew(word, t));
+		(*i) += ft_strlen(word) + 1;
+		return (CONTINUE);
+	}
+	return (1);
 }
 
-t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
+int	put_files_to_list(char *line, char **new_line, t_file **file_lst, int type)
 {
-	char	**frases;
-	t_cmd	*lst;
+	int		code;
 	int		i;
+	int		j;
 
-	frases = ft_split(line, delimiter);
-	lst = NULL;
 	i = 0;
-	while (frases[i])
+	j = 0;
+	while (line[i])
 	{
-		ft_cmd_addback(&lst, ft_cmdnew(frases[i]));
-		i++;
+		copy_through_quotes(line, new_line, &i, &j);
+		code = build_file(line, &i, file_lst, type);
+		if (code == ERROR)
+			return (ERROR);
+		else if (code == CONTINUE)
+			continue ;
+		if (!line[i])
+			break ;
+		(*new_line)[j++] = line[i++];
 	}
-	return (lst);
+	(*new_line)[j] = '\0';
+	return (1);
 }
 
-size_t	ft_new_frase_size(char *str, int mode)
+t_file	*extract_files(t_cmd **frase, int type)
 {
-	size_t	size;
-	size_t	i;
+	t_file	*file_lst;
+	char	*new_line;
 
-	if (!str)
+	new_line = malloc(ft_new_frase_size((*frase)->line, type) + 1);
+	if (!new_line)
 		return (ERROR);
-	i = 0;
-	size = 0;
-	while (str[i])
-	{
-		if (str[i] == '>' * (mode == REDIR) + '<' * (mode == DIR))
-			while (str[i] && !ft_isspace(str[i])
-				&& str[i] != '<' * (mode == REDIR) + '>' * (mode == DIR))
-			{
-				if (str[i] == '\'' && ft_strchr(str + i + 1, '\''))
-					i = ft_strchr(str + i + 1, '\'') - str;
-				i++;
-				if (!str[i])
-					return (size);
-			}
-		i++;
-		size++;
-	}
-	return (size);
-}
-
-/*
-	codigo que cria a lista de outfiles (o codigo para os infiles será similar)
-	a frase atual na estrutura t_cmd é alterada (limpa) para uma frase 
-	sem os '>', '>>' e sem os nomes dos arquivos
-	a ft_worddup foi melhorada. 
-	ainda existem alterações para serem feitas tais como suporte para aspas duplas e 
-	remoção das aspas dos nomes dos arquivos
-*/
-t_file	*extract_out_files(t_cmd **frase)
-{
-	t_file	*file_lst;
-	char	*new_frase_content;
-	char	*word;
-	int		i;
-	int		j;
-
-	new_frase_content = malloc(sizeof(char) * ft_new_frase_size(((*frase)->line), REDIR));
 	file_lst = NULL;
-	i = 0;
-	j = 0;
-	while (((*frase)->line)[i])
-	{
-		if (((*frase)->line)[i] == '\'' && ft_strchr(((*frase)->line) + i + 1, '\''))
-		{
-			new_frase_content[j++] = ((*frase)->line)[i++];
-			while (((*frase)->line)[i] && ((*frase)->line)[i] != '\'')
-				new_frase_content[j++] = ((*frase)->line)[i++];
-		}
-		if (ft_strncmp(((*frase)->line) + i, ">>", 2) == 0)
-		{
-			if (!((*frase)->line)[i + 2])
-				return (ERROR);
-			word = ft_worddup(((*frase)->line) + i + 2);
-			ft_fileadd_back(&file_lst, ft_filenew(word, O_REDIR));
-			i += ft_strlen(word) + 2;
-		}
-		else if (((*frase)->line)[i] == '>')
-		{
-			if (!((*frase)->line)[i + 1])
-				return (ERROR);
-			word = ft_worddup(((*frase)->line) + i + 1);
-			ft_fileadd_back(&file_lst, ft_filenew(word, REDIR));
-			i += ft_strlen(word) + 1;
-		}
-		if (!((*frase)->line)[i]) // se for fim da frase coninua para não incrementar j
-			break ;
-		new_frase_content[j] = ((*frase)->line)[i];
-		i++;
-		j++;
-	}
-	new_frase_content[j] = '\0';
+	if (put_files_to_list((*frase)->line, &new_line, &file_lst, type) == ERROR)
+		return (ERROR);
 	free((*frase)->line);
-	(*frase)->line = new_frase_content;
+	(*frase)->line = new_line;
 	return (file_lst);
 }
 
-t_file	*extract_in_files(t_cmd **frase)
-{
-	t_file	*file_lst;
-	char	*new_frase_content;
-	char	*word;
-	int		i;
-	int		j;
-
-	new_frase_content = malloc(sizeof(char) * ft_new_frase_size(((*frase)->line), DIR));
-	file_lst = NULL;
-	i = 0;
-	j = 0;
-	while (((*frase)->line)[i])
-	{
-		if (((*frase)->line)[i] == '\'' && ft_strchr(((*frase)->line) + i + 1, '\''))
-		{
-			new_frase_content[j++] = ((*frase)->line)[i++];
-			while (((*frase)->line)[i] && ((*frase)->line)[i] != '\'')
-				new_frase_content[j++] = ((*frase)->line)[i++];
-		}
-		// if (ft_strncmp(((*frase)->line) + i, "<<", 2) == 0)
-		// {
-		// 	if (!((*frase)->line)[i + 2])
-		// 		return (ERROR);
-		// 	word = ft_worddup(((*frase)->line) + i + 2);
-		// 	ft_fileadd_back(&file_lst, ft_filenew(word, HERE_DIR?));
-		// 	i += ft_strlen(word) + 2;
-		// }
-		if (((*frase)->line)[i] == '<')
-		{
-			if (!((*frase)->line)[i + 1])
-				return (ERROR);
-			word = ft_worddup(((*frase)->line) + i + 1);
-			ft_fileadd_back(&file_lst, ft_filenew(word, DIR));
-			i += ft_strlen(word) + 1;
-		}
-		if (!((*frase)->line)[i]) // se for fim da frase coninua para não incrementar j
-			break ;
-		new_frase_content[j] = ((*frase)->line)[i];
-		i++;
-		j++;
-	}
-	new_frase_content[j] = '\0';
-	free((*frase)->line);
-	(*frase)->line = new_frase_content;
-	return (file_lst);
-}
-
-/*
-	exemplos de comandos suportados:
-	echo "infile2\nsecond file" >>infile4>>infile5
-	cat >>infile3<infile4>>file5| ls -la |ls
-	cat <infile >>'infile3<infile4>>file5'abc| ls -la |ls
-	cat <infile >>'infile3<infile4>>file5'abc|grep cmd_exec '>file'| ls -la |ls
-	ls <<infile>>outfile2
-	cat <infile2<<infile>>outfile2
-
-	essa função recebe a linha lida
-	quebra essa linha entre os comandos (frases) usando a split no '|'
-	essas frases estão dentro da estrutura t_cmd que esta em formato de lista
-	cada nodulo dessa lista aponta para uma lista de infiles e uma de outfiles
-*/
 t_cmd	*get_file_structures(t_data *data)
 {
 	t_cmd	*frases;
 	t_cmd	*frases_iter;
 
-	frases = ft_split_to_cmd_lst(data->line, '|'); //e se tiver || (ou)
+	frases = ft_split_to_cmd_lst(data->line, '|');
 	frases_iter = frases;
 	while (frases_iter)
 	{
-		frases_iter->outfiles = extract_out_files(&frases_iter);
-		frases_iter->infiles = extract_in_files(&frases_iter);
+		frases_iter->outfiles = extract_files(&frases_iter, REDIR);
+		frases_iter->infiles = extract_files(&frases_iter, DIR);
 		frases_iter = frases_iter->next;
 	}
 	return (frases);
 }
 
-void	print_file_lst(t_file *lst)
-{
-	while (lst)
-	{
-		ft_printf("file: %s\ttype: %i\n", (char *)lst->name, lst->type);
-		lst = lst->next;
-	}
-}
-
-void	print_cmd_lst(t_cmd *lst)
-{
-	while (lst)
-	{
-		ft_printf("%s\n", (char *)lst->line);
-		print_file_lst(lst->outfiles);
-		print_file_lst(lst->infiles);
-		lst = lst->next;
-	}
-}
+// accepted commands:
+// cat <<eof<f1 >>'f2<3'<f4>>f5>f6 >>"f7"a '<f8' ">f9" -e| ls -la --color |ls

@@ -29,7 +29,9 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		env_var_utils/add_back.c env_var_utils/last_var.c \
 		env_var_utils/create_var.c env_var_utils/get_env_var.c \
 		exec/process_cares.c exec/cmd_verification.c \
-		exec/cmd_execution.c analysers/build_cmd_structure.c
+		exec/cmd_execution.c analysers/build_cmd_structure.c \
+		analysers/build_cmd_structure_utils.c analysers/print_structures.c \
+		analysers/structure_functions.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -56,6 +58,7 @@ clean:
 	@rm -rf *.o
 	@rm -rf env_var_utils/*.o
 	@rm -rf exec/*.o
+	@rm -rf analysers/*.o
 
 fclean_all: fclean
 	make fclean -C libft
