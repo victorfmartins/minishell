@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:14:02 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 14:57:22 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/20 15:59:58 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	exec_cmd(t_data *data)
 	{
 		ft_printf("bash: %s: command not found\n", data->cmd);
 		free(data->cmd);
+		free(data->exec_cmd);
 	}
+	// se absolut path então free exec_cmd, caso contrario free cmd e exec_cmd
 	else
 		exec_cmd_parent(data);
 }

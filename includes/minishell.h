@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/19 20:42:17 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:30:37 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ typedef struct s_data
 void			prompt(t_data *data);
 void			exit_program(t_data *data);
 
-void			add_back(t_env **lst, t_env *new);
-void			delone(t_env *lst, void (*del)(void*));
-t_env			*last_var(t_env *lst);
-t_env			*create_var(char	*key, char *value);
-void			print_env(t_env *env);
+t_env			*ft_envnew(char	*key, char *value);
+void			ft_env_addback(t_env **lst, t_env *new);
+void			ft_envdelone(t_env *env, void (*del)(void*));
+void			ft_envclear(t_env **env, void (*del)(void *));
+void			print_env_lst(t_env *env);
 
 unsigned int	hash(char *name);
 char			*get_env_var(t_data *data, char *key);
@@ -119,5 +119,6 @@ void			ft_filedelone(t_file *file, void (*del)(void *));
 void			ft_fileclear(t_file **file, void (*del)(void *));
 void			ft_cmddelone(t_cmd *cmd, void (*del)(void *));
 void			ft_cmdclear(t_cmd **lst, void (*del)(void *));
+void			ft_clear_array(char **array);
 
 #endif
