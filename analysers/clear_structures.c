@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 19:30:27 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 20:50:04 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/20 06:58:36 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_filedelone(t_file *file, void (*del)(void *))
 {
 	if (!file || !del)
 		return ;
+	del(file->name);
 	free(file);
 }
 
@@ -53,6 +54,7 @@ void	ft_cmddelone(t_cmd *cmd, void (*del)(void *))
 {
 	if (!cmd || !del)
 		return ;
+	del(cmd->line);
 	ft_fileclear(&cmd->infiles, del);
 	ft_fileclear(&cmd->outfiles, del);
 	ft_clear_array(cmd->args);
