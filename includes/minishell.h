@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/19 19:36:44 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:42:17 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define REDIR 3
 # define O_REDIR 4
 # define CONTINUE 5
+# define BUILTIN 6
 
 typedef struct s_proc
 {
@@ -105,7 +106,8 @@ void			free_lst(t_env *env);
 void			print_lst(t_list *lst);
 t_cmd			*get_file_structures(t_data *data);
 t_cmd			*ft_split_to_cmd_lst(char *line, char delimiter);
-size_t			ft_new_frase_size(char *str, int mode);
+size_t			ft_new_line_size(char *str, int mode);
+int				get_cmd_attributes(t_cmd **cmd);
 
 t_file			*ft_filenew(char *name, int type);
 void			ft_file_addback(t_file **lst, t_file *new);

@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 19:37:56 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:53:05 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,47 +78,39 @@ int	put_files_to_list(char *line, char **new_line, t_file **file_lst, int type)
 	return (1);
 }
 
-t_file	*extract_files(t_cmd **frase, int type)
+t_file	*extract_files(t_cmd **cmd, int type)
 {
 	t_file	*file_lst;
 	char	*new_line;
 
-	new_line = malloc(ft_new_frase_size((*frase)->line, type) + 1);
+	new_line = malloc(ft_new_line_size((*cmd)->line, type) + 1);
 	if (!new_line)
 		return (ERROR);
 	file_lst = NULL;
-	if (put_files_to_list((*frase)->line, &new_line, &file_lst, type) == ERROR)
+	if (put_files_to_list((*cmd)->line, &new_line, &file_lst, type) == ERROR)
 		return (ERROR);
-	free((*frase)->line);
-	(*frase)->line = new_line;
+	free((*cmd)->line);
+	(*cmd)->line = new_line;
 	return (file_lst);
 }
 
-// int	get_cmd_type(char *line)
-// {
-// 	return (0);
-// }
-
-// int	get_exec_cmd_and_args(char *line)
-// {
-// 	return (0);
-// }
-
 t_cmd	*get_file_structures(t_data *data)
 {
-	t_cmd	*frases;
-	t_cmd	*frases_iter;
+	t_cmd	*cmds;
+	t_cmd	*cmds_iter;
 
-	frases = ft_split_to_cmd_lst(data->line, '|');
-	frases_iter = frases;
-	while (frases_iter)
+	cmds = ft_split_to_cmd_lst(data->line, '|');
+	cmds_iter = cmds;
+	while (cmds_iter)
 	{
-		frases_iter->outfiles = extract_files(&frases_iter, REDIR);
-		frases_iter->infiles = extract_files(&frases_iter, DIR);
-		frases_iter = frases_iter->next;
+		cmds_iter->outfiles = extract_files(&cmds_iter, REDIR);
+		cmds_iter->infiles = extract_files(&cmds_iter, DIR);
+		get_cmd_attributes(&cmds_iter);
+		cmds_iter = cmds_iter->next;
 	}
-	return (frases);
+	return (cmds);
 }
 
 // accepted commands:
 // cat <<eof<f1 >>'f2<3'<f4>>f5>f6 >>"f7"a '<f8' ">f9" -e| ls -la --color |ls
+// cat <<eof<f1 >>'f2<3'<f4>>f5>f6 -e >>"f7"a -n -s| ls -la --color |ls

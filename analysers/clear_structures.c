@@ -6,11 +6,24 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 19:30:27 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 19:30:38 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:50:04 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ft_clear_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 void	ft_filedelone(t_file *file, void (*del)(void *))
 {
@@ -42,6 +55,8 @@ void	ft_cmddelone(t_cmd *cmd, void (*del)(void *))
 		return ;
 	ft_fileclear(&cmd->infiles, del);
 	ft_fileclear(&cmd->outfiles, del);
+	ft_clear_array(cmd->args);
+	free(cmd->exec_cmd);
 	free(cmd);
 }
 

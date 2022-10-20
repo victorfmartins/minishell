@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 14:04:39 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:13:03 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	pass_through_quotes(char *str, size_t *i, size_t *size)
 	}
 }
 
-size_t	ft_new_frase_size(char *str, int mode)
+size_t	ft_new_line_size(char *str, int mode)
 {
 	size_t	size;
 	size_t	i;

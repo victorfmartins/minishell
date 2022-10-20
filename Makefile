@@ -31,7 +31,8 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		exec/process_cares.c exec/cmd_verification.c \
 		exec/cmd_execution.c analysers/build_cmd_structure.c \
 		analysers/build_cmd_structure_utils.c analysers/print_structures.c \
-		analysers/create_structures.c analysers/clear_structures.c
+		analysers/create_structures.c analysers/clear_structures.c \
+		analysers/set_cmd_attributes.c
 
 OBJ = $(SRC:.c=.o)
 
