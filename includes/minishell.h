@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 13:30:37 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:23:14 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ t_cmd			*ft_cmdnew(char *frase);
 void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
 void			print_file_lst(t_file *lst);
 void			print_cmd_lst(t_cmd *lst);
+void			print_array_args(char **args);
 void			ft_filedelone(t_file *file, void (*del)(void *));
 void			ft_fileclear(t_file **file, void (*del)(void *));
 void			ft_cmddelone(t_cmd *cmd, void (*del)(void *));

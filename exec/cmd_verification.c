@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 17:20:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/19 15:25:40 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:51:20 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_exec_paths(t_data *data) // poderia ir para env_var_utils
 	free_and_count_array(paths, free);
 }
 
-int	verify_cmd(t_data *data) //veirfy_alloc_cmd --> nota: vamos separar o comando e args
+int	verify_cmd(t_data *data) //veirfy_alloc_cmd --> nota: separar o cmd e args
 {
 	char	*join_cmd;
 	int		i;

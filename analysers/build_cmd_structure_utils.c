@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 20:13:03 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:09:14 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	i = 0;
 	while (frases[i])
 	{
-		ft_cmd_addback(&lst, ft_cmdnew(frases[i]));
+		ft_cmd_addback(&lst, ft_cmdnew(ft_strdup(frases[i])));
 		i++;
 	}
+	ft_clear_array(frases);
 	return (lst);
 }
 
