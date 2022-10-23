@@ -6,7 +6,7 @@
 #    By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:09:55 by vfranco-          #+#    #+#              #
-#    Updated: 2022/10/12 11:32:57 by asoler           ###   ########.fr        #
+#    Updated: 2022/10/23 03:33:41 by asoler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		=	pipex
 CC			=	clang
 FILES_PATH	=	src
 FILES		=	pipex.c \
-				pipes.c \
+				fd_utils.c \
 				processes.c \
 				ft_split_pass.c \
 				split_utils.c \
@@ -41,6 +41,8 @@ $(OBJS_PATH)/%.o:	$(FILES_PATH)/%.c
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)
+
+bonus: all
 
 clean:
 	$(RM) $(OBJS)

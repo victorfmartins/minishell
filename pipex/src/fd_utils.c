@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 12:24:05 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/23 17:29:22 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static int	get_files_fds(t_main *data)//recebe struct q contein path, mode, e fd que sera alocado
+static int	get_files_fds(t_main *data)//recebe struct q conteim path, mode, e fd que sera alocado
 {
 	char	*infile;
 	char	*outfile;
@@ -21,6 +21,7 @@ static int	get_files_fds(t_main *data)//recebe struct q contein path, mode, e fd
 	outfile = data->argv[data->argc - 1];
 	data->inter.fd[0][0] = open(infile, O_RDONLY);
 	data->inter.fd[0][1] = open(outfile, O_TRUNC | O_CREAT | O_WRONLY, 0644);
+	// data->inter.fd[0][1] = open(outfile, O_APPEND | O_WRONLY);
 	verify_access(infile, R_OK);
 	verify_access(outfile, W_OK);
 	return (1);
@@ -67,19 +68,16 @@ void	manage_fds(t_main *data, int iter)//dup_fds*** or manage_dup
 
 	i = 0;
 	// se os fds de infile e outfile retornam -1 não se faz dup
-	if ((iter == 0 && data->inter.fd[0][0] == -1) || (iter == 1 && data->inter.fd[0][1] == -1))
+	if ((iter == 0 && data->inter.fd[0][0] == -1) || (iter == (data->n_args - 1) && data->inter.fd[0][1] == -1))
 	{
 		free_args(0, 0, data);
 		exit(1);
 	}
-	while (i < data->n_args)
-	{
-		if (i == iter)
-			dup2(data->inter.fd[iter][0], STDIN_FILENO);
-		if (i == iter + 1 || (iter == data->n_args - 1 && i == 0)) // a segunda condição corresponde ao dup ultimo comando a primeira é dup de pipes
-			dup2(data->inter.fd[i][1], STDOUT_FILENO);
-		i++;
-	}
+	dup2(data->inter.fd[iter][0], STDIN_FILENO);
+	if (iter != (data->n_args - 1))
+		dup2(data->inter.fd[iter + 1][1], STDOUT_FILENO);
+	else
+		dup2(data->inter.fd[0][1], STDOUT_FILENO);
 	close_fds_until(data->inter.fd, data->n_args);
 	return ;
 }

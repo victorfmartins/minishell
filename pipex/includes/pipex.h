@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 12:25:28 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/23 16:38:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,20 @@ typedef struct s_main
 	t_inter	inter;
 }	t_main;
 
-// typedef struct s_pipes
-// {
-// 	int		**pipes_fds;
-// 	void	*next;
-// }	t_pipes;
+typedef struct s_file
+{
+	char	*name;
+	int		mode;
+	int		fd;
+} t_file;
 
-// typedef struct s_proc
-// {
-// 	int		io_fds[2];
-// 	int		*id;
-// 	t_pipes	pipe;
-// 	void	*prev;
-// 	void	*next;
-// }	t_proc;
-
-// typedef struct s_redir
-// {
-// 	char	*file;
-// 	int		fd;
-// 	int		type;
-// 	void	*prev;
-// 	void	*next;
-// }	t_redir;
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+	t_file	*in;
+	t_file	*out;
+} t_cmd;
 
 int		verify_access(char *path, int mode);
 
