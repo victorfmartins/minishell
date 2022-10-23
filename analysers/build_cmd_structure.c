@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 18:03:04 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:58:52 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,24 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 	{
 		if (!line[(*i) + 2])
 			return (ERROR);
-		word = ft_worddup(line + (*i) + 2);
+		(*i) += 2;
+		while (line[(*i)] == ' ')
+			(*i)++;
+		word = ft_worddup(line + (*i));
 		ft_file_addback(file_lst, ft_filenew(word, t + 1));
-		(*i) += ft_strlen(word) + 2;
+		(*i) += ft_strlen(word);
 		return (CONTINUE);
 	}
 	else if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
 	{
 		if (!line[(*i) + 1])
 			return (ERROR);
-		word = ft_worddup(line + (*i) + 1);
+		(*i)++;
+		while (line[(*i)] == ' ')
+			(*i)++;
+		word = ft_worddup(line + (*i));
 		ft_file_addback(file_lst, ft_filenew(word, t));
-		(*i) += ft_strlen(word) + 1;
+		(*i) += ft_strlen(word);
 		return (CONTINUE);
 	}
 	return (1);
