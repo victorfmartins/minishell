@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 17:23:14 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:05:53 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@
 # include <sys/wait.h>
 # include "libft.h"
 
-# define ERROR 0
-# define DIR 1
-# define HERE_DIR 2
-# define REDIR 3
-# define O_REDIR 4
-# define CONTINUE 5
+# define I_REDIR 1
+# define HERE_DOC 2
+# define O_REDIR 3
+# define APPEND 4
 # define BUILTIN 6
 
 typedef struct s_proc
@@ -60,7 +58,7 @@ typedef struct s_cmd
 	char			*line;
 	char			*exec_cmd;
 	char			**args;
-	int				type; //builtin or not ou is_abs_command (que começa com /)
+	int				type;
 	t_file			*infiles;
 	t_file			*outfiles;
 	struct s_cmd	*next;
@@ -86,18 +84,12 @@ void			ft_env_addback(t_env **lst, t_env *new);
 void			ft_envdelone(t_env *env, void (*del)(void*));
 void			ft_envclear(t_env **env, void (*del)(void *));
 void			print_env_lst(t_env *env);
+void			set_exec_paths(t_data *data);
 
 unsigned int	hash(char *name);
 char			*get_env_var(t_data *data, char *key);
 void			alloc_env_hash(char **envp, t_data *data);
 void			print_table(t_env *hash_table[TABLE_SIZE]);
-
-void			set_exec_paths(t_data *data);
-void			exec_cmd_son(t_data *data);
-void			fork_process(t_data *data);
-int				verify_cmd(t_data *data);
-void			exec_cmd(t_data *data);
-int				wait_and_free(t_data *data);
 
 int				free_and_count_array(char **array, void (*f)(void *));
 void			free_hash_table(t_data *data);
@@ -111,7 +103,7 @@ int				get_cmd_attributes(t_cmd **cmd);
 
 t_file			*ft_filenew(char *name, int type);
 void			ft_file_addback(t_file **lst, t_file *new);
-t_cmd			*ft_cmdnew(char *frase);
+t_cmd			*ft_cmdnew(char *phrase);
 void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
 void			print_file_lst(t_file *lst);
 void			print_cmd_lst(t_cmd *lst);

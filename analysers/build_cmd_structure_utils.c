@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/20 17:09:14 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:05:05 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 {
-	char	**frases;
+	char	**phrases;
 	t_cmd	*lst;
 	int		i;
 
-	frases = ft_split(line, delimiter);
+	phrases = ft_split(line, delimiter);
 	lst = NULL;
 	i = 0;
-	while (frases[i])
+	while (phrases[i])
 	{
-		ft_cmd_addback(&lst, ft_cmdnew(ft_strdup(frases[i])));
+		ft_cmd_addback(&lst, ft_cmdnew(ft_strdup(phrases[i])));
 		i++;
 	}
-	ft_clear_array(frases);
+	ft_clear_array(phrases);
 	return (lst);
 }
 
@@ -56,17 +56,17 @@ size_t	ft_new_line_size(char *str, int mode)
 	while (str[i])
 	{
 		pass_through_quotes(str, &i, &size);
-		if (str[i] == '>' * (mode == REDIR) + '<' * (mode == DIR))
+		if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 		{
 			i++;
-			if (str[i] == '>' * (mode == REDIR) + '<' * (mode == DIR))
+			if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 				i++;
 			while (str[i] && !ft_isspace(str[i]) && !ft_isredirect(str[i]))
 			{
 				pass_through_quotes(str, &i, NULL);
 				i++;
 			}
-			if (str[i] == '>' * (mode == REDIR) + '<' * (mode == DIR))
+			if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 				continue ;
 		}
 		i++;
@@ -74,7 +74,3 @@ size_t	ft_new_line_size(char *str, int mode)
 	}
 	return (size);
 }
-
-// [ERROR]
-// in ft_split_to_cmd_lst: frases = ft_split(line, delimiter);
-// can return frase that is empty

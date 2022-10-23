@@ -28,9 +28,7 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		env_var_utils/alloc_env_hash.c \
 		env_var_utils/manage_env_structure.c \
 		env_var_utils/get_env_var.c \
-		exec/process_cares.c \
-		exec/cmd_verification.c \
-		exec/cmd_execution.c \
+		env_var_utils/set_exec_path.c \
 		analysers/build_cmd_structure.c \
 		analysers/build_cmd_structure_utils.c \
 		analysers/print_structures.c \

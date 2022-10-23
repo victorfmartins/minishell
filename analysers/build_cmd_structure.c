@@ -6,11 +6,13 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 20:53:05 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:03:04 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#define ERROR 0
+#define CONTINUE 5
 
 static void	copy_through_quotes(char *line, char **new_line, int *i, int *j)
 {
@@ -32,8 +34,9 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 {
 	char	*word;
 
-	if (line[(*i)] == '>' * (t == REDIR) + '<' * (t == DIR) && line[(*i + 1)]
-		&& line[(*i + 1)] == '>' * (t == REDIR) + '<' * (t == DIR))
+	if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR)
+		&& line[(*i + 1)]
+		&& line[(*i + 1)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
 	{
 		if (!line[(*i) + 2])
 			return (ERROR);
@@ -42,7 +45,7 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 		(*i) += ft_strlen(word) + 2;
 		return (CONTINUE);
 	}
-	else if (line[(*i)] == '>' * (t == REDIR) + '<' * (t == DIR))
+	else if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
 	{
 		if (!line[(*i) + 1])
 			return (ERROR);
@@ -103,14 +106,10 @@ t_cmd	*get_file_structures(t_data *data)
 	cmds_iter = cmds;
 	while (cmds_iter)
 	{
-		cmds_iter->outfiles = extract_files(&cmds_iter, REDIR);
-		cmds_iter->infiles = extract_files(&cmds_iter, DIR);
+		cmds_iter->outfiles = extract_files(&cmds_iter, O_REDIR);
+		cmds_iter->infiles = extract_files(&cmds_iter, I_REDIR);
 		get_cmd_attributes(&cmds_iter);
 		cmds_iter = cmds_iter->next;
 	}
 	return (cmds);
 }
-
-// accepted commands:
-// cat <<eof<f1 >>'f2<3'<f4>>f5>f6 >>"f7"a '<f8' ">f9" -e| ls -la --color |ls
-// cat <<eof<f1 >>'f2<3'<f4>>f5>f6 -e >>"f7"a -n -s| ls -la --color |ls

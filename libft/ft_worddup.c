@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:21:38 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:45 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:08:13 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,3 @@ char	*ft_worddup(const char *s1)
 	s2[n] = '\0';
 	return (s2);
 }
-
-// int	main()
-// {
-// 	char	*str;
-// 	char	*str_o;
-// 	int i;
-
-// 	// str_o = ft_strdup("ls -la | grep cmd_execution");
-// 	// str_o = ft_strdup("");
-// 	str_o = NULL;
-// 	str = ft_worddup(str_o);
-// 	ft_printf("%s\n", str);
-// 	i = 0;
-// 	// while (i < ft_strlen(str_o))
-// 	// {
-// 	// 	str = ft_worddup(str_o + i);
-// 	// 	ft_printf("%s\n", str);
-// 	// 	free(str);
-// 	// 	i++;	
-// 	// }
-// 	return (i);
-// }

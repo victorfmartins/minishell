@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 20:36:35 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/19 20:41:15 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:09:15 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,3 @@ int	get_cmd_attributes(t_cmd **cmd)
 	(*cmd)->exec_cmd = ft_strjoin("/usr/bin/", (*cmd)->args[0]);
 	return (0);
 }
-
-// [NOTE]
-// reemplazar get_cmd_attributes:(*cmd)->exec_cmd line by verify_cmd equivalent
