@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 22:58:35 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 02:37:28 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include <sys/wait.h>
 # include "libft.h"
 
+# define I_REDIR 1
+# define HERE_DOC 2
+# define O_REDIR 3
+# define APPEND 4
+# define BUILTIN 6
+
 typedef struct s_proc
 {
 	pid_t	pid;
@@ -40,10 +46,32 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_file
+{
+	char			*name;
+	int				type;
+	int				fd;
+	struct s_file	*next;
+}	t_file;
+
+typedef struct s_cmd
+{
+	char			*line;
+	char			*exec_cmd;
+	char			**args;
+	int				type;
+	t_file			*infiles;
+	t_file			*outfiles;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_data
 {
+	char	**envp;
 	char	*line;
 	char	**path;
+	t_cmd	*cmds;
 	char	*cmd;
 	char	**exec_cmd;
 	t_env	**hash_table;
@@ -53,26 +81,40 @@ typedef struct s_data
 void			prompt(t_data *data);
 void			exit_program(t_data *data);
 
-void			add_back(t_env **lst, t_env *new);
-void			delone(t_env *lst, void (*del)(void*));
-t_env			*last_var(t_env *lst);
-t_env			*create_var(char	*key, char *value);
-void			print_env(t_env *env);
+t_env			*ft_envnew(char	*key, char *value);
+void			ft_env_addback(t_env **lst, t_env *new);
+void			ft_envdelone(t_env *env, void (*del)(void*));
+void			ft_envclear(t_env **env, void (*del)(void *));
+void			print_env_lst(t_env *env);
+void			set_exec_paths(t_data *data);
 
 unsigned int	hash(char *name);
 char			*get_env_var(t_data *data, char *key);
 void			alloc_env_hash(char **envp, t_data *data);
 void			print_table(t_env *hash_table[TABLE_SIZE]);
 
-void			set_exec_paths(t_data *data);
-void			exec_cmd_son(t_data *data);
-void			fork_process(t_data *data);
-int				verify_cmd(t_data *data);
-void			exec_cmd(t_data *data);
-int				wait_and_free(t_data *data);
-
 int				free_and_count_array(char **array, void (*f)(void *));
 void			free_hash_table(t_data *data);
 void			free_lst(t_env *env);
+
+void			print_lst(t_list *lst);
+t_cmd			*get_file_structures(t_data *data);
+t_cmd			*ft_split_to_cmd_lst(char *line, char delimiter);
+size_t			ft_new_line_size(char *str, int mode);
+int				get_cmd_attributes(t_cmd **cmd);
+void			copy_through_quotes(char *line, char **new_line, int *i, int *j);
+
+t_file			*ft_filenew(char *name, int type);
+void			ft_file_addback(t_file **lst, t_file *new);
+t_cmd			*ft_cmdnew(char *phrase);
+void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
+void			print_file_lst(t_file *lst);
+void			print_cmd_lst(t_cmd *lst);
+void			print_array_args(char **args);
+void			ft_filedelone(t_file *file, void (*del)(void *));
+void			ft_fileclear(t_file **file, void (*del)(void *));
+void			ft_cmddelone(t_cmd *cmd, void (*del)(void *));
+void			ft_cmdclear(t_cmd **lst, void (*del)(void *));
+void			ft_clear_array(char **array);
 
 #endif

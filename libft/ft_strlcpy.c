@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   last_var.c                                         :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 15:30:06 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:17 by asoler           ###   ########.fr       */
+/*   Created: 2022/04/06 20:20:09 by asoler            #+#    #+#             */
+/*   Updated: 2022/05/24 14:28:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-t_env	*last_var(t_env *lst)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	unsigned int	i;
+
+	if (size <= 0)
+		return (ft_strlen(src));
+	i = 0;
+	while (i < size)
+	{
+		if (src[i] == '\0')
+		{
+			dest[i] = src[i];
+			return (ft_strlen(src));
+		}
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i - 1] = '\0';
+	return (ft_strlen(src));
 }

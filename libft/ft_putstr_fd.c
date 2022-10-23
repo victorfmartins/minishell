@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_var.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 20:42:25 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 20:24:52 by asoler           ###   ########.fr       */
+/*   Created: 2022/04/12 15:45:04 by asoler            #+#    #+#             */
+/*   Updated: 2022/05/24 14:27:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-t_env	*create_var(char	*key, char *value)
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_env	*result;
-
-	result = malloc(sizeof(t_env));
-	if (!result)
-		return (0);
-	result->key = ft_strdup(key);
-	result->value = ft_strdup(value);
-	result->next = NULL;
-	return (result);
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
 }

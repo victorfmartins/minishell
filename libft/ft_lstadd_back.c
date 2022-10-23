@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/23 17:40:09 by vfranco-         ###   ########.fr       */
+/*   Created: 2021/09/17 12:21:25 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:21:00 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_data	data;
+	t_list	*p;
 
-	alloc_env_hash(envp, &data);
-	data.envp = envp;
-	set_exec_paths(&data);
-	while (1)
+	if (!lst || !new)
+		return ;
+	if (!(*lst))
+		*lst = new;
+	else
 	{
-		prompt(&data);
+		p = *lst;
+		while (p->next)
+			p = p->next;
+		p->next = new;
 	}
-	(void)argc;
-	(void)argv;
 }

@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_back.c                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 15:42:49 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:14:15 by asoler           ###   ########.fr       */
+/*   Created: 2021/09/17 12:41:50 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:21:14 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	add_back(t_env **lst, t_env *new)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_env	*tmp;
+	t_list	*p;
+	t_list	*p_next;
 
-	if (!*lst)
-	{
-		*lst = new;
+	if (!lst || !del)
 		return ;
+	p = *lst;
+	while (p)
+	{
+		p_next = p->next;
+		ft_lstdelone(p, del);
+		p = p_next;
 	}
-	tmp = last_var(*lst);
-	tmp->next = new;
+	*lst = NULL;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_env_hash.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/09 00:28:43 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/20 08:49:40 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	hash_table_insert(t_data *data, char *env)
 
 	split_line = ft_split(env, '=');
 	index = hash(split_line[0]);
-	node = create_var(split_line[0], split_line[1]);
+	node = ft_envnew(split_line[0], split_line[1]);
 	free_and_count_array(split_line, free);
-	add_back(&data->hash_table[index], node);
+	ft_env_addback(&data->hash_table[index], node);
 	return (1);
 }
 
@@ -66,7 +66,7 @@ void	print_table(t_env *hash_table[TABLE_SIZE])
 		else
 		{
 			ft_printf("\t%i\t", i);
-			print_env(hash_table[i]);
+			print_env_lst(hash_table[i]);
 		}
 		i++;
 	}

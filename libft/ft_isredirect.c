@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env.c                                        :+:      :+:    :+:   */
+/*   ft_isredirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 22:31:22 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:21 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/19 15:20:38 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:20:43 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	print_env(t_env *env)
+int	ft_isredirect(int c)
 {
-	while (env)
-	{
-		printf("%s=", env->key);
-		printf("%s\n", env->value);
-		env = env->next;
-	}
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
 }

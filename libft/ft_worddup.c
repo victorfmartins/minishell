@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_worddup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/23 17:40:09 by vfranco-         ###   ########.fr       */
+/*   Created: 2022/10/11 11:21:38 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/23 18:08:13 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_worddup(const char *s1)
 {
-	t_data	data;
+	char	*s2;
+	size_t	n;
 
-	alloc_env_hash(envp, &data);
-	data.envp = envp;
-	set_exec_paths(&data);
-	while (1)
+	if (!s1)
+		return (NULL);
+	n = 0;
+	while (s1[n] != '\0' && !ft_isspace(s1[n]) && !ft_isredirect(s1[n]))
 	{
-		prompt(&data);
+		if (s1[n] == '\'' && ft_strchr(s1 + n + 1, '\''))
+			n = ft_strchr(s1 + n + 1, '\'') - s1;
+		n++;
 	}
-	(void)argc;
-	(void)argv;
+	s2 = malloc(sizeof(char) * n + 1);
+	if (!s2)
+		return (NULL);
+	s2 = ft_memcpy(s2, s1, n);
+	s2[n] = '\0';
+	return (s2);
 }
