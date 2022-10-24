@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_structures.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:02:17 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 18:05:31 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:42:11 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_file	*ft_filenew(char *name, int type)
 		return (NULL);
 	lst->name = name;
 	lst->type = type;
+	lst->fd = -1;
 	lst->next = NULL;
 	return (lst);
 }
@@ -50,6 +51,7 @@ t_cmd	*ft_cmdnew(char *phrase)
 	if (!lst)
 		return (NULL);
 	lst->line = phrase;
+	lst->prev = NULL;
 	lst->next = NULL;
 	return (lst);
 }
@@ -68,5 +70,6 @@ void	ft_cmd_addback(t_cmd **lst, t_cmd *new)
 		while (p->next)
 			p = p->next;
 		p->next = new;
+		new->prev = p;
 	}
 }

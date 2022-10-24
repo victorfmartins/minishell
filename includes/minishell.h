@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/24 02:36:02 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 02:37:28 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_file
 {
 	char			*name;
 	int				type;
+	int				fd;
 	struct s_file	*next;
 }	t_file;
 
@@ -61,6 +62,7 @@ typedef struct s_cmd
 	int				type;
 	t_file			*infiles;
 	t_file			*outfiles;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 
