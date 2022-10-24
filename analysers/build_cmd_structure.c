@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd_structure.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 18:58:52 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:34:30 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,20 @@
 #define ERROR 0
 #define CONTINUE 5
 
-static void	copy_through_quotes(char *line, char **new_line, int *i, int *j)
+static int	add_file_node(char *line, int **i, t_file **file_lst, int t)
 {
-	if (line[*i] == '\'' && ft_strchr(line + *i + 1, '\''))
-	{
-		(*new_line)[(*j)++] = line[(*i)++];
-		while (line[*i] && line[*i] != '\'')
-			(*new_line)[(*j)++] = line[(*i)++];
-	}
-	if (line[*i] == '\"' && ft_strchr(line + *i + 1, '\"'))
-	{
-		(*new_line)[(*j)++] = line[(*i)++];
-		while (line[*i] && line[*i] != '\"')
-			(*new_line)[(*j)++] = line[(*i)++];
-	}
+	char	*word;
+
+	while (line[(**i)] == ' ')
+		(**i)++;
+	word = ft_worddup(line + (**i));
+	ft_file_addback(file_lst, ft_filenew(word, t));
+	(**i) += ft_strlen(word);
+	return (CONTINUE);
 }
 
 static int	build_file(char *line, int *i, t_file **file_lst, int t)
 {
-	char	*word;
-
 	if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR)
 		&& line[(*i + 1)]
 		&& line[(*i + 1)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
@@ -41,24 +35,14 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 		if (!line[(*i) + 2])
 			return (ERROR);
 		(*i) += 2;
-		while (line[(*i)] == ' ')
-			(*i)++;
-		word = ft_worddup(line + (*i));
-		ft_file_addback(file_lst, ft_filenew(word, t + 1));
-		(*i) += ft_strlen(word);
-		return (CONTINUE);
+		return (add_file_node(line, &i, file_lst, t));
 	}
 	else if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
 	{
 		if (!line[(*i) + 1])
 			return (ERROR);
 		(*i)++;
-		while (line[(*i)] == ' ')
-			(*i)++;
-		word = ft_worddup(line + (*i));
-		ft_file_addback(file_lst, ft_filenew(word, t));
-		(*i) += ft_strlen(word);
-		return (CONTINUE);
+		return (add_file_node(line, &i, file_lst, t));
 	}
 	return (1);
 }

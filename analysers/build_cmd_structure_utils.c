@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd_structure_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 18:05:05 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:35:50 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	copy_through_quotes(char *line, char **new_line, int *i, int *j)
+{
+	if (line[*i] == '\'' && ft_strchr(line + *i + 1, '\''))
+	{
+		(*new_line)[(*j)++] = line[(*i)++];
+		while (line[*i] && line[*i] != '\'')
+			(*new_line)[(*j)++] = line[(*i)++];
+	}
+	if (line[*i] == '\"' && ft_strchr(line + *i + 1, '\"'))
+	{
+		(*new_line)[(*j)++] = line[(*i)++];
+		while (line[*i] && line[*i] != '\"')
+			(*new_line)[(*j)++] = line[(*i)++];
+	}
+}
 
 t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 {

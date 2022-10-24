@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/23 17:41:37 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:32:02 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	prompt(t_data *data)
 	if (*data->line)
 		add_history(data->line);
 	else
+	{
+		free(data->line);
 		return ;
+	}
 	if (!ft_strncmp("exit", data->line, 4))
 		exit_program(data);
 	analize_line(data);
