@@ -24,7 +24,6 @@ SRC =	ft_itoa.c \
 		ft_printf_int_convs.c \
 		ft_putstr_fd.c \
 		ft_strlcpy.c \
-		ft_worddup.c \
 		ft_lstclear.c \
 		ft_lstdelone.c \
 		ft_lstadd_back.c \

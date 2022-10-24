@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:01:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/11 11:36:17 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 08:25:50 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int		ft_lstsize(t_list *lst);
 t_list	*ft_lstnew(void *content);
 
 void	ft_lstadd_front(t_list **lst, t_list *new);
-
-char	*ft_worddup(const char *s1);
 
 int		ft_isredirect(int c);
 

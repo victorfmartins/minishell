@@ -25,6 +25,7 @@ READ_FLAG = -lreadline
 LIBFT = libft.a
 
 SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
+		ft_split_but_through_quotes.c \
 		env_var_utils/alloc_env_hash.c \
 		env_var_utils/manage_env_structure.c \
 		env_var_utils/get_env_var.c \
@@ -34,7 +35,8 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		analysers/print_structures.c \
 		analysers/create_structures.c \
 		analysers/clear_structures.c \
-		analysers/set_cmd_attributes.c
+		analysers/set_cmd_attributes.c \
+		analysers/parsers.c
 
 OBJ = $(SRC:.c=.o)
 

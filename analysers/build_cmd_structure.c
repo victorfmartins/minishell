@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd_structure.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 02:34:30 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 18:29:53 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	add_file_node(char *line, int **i, t_file **file_lst, int t)
 
 	while (line[(**i)] == ' ')
 		(**i)++;
-	word = ft_worddup(line + (**i));
+	word = ft_worddup(line + (**i), " <>");
 	ft_file_addback(file_lst, ft_filenew(word, t));
 	(**i) += ft_strlen(word);
 	return (CONTINUE);
@@ -35,7 +35,7 @@ static int	build_file(char *line, int *i, t_file **file_lst, int t)
 		if (!line[(*i) + 2])
 			return (ERROR);
 		(*i) += 2;
-		return (add_file_node(line, &i, file_lst, t));
+		return (add_file_node(line, &i, file_lst, t + 1));
 	}
 	else if (line[(*i)] == '>' * (t == O_REDIR) + '<' * (t == I_REDIR))
 	{
@@ -81,7 +81,10 @@ t_file	*extract_files(t_cmd **cmd, int type)
 		return (ERROR);
 	file_lst = NULL;
 	if (put_files_to_list((*cmd)->line, &new_line, &file_lst, type) == ERROR)
+	{
+		free(new_line);
 		return (ERROR);
+	}
 	free((*cmd)->line);
 	(*cmd)->line = new_line;
 	return (file_lst);
