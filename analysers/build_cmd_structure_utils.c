@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 19:22:06 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:26:18 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	return (lst);
 }
 
-static void	pass_through_redirect_word(char *str, int mode, int *i, int *size)
+static void	pass_on_redirect_word(char *str, int mode, size_t *i, size_t *size)
 {
 	if (str[(*i)] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 		(*i)++;
@@ -75,7 +75,7 @@ size_t	ft_new_line_size(char *str, int mode)
 		if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 		{
 			i++;
-			pass_through_redirect_word(str, mode, &i, &size);
+			pass_on_redirect_word(str, mode, &i, &size);
 			if (!str[i])
 				return (size);
 			if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
