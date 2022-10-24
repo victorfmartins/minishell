@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/24 02:32:02 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 02:50:51 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	analize_line(t_data *data)
 {
 	data->cmds = get_file_structures(data);
-	print_cmd_lst(data->cmds);
 	ft_cmdclear(&data->cmds, free);
 	free(data->line);
 }
