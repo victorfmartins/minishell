@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 20:36:35 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 18:09:15 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/24 18:35:19 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	get_cmd_type(char *line)
 
 int	get_cmd_attributes(t_cmd **cmd)
 {
-	(*cmd)->args = ft_split((*cmd)->line, ' ');
+	(*cmd)->args = ft_split_but_through_quotes((*cmd)->line, ' ');
 	(*cmd)->type = get_cmd_type((*cmd)->args[0]);
 	(*cmd)->exec_cmd = ft_strjoin("/usr/bin/", (*cmd)->args[0]);
 	return (0);

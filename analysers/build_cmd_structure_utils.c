@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd_structure_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:06:52 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 02:35:50 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 19:26:18 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	copy_through_quotes(char *line, char **new_line, int *i, int *j)
+void	copy_through_quotes(char *s, char **new_s, int *i, int *j)
 {
-	if (line[*i] == '\'' && ft_strchr(line + *i + 1, '\''))
+	if (s[*i] == '\'' && ft_strchr(s + *i + 1, '\''))
 	{
-		(*new_line)[(*j)++] = line[(*i)++];
-		while (line[*i] && line[*i] != '\'')
-			(*new_line)[(*j)++] = line[(*i)++];
+		(*new_s)[(*j)++] = s[(*i)++];
+		while (s[*i] && s[*i] != '\'')
+			(*new_s)[(*j)++] = s[(*i)++];
 	}
-	if (line[*i] == '\"' && ft_strchr(line + *i + 1, '\"'))
+	if (s[*i] == '\"' && ft_strchr(s + *i + 1, '\"'))
 	{
-		(*new_line)[(*j)++] = line[(*i)++];
-		while (line[*i] && line[*i] != '\"')
-			(*new_line)[(*j)++] = line[(*i)++];
+		(*new_s)[(*j)++] = s[(*i)++];
+		while (s[*i] && s[*i] != '\"')
+			(*new_s)[(*j)++] = s[(*i)++];
 	}
 }
 
@@ -34,7 +34,7 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	t_cmd	*lst;
 	int		i;
 
-	phrases = ft_split(line, delimiter);
+	phrases = ft_split_but_through_quotes(line, delimiter);
 	lst = NULL;
 	i = 0;
 	while (phrases[i])
@@ -46,19 +46,19 @@ t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter)
 	return (lst);
 }
 
-static void	pass_through_quotes(char *str, size_t *i, size_t *size)
+static void	pass_on_redirect_word(char *str, int mode, size_t *i, size_t *size)
 {
-	if (str[*i] == '\'' && ft_strchr(str + *i + 1, '\''))
+	if (str[(*i)] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
+		(*i)++;
+	while (str[(*i)] == ' ')
 	{
-		if (size)
-			*size += ft_strchr(str + *i + 1, '\'') - str - *i;
-		*i = ft_strchr(str + *i + 1, '\'') - str;
+		(*i)++;
+		(*size)++;
 	}
-	if (str[*i] == '\"' && ft_strchr(str + *i + 1, '\"'))
+	while (str[(*i)] && !ft_isspace(str[(*i)]) && !ft_isredirect(str[(*i)]))
 	{
-		if (size)
-			*size += ft_strchr(str + *i + 1, '\"') - str - *i;
-		*i = ft_strchr(str + *i + 1, '\"') - str;
+		pass_through_quotes(str, i, NULL);
+		(*i)++;
 	}
 }
 
@@ -75,13 +75,9 @@ size_t	ft_new_line_size(char *str, int mode)
 		if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 		{
 			i++;
-			if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
-				i++;
-			while (str[i] && !ft_isspace(str[i]) && !ft_isredirect(str[i]))
-			{
-				pass_through_quotes(str, &i, NULL);
-				i++;
-			}
+			pass_on_redirect_word(str, mode, &i, &size);
+			if (!str[i])
+				return (size);
 			if (str[i] == '>' * (mode == O_REDIR) + '<' * (mode == I_REDIR))
 				continue ;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/24 02:37:28 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 19:22:24 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,28 @@ int				free_and_count_array(char **array, void (*f)(void *));
 void			free_hash_table(t_data *data);
 void			free_lst(t_env *env);
 
-void			print_lst(t_list *lst);
+// void			print_lst(t_list *lst);
 t_cmd			*get_file_structures(t_data *data);
 t_cmd			*ft_split_to_cmd_lst(char *line, char delimiter);
 size_t			ft_new_line_size(char *str, int mode);
 int				get_cmd_attributes(t_cmd **cmd);
-void			copy_through_quotes(char *line, char **new_line, int *i, int *j);
 
 t_file			*ft_filenew(char *name, int type);
-void			ft_file_addback(t_file **lst, t_file *new);
 t_cmd			*ft_cmdnew(char *phrase);
+void			ft_file_addback(t_file **lst, t_file *new);
 void			ft_cmd_addback(t_cmd **lst, t_cmd *new);
-void			print_file_lst(t_file *lst);
-void			print_cmd_lst(t_cmd *lst);
-void			print_array_args(char **args);
 void			ft_filedelone(t_file *file, void (*del)(void *));
 void			ft_fileclear(t_file **file, void (*del)(void *));
 void			ft_cmddelone(t_cmd *cmd, void (*del)(void *));
 void			ft_cmdclear(t_cmd **lst, void (*del)(void *));
 void			ft_clear_array(char **array);
+void			print_file_lst(t_file *lst);
+void			print_cmd_lst(t_cmd *lst);
+void			print_array_args(char **args);
+
+char			*ft_worddup(char *s1, const char *delimiters);
+void			copy_through_quotes(char *s, char **new_s, int *i, int *j);
+void			pass_through_quotes(char *str, size_t *i, size_t *size);
+char			**ft_split_but_through_quotes(char const *s, char delimiter);
 
 #endif
