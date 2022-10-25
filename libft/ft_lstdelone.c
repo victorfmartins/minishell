@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_back.c                                         :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 15:42:49 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:14:15 by asoler           ###   ########.fr       */
+/*   Created: 2021/09/17 12:30:56 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:19:36 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	add_back(t_env **lst, t_env *new)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	t_env	*tmp;
-
-	if (!*lst)
-	{
-		*lst = new;
+	if (!lst || !del)
 		return ;
-	}
-	tmp = last_var(*lst);
-	tmp->next = new;
+	del(lst->content);
+	free(lst);
 }

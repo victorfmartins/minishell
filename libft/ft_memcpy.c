@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/23 17:40:09 by vfranco-         ###   ########.fr       */
+/*   Created: 2021/09/11 11:53:10 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:22:58 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	t_data	data;
+	size_t	i;
 
-	alloc_env_hash(envp, &data);
-	data.envp = envp;
-	set_exec_paths(&data);
-	while (1)
+	if (!dst || !src)
+		return (dst);
+	i = 0;
+	while (i < n)
 	{
-		prompt(&data);
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
 	}
-	(void)argc;
-	(void)argv;
+	return (dst);
 }

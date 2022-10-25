@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/23 17:40:09 by vfranco-         ###   ########.fr       */
+/*   Created: 2021/09/17 11:58:44 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:20:53 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char **argv, char **envp)
+t_list	*ft_lstnew(void *content)
 {
-	t_data	data;
+	t_list	*lst;
 
-	alloc_env_hash(envp, &data);
-	data.envp = envp;
-	set_exec_paths(&data);
-	while (1)
-	{
-		prompt(&data);
-	}
-	(void)argc;
-	(void)argv;
+	lst = malloc(sizeof(t_list));
+	if (!lst)
+		return (NULL);
+	(*lst).content = content;
+	(*lst).next = NULL;
+	return (lst);
 }

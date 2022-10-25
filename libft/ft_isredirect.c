@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   last_var.c                                         :+:      :+:    :+:   */
+/*   ft_isredirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 15:30:06 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:17 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/19 15:20:38 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:20:43 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-t_env	*last_var(t_env *lst)
+int	ft_isredirect(int c)
 {
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
 }

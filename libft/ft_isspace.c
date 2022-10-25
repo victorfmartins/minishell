@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_one_var.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 18:08:29 by asoler            #+#    #+#             */
-/*   Updated: 2022/09/28 01:16:13 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/19 15:21:21 by vfranco-          #+#    #+#             */
+/*   Updated: 2022/10/19 15:21:24 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	del_one_var(t_env *lst, void (*del)(void*))
+int	ft_isspace(int c)
 {
-	del(lst->key);
-	del(lst->value);
-	free(lst);
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }
