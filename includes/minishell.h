@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/24 19:22:24 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:23:06 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
+# include "../pipex/includes/pipex.h"
 
 # define I_REDIR 1
 # define HERE_DOC 2
@@ -71,9 +72,8 @@ typedef struct s_data
 	char	**envp;
 	char	*line;
 	char	**path;
+	t_main	pipex;
 	t_cmd	*cmds;
-	char	*cmd;
-	char	**exec_cmd;
 	t_env	**hash_table;
 	t_proc	proc;
 }	t_data;

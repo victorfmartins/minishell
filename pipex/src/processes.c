@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 13:14:09 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:24:00 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	enter_process_op(t_main *data, int iter) // receber stuct com out e in fds c
 	char	*cmd;
 	int		code;
 
-	manage_fds(data, iter);
-	args = ft_split_pass(data->argv[iter + 2], ' ', '\''); //apagar
+	dup_fds(data, iter);
 	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
 	code = verify_cmd_access(args, &cmd);
 	if (!code)

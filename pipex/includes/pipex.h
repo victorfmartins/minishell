@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 13:23:00 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:26:38 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,8 @@ int		enter_process_op(t_main *data, int fds_idx);
 void	free_args(char ***args, char **cmd, t_main *data);
 void	wait_all_child_finish(int id[], int child_qtd, int *status);
 
-int		open_fds(t_main *data);
+int		init_fds(t_data *data);
 void	close_fds_until(int **fd, int n);
-void	manage_fds(t_main *data, int iter);
-
-char	**ft_split_pass(char const *s, char c, char l);
-
-size_t	count_words(char *str, char c, char l);
-size_t	word_lenght(char *str, char c, char l);
-void	free_until(char **arr, int n);
+void	dup_fds(t_data *data, int iter);
 
 #endif

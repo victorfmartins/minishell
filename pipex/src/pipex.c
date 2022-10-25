@@ -6,17 +6,47 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 13:02:13 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:24:23 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	pipex(t_main *data)
+int	count_nodes(void *head)
+{
+	int		n;
+
+	n = 0;
+	while(head->next)
+	{
+		head = head->next;
+		n++;
+	}
+	return (n);
+}
+
+int	init_data(t_data *data)
+{
+	t_main	*main;
+
+	main = &data->pipex;
+	main->n_args = count_procs;
+	main->envp = data->envp;
+	main->inter.fd = ft_calloc(sizeof(int *), main->n_args);
+	main->inter.id = ft_calloc(sizeof(int), main->n_args);
+	while (i < data.n_args)
+	{
+		data.inter.fd[i] = malloc(sizeof(int) * 2);
+		i++;
+	}
+	init_fds(data);
+}
+
+int	pipex(t_data *data)
 {
 	int	i;
 
-	if (open_fds(data) == -1)// alloc fds de aquivos e pipes
+	if (init_data(data) == -1)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
 	while (i < data->n_args)//n_args => quantidade de cmds e forks que serão executado
@@ -24,8 +54,8 @@ int	pipex(t_main *data)
 		data->inter.id[i] = fork();
 		if (data->inter.id[i] == -1)
 		{
-			close_fds_until(data->inter.fd, data->n_args);
-			perror("");
+			// close_fds_until(data->inter.fd, data->n_args);
+			perror("somenthing went wrong with fork function");
 			return (-2);
 		}
 		if (data->inter.id[i] == 0)
@@ -37,30 +67,3 @@ int	pipex(t_main *data)
 	return (1);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_main	data;
-	int		i;
-
-	i = 0;
-	data.argc = argc;
-	data.n_args = argc - 3;
-	data.argv = argv;
-	data.envp = envp;
-	data.inter.fd = ft_calloc(sizeof(int *), data.n_args);
-	data.inter.id = ft_calloc(sizeof(int), data.n_args);
-	while (i < data.n_args)
-	{
-		data.inter.fd[i] = malloc(sizeof(int) * 2);
-		i++;
-	}
-	if (argc < 5)
-		return (ft_printf("not enought args\n"));
-	if (pipex(&data) == -1)
-	{
-		free_args(0, 0, &data);
-		return (EXIT_FAILURE);
-	}
-	free_args(0, 0, &data);
-	exit(WEXITSTATUS(data.status));
-}

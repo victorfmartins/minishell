@@ -24,6 +24,8 @@ READ_FLAG = -lreadline
 
 LIBFT = libft.a
 
+PIPEX = pipex
+
 SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		ft_split_but_through_quotes.c \
 		env_var_utils/alloc_env_hash.c \
@@ -43,15 +45,18 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 	@make clean
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) $(PIPEX)
 	@echo "$(YELLOW)creating ./minishell$(RESET)"
-	@$(CC) $(WFLAGS) -g3 $(OBJ) $(READ_FLAG) -L ./ -lft -o $(NAME)
+	@$(CC) $(WFLAGS) $(READ_FLAG) -g3 $(OBJ) -L ./ -lft -o $(NAME)
 
 %.o: %.c
 	@$(CC) -g3 $(WFLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft
+
+$(PIPEX):
+	make -C pipex
 
 re: fclean all
 	@make clean
