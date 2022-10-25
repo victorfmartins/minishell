@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 16:38:35 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 13:23:00 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@
 # include "../../includes/libft.h"
 # include "../../includes/minishell.h"
 # define PIPEX_H
-# define PIPE 1
-# define INREDIR 2
-# define OUTREDIR 3
-# define APPEND 4
-# define HEREDOC 5
 
 typedef struct s_inter
 {
@@ -44,25 +39,10 @@ typedef struct s_main
 	t_inter	inter;
 }	t_main;
 
-typedef struct s_file
-{
-	char	*name;
-	int		mode;
-	int		fd;
-} t_file;
-
-typedef struct s_cmd
-{
-	char	*cmd;
-	char	**args;
-	t_file	*in;
-	t_file	*out;
-} t_cmd;
-
 int		verify_access(char *path, int mode);
 
-void	free_args(char ***args, char **cmd, t_main *data);
 int		enter_process_op(t_main *data, int fds_idx);
+void	free_args(char ***args, char **cmd, t_main *data);
 void	wait_all_child_finish(int id[], int child_qtd, int *status);
 
 int		open_fds(t_main *data);

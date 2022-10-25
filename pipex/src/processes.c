@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/17 12:11:17 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 13:14:09 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,5 @@ void	wait_all_child_finish(int id[], int child_qtd, int *status)
 		i++;
 	}
 }
+
+//[TODO] melhorar fluxo, verificar acesso antes de fork, mater dups depois de fork

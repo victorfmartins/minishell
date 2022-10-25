@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 16:58:10 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/24 13:02:13 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ int	pipex(t_main *data)
 	wait_all_child_finish(data->inter.id, data->n_args, &data->status);
 	return (1);
 }
-
-// void init_struct(t_main *data)
-// {
-	
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
