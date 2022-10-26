@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/10/24 10:09:52 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:19:55 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	analize_line(t_data *data)
 {
 	data->cmds = get_file_structures(data);
-	print_cmd_lst(data->cmds);
+	// print_cmd_lst(data->cmds);
+	pipex(data);
 	ft_cmdclear(&data->cmds, free);
 	free(data->line);
 }

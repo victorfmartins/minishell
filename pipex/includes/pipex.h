@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/25 15:26:38 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/26 15:20:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,24 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include "../../includes/libft.h"
 # include "../../includes/minishell.h"
 # define PIPEX_H
 
-typedef struct s_inter
-{
-	int	**fd; 
-	int	*id;
-}	t_inter;
+// typedef struct s_inter
+// {
+// 	int	**fd; 
+// 	int	*id;
+// }	t_inter;
 
-typedef struct s_main
-{
-	char	**argv;
-	char	**envp;
-	int		argc;
-	int		n_args;
-	int		status;
-	t_inter	inter;
-}	t_main;
+// typedef struct s_main
+// {
+// 	char	**argv;
+// 	char	**envp;
+// 	int		argc;
+// 	int		n_args;
+// 	int		status;
+// 	t_inter	inter;
+// }	t_main;
 
 int		verify_access(char *path, int mode);
 

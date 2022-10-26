@@ -6,13 +6,13 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/25 15:24:23 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/26 15:15:03 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/minishell.h"
 
-int	count_nodes(void *head)
+int	count_procs(void *head)
 {
 	int		n;
 
@@ -20,7 +20,8 @@ int	count_nodes(void *head)
 	while(head->next)
 	{
 		head = head->next;
-		n++;
+		if (head->exec_cmd)
+			n++;
 	}
 	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/25 14:23:06 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/26 15:20:31 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
-# include "../pipex/includes/pipex.h"
 
 # define I_REDIR 1
 # define HERE_DOC 2
@@ -33,12 +32,21 @@
 # define APPEND 4
 # define BUILTIN 6
 
-typedef struct s_proc
+typedef struct s_inter
 {
-	pid_t	pid;
+	int	**fd; 
+	int	*id;
+}	t_inter;
+
+typedef struct s_main
+{
+	char	**argv;
+	char	**envp;
+	int		argc;
+	int		n_args;
 	int		status;
-	int		ret;
-}	t_proc;
+	t_inter	inter;
+}	t_main;
 
 typedef struct s_env
 {
@@ -75,7 +83,6 @@ typedef struct s_data
 	t_main	pipex;
 	t_cmd	*cmds;
 	t_env	**hash_table;
-	t_proc	proc;
 }	t_data;
 
 void			prompt(t_data *data);
@@ -120,5 +127,7 @@ char			*ft_worddup(char *s1, const char *delimiters);
 void			copy_through_quotes(char *s, char **new_s, int *i, int *j);
 void			pass_through_quotes(char *str, size_t *i, size_t *size);
 char			**ft_split_but_through_quotes(char const *s, char delimiter);
+
+int				pipex(t_data *data);
 
 #endif

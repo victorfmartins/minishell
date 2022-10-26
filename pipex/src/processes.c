@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/25 15:24:00 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/26 15:14:40 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/minishell.h"
 
 void	free_args(char ***args, char **cmd, t_main *data)
 {
@@ -47,21 +47,23 @@ int	verify_cmd_access(char **args, char **cmd)
 	return (0);
 }
 
-int	enter_process_op(t_main *data, int iter) // receber stuct com out e in fds cmd e envp (deve estar atualizado) ta no data
+int	enter_process_op(t_data *data, int iter) // receber stuct com out e in fds cmd e envp (deve estar atualizado) ta no data
 {
-	char	**args;
-	char	*cmd;
+	t_cmd	*node;
 	int		code;
 
-	dup_fds(data, iter);
-	cmd = ft_strjoin("/usr/bin/", args[0]); //reemplazar por verify_cmd
-	code = verify_cmd_access(args, &cmd);
+	node = data->cmds;
+	while(iter)
+	{
+		node = node->next;
+		iter--;
+	}
+	code = verify_cmd_access(node->args, &node->exec_cmd);
 	if (!code)
 	{
-		execve(cmd, args, data->envp);
+		execve(node->exec_cmd, node->args, data->envp);
 		perror("Execve fail");
 	}
-	free_args(&args, &cmd, data);
 	exit(code);
 	return (1);
 }
