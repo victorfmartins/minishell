@@ -1,5 +1,4 @@
 name: normcheck
-description: "Pass the norminette in all the code"
 
 on:
   push:
