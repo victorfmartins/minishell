@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/26 15:20:31 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:24:31 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_main
 	int		argc;
 	int		n_args;
 	int		status;
+	int		ret;
 	t_inter	inter;
 }	t_main;
 

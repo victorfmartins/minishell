@@ -59,6 +59,7 @@ $(PIPEX):
 	make -C pipex
 
 re: fclean all
+	@make re -C pipex
 	@make clean
 
 fclean: clean

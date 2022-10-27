@@ -6,22 +6,23 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/26 15:17:12 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:19:06 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
+# include "../includes/pipex.h"
 
 void	redir_lst_fd_init(t_file *lst, int mode)
 {
 	while (lst->next)
 	{
-		if (lst->type = 1) //O_REDIR
-			lst->fd = open(name, O_TRUNC | O_CREAT | O_WRONLY, 0644);
-		if (lst->type = 4) // APPEND
-			lst->fd = open(name, O_APPEND | O_CREAT | O_WRONLY, 0644);
+		if (lst->type == 1) //O_REDIR
+			lst->fd = open(lst->name, O_TRUNC | O_CREAT | O_WRONLY, 0644);
+		if (lst->type == 4) // APPEND
+			lst->fd = open(lst->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
 		else //add HERDOC
-			lst->fd = open(name, O_RDONLY);
+			lst->fd = open(lst->name, O_RDONLY);
 		verify_access(lst->name, mode);
 		lst = lst->next;
 	}
@@ -44,9 +45,9 @@ void	close_fds_until(t_data *data)//tratar casos: ex. sem pipe
 	t_cmd	*node;
 	int		n_cmds;
 	
-	pipes_fds = data->pipex->inter->fd;
+	pipes_fds = data->pipex.inter.fd;
 	node = data->cmds;
-	n_cmds = data->pipex->n_args;
+	n_cmds = data->pipex.n_args;
 	while (n_cmds >= 0)
 	{
 		if (node->infiles->fd != -1)
@@ -67,8 +68,10 @@ int	init_fds(t_data *data)
 	int		i;
 
 	get_files_fds(data->cmds);//here there is just redir
-	n_cmds = data->pipex->n_args;
-	inter = data->pipex->inter;
+	n_cmds = data->pipex.n_args;
+	if (!n_cmds)
+		return (0);
+	inter = &data->pipex.inter;
 	i = 0;
 	while (i <= n_cmds)
 	{
@@ -90,7 +93,7 @@ void	dup_fds(t_data *data, int iter)//dup_fds*** or manage_dup
 	int	i;
 
 	node = data->cmds;
-	pipes_fds = data->pipex->inter;
+	pipes_fds = &data->pipex.inter;
 	i = iter;
 	while (iter)
 	{

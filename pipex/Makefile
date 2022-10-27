@@ -6,7 +6,7 @@
 #    By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:09:55 by vfranco-          #+#    #+#              #
-#    Updated: 2022/10/24 13:22:19 by asoler           ###   ########.fr        #
+#    Updated: 2022/10/27 14:20:42 by asoler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,6 @@ FILES_PATH	=	src
 FILES		=	pipex.c \
 				fd_utils.c \
 				processes.c \
-				ft_split_pass.c \
-				split_utils.c \
 				access_utils.c
 OBJS_PATH	=	objs
 OBJS		=	$(addprefix $(OBJS_PATH)/,$(notdir $(FILES:.c=.o)))
@@ -34,7 +32,7 @@ $(OBJS_PATH):
 	mkdir -p $(OBJS_PATH)
 
 $(NAME):	$(OBJS) $(LIBFT)
-	$(CC) $(FLAGS) -g3 $(OBJS) $(LIBFT) -o pipex
+	ar -r $(LIBFT) $(OBJS)
 
 $(OBJS_PATH)/%.o:	$(FILES_PATH)/%.c
 	$(CC) -c -g3 $(FLAGS)  $< -o $(addsuffix .o, $(OBJS_PATH)/$(basename $(@F)))
@@ -48,7 +46,6 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME)
 
 re:	fclean all
 

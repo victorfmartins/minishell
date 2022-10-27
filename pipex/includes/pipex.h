@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:04:09 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/26 15:20:36 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/27 14:04:30 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@
 
 int		verify_access(char *path, int mode);
 
-int		enter_process_op(t_main *data, int fds_idx);
-void	free_args(char ***args, char **cmd, t_main *data);
-void	wait_all_child_finish(int id[], int child_qtd, int *status);
+int		enter_process_op(t_data *data, int fds_idx);
+// void	free_args(char ***args, char **cmd, t_main *data);
+void	wait_all_child_finish(int id[], t_data *data);
 
 int		init_fds(t_data *data);
-void	close_fds_until(int **fd, int n);
+void	close_fds_until(t_data *data);
 void	dup_fds(t_data *data, int iter);
 
 #endif

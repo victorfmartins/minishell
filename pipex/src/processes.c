@@ -6,11 +6,12 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/26 15:14:40 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/27 14:27:46 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
+# include "../includes/pipex.h"
 
 void	free_args(char ***args, char **cmd, t_main *data)
 {
@@ -47,7 +48,7 @@ int	verify_cmd_access(char **args, char **cmd)
 	return (0);
 }
 
-int	enter_process_op(t_data *data, int iter) // receber stuct com out e in fds cmd e envp (deve estar atualizado) ta no data
+int	enter_process_op(t_data *data, int iter)//env deve estar atualizado
 {
 	t_cmd	*node;
 	int		code;
@@ -68,16 +69,21 @@ int	enter_process_op(t_data *data, int iter) // receber stuct com out e in fds c
 	return (1);
 }
 
-void	wait_all_child_finish(int id[], int child_qtd, int *status)
+void	wait_all_child_finish(int id[], t_data *data)
 {
+	int	child_qtd;
+	int	status;
 	int	i;
-
+	
 	i = 0;
+	child_qtd = data->pipex.n_args;
+	status = data->pipex.status;
 	while (i < child_qtd)
 	{
-		waitpid(id[i], status, 0);
+		waitpid(id[i], &status, 0);
 		i++;
 	}
 }
 
 //[TODO] melhorar fluxo, verificar acesso antes de fork, mater dups depois de fork
+//[TODO] procurar para que usar o status
