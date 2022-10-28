@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/28 06:35:14 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/28 06:39:51 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	alloc_env_hash(envp, &data);
-	
 	data.envp = envp;
 	set_exec_paths(&data);
 	while (1)
