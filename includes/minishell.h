@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/30 17:46:23 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 23:37:38 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int				executer(t_data *data);
 int				verify_cmd(char **path, t_cmd *node);
 int				verify_access(char *path, int mode);
 int				enter_process_op(t_data *data, t_cmd *node);
-void			wait_all_child_finish(int id[], t_data *data);
+int				wait_and_free( t_data *data);
 
 void			dup_fds(t_data *data, t_cmd *node);
 int				init_fds(t_data *data);

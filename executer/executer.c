@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/30 17:45:07 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/31 00:00:31 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,12 @@ int	init_proc_data(t_data *data)
 		}
 	}
 	else
+	{
+		data->pipex.inter.fd = NULL;
 		data->pipex.inter.id = ft_calloc(sizeof(int), 1);
+	}
 	return (init_fds(data));
 }
-
-// int	wait_or_die(t_data *data)
-// {
-// 	if (waitpid(pid, &status, 0) < 0)
-// 	{
-// 		ft_printf("Wait fail %s\n", strerror(errno));
-// 		return (0);
-// 	}
-// 	free_array(cmd);
-// 	if (WIFEXITED(status))
-// 		ret = WEXITSTATUS(status);
-// 	return (ret);
-// }
 
 int	executer(t_data *data)
 {
@@ -73,23 +63,14 @@ int	executer(t_data *data)
 	if (init_proc_data(data) == -1)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
-	while (node)//<=
+	while (node)
 	{
-		node->index = i;
-		if (verify_cmd(data->path, node))
-			data->pipex.inter.id[i] = fork();
-		else
-		{
-			data->pipex.inter.id[i] = -2;
-			// data->pipex.inter.fd[i][1] = 1;
-		}
-		if (data->pipex.inter.id[i] == -1)
-		{
-			// close_fds_until(data->pipex.inter.fd, data->n_args);
-			perror("something went wrong with fork function");
-			return (-2);
-		}
-		if (data->pipex.inter.id[i] == 0)
+		node->index = i;// em caso de fazer o wait sincrono
+		verify_cmd(data->path, node)
+		data->pipex.inter.id[i] = fork();
+		if (data->pipex.inter.id[i] < 0)
+			ft_printf("something went wrong with fork function");
+		if (!data->pipex.inter.id[i])
 			enter_process_op(data, node);
 		if (!node->next)
 			break;
@@ -97,11 +78,9 @@ int	executer(t_data *data)
 			node = node->next;
 		i++;
 	}
-	// if (n_cmds)
-	// 	close_fds_until(data);
+	close_fds_until(data);
 	// return (wait_or_die())
-	wait_all_child_finish(data->pipex.inter.id, data);
-	free(data->pipex.inter.id);
+	wait_and_free(data);
 	return (1);
 }
 
