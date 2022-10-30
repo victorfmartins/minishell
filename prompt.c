@@ -15,6 +15,7 @@
 void	analize_line(t_data *data)
 {
 	data->cmds = get_file_structures(data);
+	print_cmd_lst(data->cmds);
 	ft_cmdclear(&data->cmds, free);
 	free(data->line);
 }
