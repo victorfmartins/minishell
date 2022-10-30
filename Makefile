@@ -39,18 +39,17 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		analysers/clear_structures.c \
 		analysers/set_cmd_attributes.c \
 		analysers/parsers.c \
-		pipex/src/pipex.c \
-		pipex/src/fd_utils.c \
-		pipex/src/processes.c \
-		pipex/src/access_utils.c
+		executer/executer.c \
+		executer/fd_utils.c \
+		executer/processes.c \
+		executer/access_utils.c
 
-PIPEX_OBJS_PATH	=	objs
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 	@make clean
 
-$(NAME): $(OBJ) $(LIBFT) $(PIPEX)
+$(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)creating ./minishell$(RESET)"
 	@$(CC) $(WFLAGS) $(READ_FLAG) -g3 $(OBJ) -L ./ -lft -o $(NAME)
 
@@ -60,11 +59,7 @@ $(NAME): $(OBJ) $(LIBFT) $(PIPEX)
 $(LIBFT):
 	make -C libft
 
-$(PIPEX):
-	make -C pipex
-
 re: fclean all
-	# @make re -C pipex
 	@make clean
 
 fclean: clean
@@ -73,12 +68,11 @@ fclean: clean
 clean:
 	@rm -rf *.o
 	@rm -rf env_var_utils/*.o
-	@rm -rf exec/*.o
 	@rm -rf analysers/*.o
+	@rm -rf executer/*.o
 
 fclean_all: fclean
 	make fclean -C libft
-	# make fclean -C pipex
 
 commit: fclean_all
 	@$(GIT)

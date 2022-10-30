@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/30 16:01:21 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 17:45:07 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	count_procs(t_cmd *head)
 {
@@ -61,19 +61,22 @@ int	init_proc_data(t_data *data)
 // 	return (ret);
 // }
 
-int	pipex(t_data *data)
+int	executer(t_data *data)
 {
 	int	i;
 	int	n_cmds;
+	t_cmd *node;
 
 	data->pipex.n_args = count_procs(data->cmds); //n_args = n_pipes
 	n_cmds = data->pipex.n_args;
+	node = data->cmds;
 	if (init_proc_data(data) == -1)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
-	while (i <= n_cmds)//<=
+	while (node)//<=
 	{
-		if (verify_cmd(data))
+		node->index = i;
+		if (verify_cmd(data->path, node))
 			data->pipex.inter.id[i] = fork();
 		else
 		{
@@ -83,20 +86,22 @@ int	pipex(t_data *data)
 		if (data->pipex.inter.id[i] == -1)
 		{
 			// close_fds_until(data->pipex.inter.fd, data->n_args);
-			perror("somenthing went wrong with fork function");
+			perror("something went wrong with fork function");
 			return (-2);
 		}
 		if (data->pipex.inter.id[i] == 0)
-			enter_process_op(data, i);
+			enter_process_op(data, node);
+		if (!node->next)
+			break;
+		else
+			node = node->next;
 		i++;
 	}
 	// if (n_cmds)
 	// 	close_fds_until(data);
 	// return (wait_or_die())
-	if (data->pipex.inter.id[0] != -2)
-		wait_all_child_finish(data->pipex.inter.id, data);
-	else
-		free(data->pipex.inter.id);
+	wait_all_child_finish(data->pipex.inter.id, data);
+	free(data->pipex.inter.id);
 	return (1);
 }
 

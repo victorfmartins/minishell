@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/30 15:46:35 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 17:46:23 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "libft.h"
-# include "../pipex/includes/pipex.h"
 
 # define I_REDIR 1
 # define HERE_DOC 2
@@ -71,6 +71,7 @@ typedef struct s_cmd
 	char			*exec_cmd;
 	char			**args;
 	int				type;
+	int				index;
 	t_file			*infiles;
 	t_file			*outfiles;
 	struct s_cmd	*prev;
@@ -87,14 +88,15 @@ typedef struct s_data
 	t_env	**hash_table;
 }	t_data;
 
-int				pipex(t_data *data);
-int				enter_process_op(t_data *data, int fds_idx);
+int				executer(t_data *data);
+int				verify_cmd(char **path, t_cmd *node);
+int				verify_access(char *path, int mode);
+int				enter_process_op(t_data *data, t_cmd *node);
 void			wait_all_child_finish(int id[], t_data *data);
-int				verify_cmd(t_data *data);
 
+void			dup_fds(t_data *data, t_cmd *node);
 int				init_fds(t_data *data);
 void			close_fds_until(t_data *data);
-void			dup_fds(t_data *data, int iter);
 
 void			prompt(t_data *data);
 void			exit_program(t_data *data);

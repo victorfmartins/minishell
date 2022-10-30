@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/30 15:56:41 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 17:58:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	redir_lst_fd_init(t_file *lst, int mode)
 {
@@ -42,22 +42,32 @@ static int	get_files_fds(t_cmd *node)//recebe struct q conteim path, mode, e fd 
 
 void	close_fds_until(t_data *data)//tratar casos: ex. sem pipe
 {
-	int		**pipes_fds;
+	// int		**pipes_fds;
 	t_cmd	*node;
 	int		n_cmds;
 	
-	pipes_fds = data->pipex.inter.fd;
 	node = data->cmds;
 	n_cmds = data->pipex.n_args;
-	while (n_cmds >= 0)
+	// if (data->pipex.inter.fd)
+	// 	pipes_fds = data->pipex.inter.fd;
+	while (n_cmds > 0)
 	{
-		// if (node->infiles->fd != -1)
-		// 	close(node->infiles->fd);
-		// if (node->outfiles->fd != -1)
-		// 	close(node->outfiles->fd);
-		close(pipes_fds[n_cmds][0]);
-		close(pipes_fds[n_cmds][1]);
 		n_cmds--;
+		close(data->pipex.inter.fd[n_cmds][0]);
+		close(data->pipex.inter.fd[n_cmds][1]);
+		// close(pipes_fds[n_cmds][0]);
+		// close(pipes_fds[n_cmds][1]);
+	}
+	while (node)//tratar casos quando infile nao está relacionado a cmd
+	{
+		if (node->infiles)
+			close(node->infiles->fd);
+		if (node->outfiles)
+			close(node->outfiles->fd);
+		if (node->next)
+			node = node->next;
+		else
+			break;
 	}
 	return ;
 }
@@ -87,28 +97,20 @@ int	init_fds(t_data *data)
 	return (0);
 }
 
-void	dup_fds(t_data *data, int iter)//dup_fds*** or manage_dup
+void	dup_fds(t_data *data, t_cmd *node)//dup_fds*** or manage_dup
 {
-	t_cmd	*node;
 	t_inter	*pipes_fds;
 	int	i;
 
-	node = data->cmds;
 	pipes_fds = &data->pipex.inter;
-	i = iter;
-	while (iter)
-	{
-		node = node->next;
-		iter--;
-	}
+	i = node->index;
+	if (node->infiles)
+		dup2(node->infiles->fd, 0);
+	else if (node->prev)
+		dup2(pipes_fds->fd[i - 1][0], 0);
 	if (node->outfiles)
 		dup2(node->outfiles->fd, 1);
 	else if (node->next)
-		dup2(node->infiles->fd, 1);
-	if (node->infiles)
-		dup2(pipes_fds->fd[i][0], 0);
-	else if (node->prev)
-		dup2(pipes_fds->fd[i - 1][0], 0);
-	close_fds_until(data);
+		dup2(pipes_fds->fd[i][1], 1);
 	return ;
 }
