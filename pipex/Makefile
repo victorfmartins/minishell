@@ -6,7 +6,7 @@
 #    By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/24 18:09:55 by vfranco-          #+#    #+#              #
-#    Updated: 2022/10/27 14:20:42 by asoler           ###   ########.fr        #
+#    Updated: 2022/10/30 14:37:43 by asoler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ RM			=	rm -f
 
 ###################################################################
 
-all: $(OBJS_PATH) $(NAME)
+all: $(OBJS_PATH)
 	
 $(OBJS_PATH):
 	mkdir -p $(OBJS_PATH)
 
-$(NAME):	$(OBJS) $(LIBFT)
-	ar -r $(LIBFT) $(OBJS)
+# $(NAME):	$(OBJS) $(LIBFT)
+# 	ar -r $(LIBFT) $(OBJS)
 
 $(OBJS_PATH)/%.o:	$(FILES_PATH)/%.c
 	$(CC) -c -g3 $(FLAGS)  $< -o $(addsuffix .o, $(OBJS_PATH)/$(basename $(@F)))

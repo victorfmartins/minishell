@@ -6,15 +6,16 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/27 15:19:06 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 15:56:41 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../includes/minishell.h"
-# include "../includes/pipex.h"
+#include "../../includes/minishell.h"
 
 void	redir_lst_fd_init(t_file *lst, int mode)
 {
+	if (!lst)
+		return ;
 	while (lst->next)
 	{
 		if (lst->type == 1) //O_REDIR
@@ -50,10 +51,10 @@ void	close_fds_until(t_data *data)//tratar casos: ex. sem pipe
 	n_cmds = data->pipex.n_args;
 	while (n_cmds >= 0)
 	{
-		if (node->infiles->fd != -1)
-			close(node->infiles->fd);
-		if (node->outfiles->fd != -1)
-			close(node->outfiles->fd);
+		// if (node->infiles->fd != -1)
+		// 	close(node->infiles->fd);
+		// if (node->outfiles->fd != -1)
+		// 	close(node->outfiles->fd);
 		close(pipes_fds[n_cmds][0]);
 		close(pipes_fds[n_cmds][1]);
 		n_cmds--;
@@ -63,7 +64,7 @@ void	close_fds_until(t_data *data)//tratar casos: ex. sem pipe
 
 int	init_fds(t_data *data)
 {
-	t_inter	*inter;
+	// t_inter	*inter;
 	int		n_cmds;
 	int		i;
 
@@ -71,11 +72,11 @@ int	init_fds(t_data *data)
 	n_cmds = data->pipex.n_args;
 	if (!n_cmds)
 		return (0);
-	inter = &data->pipex.inter;
+	// inter = &data->pipex.inter;
 	i = 0;
-	while (i <= n_cmds)
+	while (i < n_cmds)
 	{
-		if (pipe(inter->fd[i]) == -1) // here there is just pipes
+		if (pipe(data->pipex.inter.fd[i]) == -1) // here there is just pipes
 		{
 			// close_fds_until(inter->fd, i);
 			perror("something went wrong with pipe function");

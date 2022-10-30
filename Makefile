@@ -38,8 +38,13 @@ SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
 		analysers/create_structures.c \
 		analysers/clear_structures.c \
 		analysers/set_cmd_attributes.c \
-		analysers/parsers.c
+		analysers/parsers.c \
+		pipex/src/pipex.c \
+		pipex/src/fd_utils.c \
+		pipex/src/processes.c \
+		pipex/src/access_utils.c
 
+PIPEX_OBJS_PATH	=	objs
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
@@ -59,7 +64,7 @@ $(PIPEX):
 	make -C pipex
 
 re: fclean all
-	@make re -C pipex
+	# @make re -C pipex
 	@make clean
 
 fclean: clean
@@ -73,7 +78,7 @@ clean:
 
 fclean_all: fclean
 	make fclean -C libft
-	make fclean -C pipex
+	# make fclean -C pipex
 
 commit: fclean_all
 	@$(GIT)

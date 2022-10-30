@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/27 15:24:31 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/30 15:46:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
+# include "../pipex/includes/pipex.h"
 
 # define I_REDIR 1
 # define HERE_DOC 2
@@ -85,6 +86,15 @@ typedef struct s_data
 	t_cmd	*cmds;
 	t_env	**hash_table;
 }	t_data;
+
+int				pipex(t_data *data);
+int				enter_process_op(t_data *data, int fds_idx);
+void			wait_all_child_finish(int id[], t_data *data);
+int				verify_cmd(t_data *data);
+
+int				init_fds(t_data *data);
+void			close_fds_until(t_data *data);
+void			dup_fds(t_data *data, int iter);
 
 void			prompt(t_data *data);
 void			exit_program(t_data *data);
