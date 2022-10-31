@@ -68,6 +68,9 @@ clean:
 fclean_all: fclean
 	make fclean -C libft
 
+check: re
+	./run_pr_check.sh
+
 commit: fclean_all
 	@$(GIT)
 
