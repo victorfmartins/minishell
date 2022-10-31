@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/30 23:55:55 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/31 03:18:51 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	enter_process_op(t_data *data, t_cmd *node)//env deve estar atualizado
 {
 	dup_fds(data, node);
-	close_fds_until(data);
+	close_fds(data);
 	execve(node->exec_cmd, node->args, data->envp);
 	perror("Execve fail");
 	return (1);

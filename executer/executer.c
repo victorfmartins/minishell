@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/31 00:00:31 by asoler           ###   ########.fr       */
+/*   Updated: 2022/10/31 04:18:44 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,34 +53,39 @@ int	init_proc_data(t_data *data)
 
 int	executer(t_data *data)
 {
-	int	i;
-	int	n_cmds;
-	t_cmd *node;
+	int		i;
+	int		n_cmds;
+	int		wait;
+	t_cmd	*node;
 
 	data->pipex.n_args = count_procs(data->cmds); //n_args = n_pipes
 	n_cmds = data->pipex.n_args;
 	node = data->cmds;
-	if (init_proc_data(data) == -1)// alloc fds de aquivos e pipes
+	wait = 0;
+	if (init_proc_data(data) < 0)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
 	while (node)
 	{
 		node->index = i;// em caso de fazer o wait sincrono
-		verify_cmd(data->path, node)
-		data->pipex.inter.id[i] = fork();
-		if (data->pipex.inter.id[i] < 0)
-			ft_printf("something went wrong with fork function");
-		if (!data->pipex.inter.id[i])
-			enter_process_op(data, node);
+		if (verify_cmd(data->path, node))
+		{
+			data->pipex.inter.id[i] = fork();
+			if (data->pipex.inter.id[i] == 0)
+				enter_process_op(data, node);
+			// else if (data->pipex.inter.id[i] < 0)
+			// 	ft_printf("something went wrong with fork function");
+			wait = 1;
+		}
 		if (!node->next)
 			break;
 		else
 			node = node->next;
 		i++;
 	}
-	close_fds_until(data);
-	// return (wait_or_die())
-	wait_and_free(data);
+	close_fds(data);
+	if (wait)
+		wait_and_free(data);
 	return (1);
 }
 
