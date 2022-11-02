@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/31 03:18:51 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 10:08:32 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ int	wait_and_free(t_data *data)
 	int	status;
 	int	ret;
 	int	n_cmds;
+	int	i;
 
 	n_cmds = data->pipex.n_args;
 	ret = 0;
-	if (waitpid(0, &status, 0) < 0)
-		ft_printf("Wait fail %s\n", strerror(errno));
+	i = 0;
+	while (i <= n_cmds)
+	{
+		if (waitpid(data->pipex.inter.id[i], &status, 0) < 0)
+			ft_printf("Wait fail %s\n", strerror(errno));
+		i++;
+	}
 	free(data->pipex.inter.id);
 	while (n_cmds > 0)
 	{

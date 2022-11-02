@@ -6,15 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/31 03:18:58 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 09:06:45 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
-
-# define TABLE_SIZE 10
-
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,6 +22,10 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "libft.h"
+# define MINISHELL_H
+
+# define TABLE_SIZE 10
+
 
 # define I_REDIR 1
 # define HERE_DOC 2
