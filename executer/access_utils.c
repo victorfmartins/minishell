@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/31 03:32:41 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 17:12:54 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	verify_cmd(char **path, t_cmd *node)
 	char	*join_cmd;
 	int		i;
 
-	if (!node->exec_cmd) //proteção para node que não é de comando
+	if (!node->exec_cmd)
 		return (0);
 	i = 0;
 	while (path[i])

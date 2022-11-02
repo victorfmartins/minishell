@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 10:12:22 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 11:44:17 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 typedef struct s_inter
 {
-	int	**fd; 
+	int	**fd;
 	int	*id;
 }	t_inter;
 

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 10:52:03 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 17:17:52 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	redir_lst_fd_init(t_file *lst, int mode)
 			lst->fd = open(lst->name, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 		else if (lst->type == APPEND)
 			lst->fd = open(lst->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
-		else // I_REDIR [TODO]add HERDOC
+		else
 			lst->fd = open(lst->name, O_RDONLY);
 		verify_access(lst->name, mode);
 		if (lst->next)
@@ -32,7 +32,7 @@ void	redir_lst_fd_init(t_file *lst, int mode)
 	}
 }
 
-static int	get_files_fds(t_cmd *node)//recebe struct q conteim path, mode, e fd que sera alocado
+static int	get_files_fds(t_cmd *node)
 {
 	while (node)
 	{
@@ -50,7 +50,7 @@ static int	get_files_fds(t_cmd *node)//recebe struct q conteim path, mode, e fd 
 
 void	close_file_fds(t_cmd *node)
 {
-	while (node)//[TODO]tratar casos quando infile nao está relacionado a cmd
+	while (node)
 	{
 		if (node->infiles)
 			close(node->infiles->fd);
@@ -63,7 +63,7 @@ void	close_file_fds(t_cmd *node)
 	}
 }
 
-void	close_fds(t_data *data)//tratar casos: ex. sem pipe
+void	close_fds(t_data *data)
 {
 	int		**pipes_fds;
 	int		n_cmds;
@@ -83,21 +83,20 @@ void	close_fds(t_data *data)//tratar casos: ex. sem pipe
 
 int	init_fds(t_data *data)
 {
-	// t_inter	*inter;
+	t_inter	*inter;
 	int		n_cmds;
 	int		i;
 
-	get_files_fds(data->cmds);//here there is just redir
+	get_files_fds(data->cmds);
 	n_cmds = data->pipex.n_args;
 	if (!n_cmds)
 		return (0);
-	// inter = &data->pipex.inter;
+	inter = &data->pipex.inter;
 	i = 0;
 	while (i < n_cmds)
 	{
-		if (pipe(data->pipex.inter.fd[i]) == -1) // here there is just pipes
+		if (pipe(inter->fd[i]) == -1)
 		{
-			// close_fds_until(inter->fd, i);
 			perror("something went wrong with pipe function");
 			return (-1);
 		}
