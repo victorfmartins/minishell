@@ -6,13 +6,31 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 17:45:38 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 18:24:48 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	enter_process_op(t_data *data, t_cmd *node)
+void	dup_fds(t_data *data, t_cmd *node)
+{
+	t_inter	*pipes_fds;
+	int		i;
+
+	pipes_fds = &data->pipex.inter;
+	i = node->index;
+	if (node->infiles)
+		dup2(node->infiles->fd, 0);
+	else if (node->prev)
+		dup2(pipes_fds->fd[i - 1][0], 0);
+	if (node->outfiles)
+		dup2(node->outfiles->fd, 1);
+	else if (node->next)
+		dup2(pipes_fds->fd[i][1], 1);
+	return ;
+}
+
+int	ft_exec(t_data *data, t_cmd *node)
 {
 	dup_fds(data, node);
 	close_fds(data);

@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/23 17:40:09 by vfranco-         ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:14 by asoler            #+#    #+#             */
+/*   Updated: 2022/11/02 19:05:07 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	exit_program(t_data *data)
 {
-	t_data	data;
-
-	alloc_env_hash(envp, &data);
-	data.envp = envp;
-	set_exec_paths(&data);
-	while (1)
-	{
-		prompt(&data);
-	}
-	(void)argc;
-	(void)argv;
+	free_and_count_array(data->path, free);
+	free_hash_table(data);
+	free(data->line);
+	(void)data;
+	exit(0);
 }

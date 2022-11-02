@@ -26,23 +26,26 @@ LIBFT = libft.a
 
 PIPEX = pipex
 
-SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
-		ft_split_but_through_quotes.c \
+SRC =	_minishell_/minishell.c \
+		_minishell_/prompt.c \
+		env_var_utils/clear_utils.c \
 		env_var_utils/alloc_env_hash.c \
 		env_var_utils/manage_env_structure.c \
 		env_var_utils/get_env_var.c \
 		env_var_utils/set_exec_path.c \
-		analysers/build_cmd_structure.c \
-		analysers/build_cmd_structure_utils.c \
-		analysers/print_structures.c \
-		analysers/create_structures.c \
-		analysers/clear_structures.c \
-		analysers/set_cmd_attributes.c \
-		analysers/parsers.c \
+		parser/build_cmd_structure.c \
+		parser/build_cmd_structure_utils.c \
+		parser/print_structures.c \
+		parser/create_structures.c \
+		parser/clear_structures.c \
+		parser/set_cmd_attributes.c \
+		parser/ft_split_but_through_quotes.c \
+		parser/parsers.c \
 		executer/executer.c \
 		executer/fd_utils.c \
 		executer/processes.c \
-		executer/access_utils.c
+		executer/access_utils.c \
+		builtins/exit.c
 
 OBJ = $(SRC:.c=.o)
 

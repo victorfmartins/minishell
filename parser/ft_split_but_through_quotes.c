@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_but_through_quotes.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:04:51 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/25 12:18:27 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:52:58 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 static size_t	count_words(char const *s, char delimiter)
 {

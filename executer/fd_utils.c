@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 23:54:46 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 18:22:43 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,3 @@ int	init_fds(t_data *data)
 	return (0);
 }
 
-void	dup_fds(t_data *data, t_cmd *node)
-{
-	t_inter	*pipes_fds;
-	int		i;
-
-	pipes_fds = &data->pipex.inter;
-	i = node->index;
-	if (node->infiles)
-		dup2(node->infiles->fd, 0);
-	else if (node->prev)
-		dup2(pipes_fds->fd[i - 1][0], 0);
-	if (node->outfiles)
-		dup2(node->outfiles->fd, 1);
-	else if (node->next)
-		dup2(pipes_fds->fd[i][1], 1);
-	return ;
-}

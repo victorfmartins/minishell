@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   general_utils.c                                    :+:      :+:    :+:   */
+/*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 22:16:57 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/08 19:46:43 by asoler           ###   ########.fr       */
+/*   Created: 2022/11/02 18:35:51 by asoler            #+#    #+#             */
+/*   Updated: 2022/11/02 18:42:44 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#ifndef EXECUTER_H
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <errno.h>
+#define EXECUTER_H
 
-int	free_and_count_array(char **array, void (*f)(void *))
+typedef struct s_inter
 {
-	int	n;
+	int	**fd;
+	int	*id;
+}	t_inter;
 
-	n = 0;
-	while (array[n])
-	{
-		if (f)
-			f(array[n]);
-		n++;
-	}
-	if (f)
-		f(array);
-	return (n);
-}
+typedef struct s_main
+{
+	char	**argv;
+	char	**envp;
+	int		argc;
+	int		n_args;
+	int		status;
+	int		ret;
+	t_inter	inter;
+}	t_main;
+
+#endif

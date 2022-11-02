@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 21:35:51 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 08:48:49 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:04:21 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	free_hash_table(t_data *data)
 {
@@ -24,4 +24,20 @@ void	free_hash_table(t_data *data)
 		i++;
 	}
 	free(data->hash_table);
+}
+
+int	free_and_count_array(char **array, void (*f)(void *))
+{
+	int	n;
+
+	n = 0;
+	while (array[n])
+	{
+		if (f)
+			f(array[n]);
+		n++;
+	}
+	if (f)
+		f(array);
+	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/03 00:08:19 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 18:24:47 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_pid(t_data *data, t_cmd *node)
 	{
 		data->pipex.inter.id[i] = fork();
 		if (data->pipex.inter.id[i] == 0)
-			enter_process_op(data, node);
+			ft_exec(data, node);
 		return (1);
 	}
 	return (0);
