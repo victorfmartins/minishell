@@ -6,16 +6,16 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:43:30 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 18:46:38 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:24:58 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
+# ifndef ENVIROMENT_H
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-#define ENVIROMENT_H
+# define ENVIROMENT_H
 
 # define TABLE_SIZE 10
 

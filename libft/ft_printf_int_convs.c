@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 02:22:14 by asoler            #+#    #+#             */
-/*   Updated: 2022/07/06 14:28:53 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:19:05 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 void	reverse_write_digits(char *s, int count)
 {

@@ -3,6 +3,7 @@
         "unistd.h": "c",
         "readline.h": "c",
         "enviroment.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "ft_printf.h": "c"
     }
 }

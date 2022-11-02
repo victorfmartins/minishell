@@ -6,16 +6,16 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:35:51 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 18:42:44 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:25:03 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTER_H
+# ifndef EXECUTER_H
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
-#define EXECUTER_H
+# define EXECUTER_H
 
 typedef struct s_inter
 {
@@ -33,5 +33,7 @@ typedef struct s_main
 	int		ret;
 	t_inter	inter;
 }	t_main;
+
+int	verify_access(char *path, int mode);
 
 #endif

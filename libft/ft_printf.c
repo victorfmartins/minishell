@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 01:05:19 by asoler            #+#    #+#             */
-/*   Updated: 2022/07/06 14:28:23 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:17:59 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 int	int_conversion(char c, char *conv)
 {

@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 00:35:24 by asoler            #+#    #+#             */
-/*   Updated: 2022/07/06 14:28:44 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:19:00 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 int	ft_printf_char(char c)
 {

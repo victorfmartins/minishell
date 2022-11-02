@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 18:52:39 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 19:25:11 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+# ifndef MINISHELL_H
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
@@ -35,25 +35,22 @@ typedef struct s_data
 	t_env	**hash_table;
 }	t_data;
 
-int				executer(t_data *data);
-int				ft_exec(t_data *data, t_cmd *node);
-int				verify_cmd(char **path, t_cmd *node);
-int				verify_access(char *path, int mode);
-int				wait_and_free( t_data *data);
+void	prompt(t_data *data);
+void	exit_program(t_data *data);
 
-int				init_fds(t_data *data);
-void			close_fds(t_data *data);
+t_cmd	*get_file_structures(t_data *data);
 
-void			prompt(t_data *data);
-void			exit_program(t_data *data);
+char	*get_env_var(t_data *data, char *key);
+void	alloc_env_hash(char **envp, t_data *data);
+void	set_exec_paths(t_data *data);
+void	free_hash_table(t_data *data);
 
-t_cmd			*get_file_structures(t_data *data);
+int		executer(t_data *data);
+int		ft_exec(t_data *data, t_cmd *node);
+int		verify_cmd(char **path, t_cmd *node);
+int		wait_and_free( t_data *data);
 
-char			*get_env_var(t_data *data, char *key);
-void			alloc_env_hash(char **envp, t_data *data);
-void			set_exec_paths(t_data *data);
-
-
-void			free_hash_table(t_data *data);
+int		init_fds(t_data *data);
+void	close_fds(t_data *data);
 
 #endif

@@ -28,11 +28,11 @@ PIPEX = pipex
 
 SRC =	_minishell_/minishell.c \
 		_minishell_/prompt.c \
-		env_var_utils/clear_utils.c \
-		env_var_utils/alloc_env_hash.c \
-		env_var_utils/manage_env_structure.c \
-		env_var_utils/get_env_var.c \
-		env_var_utils/set_exec_path.c \
+		enviroment/clear_utils.c \
+		enviroment/alloc_env_hash.c \
+		enviroment/manage_env_structure.c \
+		enviroment/get_env_var.c \
+		enviroment/set_exec_path.c \
 		parser/build_cmd_structure.c \
 		parser/build_cmd_structure_utils.c \
 		parser/print_structures.c \
@@ -69,10 +69,11 @@ fclean: clean
 	rm -rf $(NAME)
 
 clean:
-	@rm -rf *.o
-	@rm -rf env_var_utils/*.o
-	@rm -rf analysers/*.o
+	@rm -rf _minishell_/*.o
+	@rm -rf enviroment/*.o
+	@rm -rf parser/*.o
 	@rm -rf executer/*.o
+	@rm -rf builtins/*.o
 
 fclean_all: fclean
 	make fclean -C libft
