@@ -6,13 +6,13 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 10:12:36 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 11:10:02 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	count_procs(t_cmd *head)
+int	count_pipes(t_cmd *head)
 {
 	int		n;
 
@@ -56,14 +56,14 @@ int	executer(t_data *data)
 	int		i;
 	t_cmd	*node;
 
-	data->pipex.n_args = count_procs(data->cmds); //n_args = n_pipes count_pipes
+	data->pipex.n_args = count_pipes(data->cmds); //n_args = n_pipes count_pipes
 	node = data->cmds;
 	if (init_proc_data(data) < 0)// alloc fds de aquivos e pipes
 		return (-1);
 	i = 0;
 	while (node)
 	{
-		node->index = i;// em caso de fazer o wait sincrono
+		node->index = i;//identifica nodo no dup
 		if (verify_cmd(data->path, node))
 		{
 			data->pipex.inter.id[i] = fork();
