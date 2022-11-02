@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 10:06:51 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 10:12:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	executer(t_data *data)
 			data->pipex.inter.id[i] = fork();
 			if (data->pipex.inter.id[i] == 0)
 				enter_process_op(data, node);
-			// else if (data->pipex.inter.id[i] < 0)
-			// 	ft_printf("something went wrong with fork function");
 		}
 		if (!node->next)
 			break;

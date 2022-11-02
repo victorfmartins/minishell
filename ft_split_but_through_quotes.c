@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:04:51 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 19:12:15 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:18:27 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static void	result_array(char	***dest, char *src, char delimiter)
 	delimiter_str[1] = '\0';
 	i = 0;
 	j = 0;
+	while (src[i] == delimiter)
+			i++;
 	while (src[i])
 	{
-		while (src[i] == delimiter)
-			i++;
 		(*dest)[j] = ft_worddup(src + i, delimiter_str);
 		i += ft_strlen((*dest)[j]);
 		i += (src[i] != '\0');
