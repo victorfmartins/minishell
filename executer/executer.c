@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 17:31:22 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/03 00:08:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_pipes(t_cmd *head)
 	int		n;
 
 	n = 0;
-	while(head->next)
+	while (head->next)
 	{
 		if (head->exec_cmd && head->next->exec_cmd)
 			n++;
@@ -29,10 +29,10 @@ int	count_pipes(t_cmd *head)
 int	init_proc_data(t_data *data)
 {
 	t_main	*main;
-	main = &data->pipex;
 	int		i;
 
 	i = 0;
+	main = &data->pipex;
 	if (main->n_args > 0)
 	{
 		main->inter.fd = ft_calloc(sizeof(int *), main->n_args);
@@ -51,6 +51,21 @@ int	init_proc_data(t_data *data)
 	return (init_fds(data));
 }
 
+int	get_pid(t_data *data, t_cmd *node)
+{
+	int	i;
+
+	i = node->index;
+	if (verify_cmd(data->path, node))
+	{
+		data->pipex.inter.id[i] = fork();
+		if (data->pipex.inter.id[i] == 0)
+			enter_process_op(data, node);
+		return (1);
+	}
+	return (0);
+}
+
 int	executer(t_data *data)
 {
 	int		i;
@@ -58,22 +73,15 @@ int	executer(t_data *data)
 
 	data->pipex.n_args = count_pipes(data->cmds);
 	node = data->cmds;
-	if (init_proc_data(data) < 0)
-		return (-1);
+	init_proc_data(data);
 	i = 0;
 	while (node)
 	{
 		node->index = i;
-		if (verify_cmd(data->path, node))
-		{
-			data->pipex.inter.id[i] = fork();
-			if (data->pipex.inter.id[i] == 0)
-				enter_process_op(data, node);
-		}
-		else
+		if (!get_pid(data, node))
 			data->pipex.inter.id[i] = -1;
 		if (!node->next)
-			break;
+			break ;
 		else
 			node = node->next;
 		i++;
@@ -82,4 +90,3 @@ int	executer(t_data *data)
 	wait_and_free(data);
 	return (1);
 }
-

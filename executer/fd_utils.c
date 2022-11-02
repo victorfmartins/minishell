@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 17:17:52 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 23:54:46 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	redir_lst_fd_init(t_file *lst, int mode)
 		if (lst->next)
 			lst = lst->next;
 		else
-			break;
+			break ;
 	}
 }
 
@@ -39,11 +39,11 @@ static int	get_files_fds(t_cmd *node)
 		if (node->infiles)
 			redir_lst_fd_init(node->infiles, W_OK);
 		if (node->outfiles)
-			redir_lst_fd_init(node->outfiles,  R_OK);
+			redir_lst_fd_init(node->outfiles, R_OK);
 		if (node->next)
 			node = node->next;
 		else
-			break;
+			break ;
 	}
 	return (1);
 }
@@ -59,7 +59,7 @@ void	close_file_fds(t_cmd *node)
 		if (node->next)
 			node = node->next;
 		else
-			break;
+			break ;
 	}
 }
 
@@ -67,7 +67,7 @@ void	close_fds(t_data *data)
 {
 	int		**pipes_fds;
 	int		n_cmds;
-	
+
 	n_cmds = data->pipex.n_args;
 	if (data->pipex.inter.fd)
 		pipes_fds = data->pipex.inter.fd;
@@ -108,7 +108,7 @@ int	init_fds(t_data *data)
 void	dup_fds(t_data *data, t_cmd *node)
 {
 	t_inter	*pipes_fds;
-	int	i;
+	int		i;
 
 	pipes_fds = &data->pipex.inter;
 	i = node->index;

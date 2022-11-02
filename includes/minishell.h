@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 11:44:17 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/02 23:55:40 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define MINISHELL_H
 
 # define TABLE_SIZE 10
-
 
 # define I_REDIR 1
 # define HERE_DOC 2
