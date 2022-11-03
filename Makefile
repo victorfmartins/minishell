@@ -79,7 +79,7 @@ fclean_all: fclean
 	make fclean -C libft
 
 check: re
-	./run_pr_check.sh
+	dev_utils/run_pr_check.sh
 
 commit: fclean_all
 	@$(GIT)
