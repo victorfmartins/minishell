@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_utils.c                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 21:35:51 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 08:48:49 by vfranco-         ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:14 by asoler            #+#    #+#             */
+/*   Updated: 2022/11/02 19:05:07 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-void	free_hash_table(t_data *data)
+void	exit_program(t_data *data)
 {
-	int		i;
-
-	i = 0;
-	while (i < TABLE_SIZE)
-	{
-		if (data->hash_table[i])
-			ft_envclear(&data->hash_table[i], free);
-		i++;
-	}
-	free(data->hash_table);
+	free_and_count_array(data->path, free);
+	free_hash_table(data);
+	free(data->line);
+	(void)data;
+	exit(0);
 }

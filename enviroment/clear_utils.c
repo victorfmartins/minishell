@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_other_convs.c                            :+:      :+:    :+:   */
+/*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 00:35:24 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 19:19:00 by asoler           ###   ########.fr       */
+/*   Created: 2022/10/08 21:35:51 by asoler            #+#    #+#             */
+/*   Updated: 2022/11/02 19:04:21 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/minishell.h"
 
-int	ft_printf_char(char c)
+void	free_hash_table(t_data *data)
 {
-	write(1, &c, 1);
-	return (0);
+	int		i;
+
+	i = 0;
+	while (i < TABLE_SIZE)
+	{
+		if (data->hash_table[i])
+			ft_envclear(&data->hash_table[i], free);
+		i++;
+	}
+	free(data->hash_table);
 }
 
-int	ft_printf_str(char *s)
+int	free_and_count_array(char **array, void (*f)(void *))
 {
-	if (s)
+	int	n;
+
+	n = 0;
+	while (array[n])
 	{
-		write(1, s, ft_strlen(s));
-		return (ft_strlen(s) - 1);
+		if (f)
+			f(array[n]);
+		n++;
 	}
-	else
-	{
-		write(1, "(null)", 6);
-		return (5);
-	}
-	return (0);
+	if (f)
+		f(array);
+	return (n);
 }

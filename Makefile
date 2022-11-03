@@ -24,19 +24,28 @@ READ_FLAG = -lreadline
 
 LIBFT = libft.a
 
-SRC =	minishell.c prompt.c general_utils.c clear_utils.c exit.c \
-		ft_split_but_through_quotes.c \
-		env_var_utils/alloc_env_hash.c \
-		env_var_utils/manage_env_structure.c \
-		env_var_utils/get_env_var.c \
-		env_var_utils/set_exec_path.c \
-		analysers/build_cmd_structure.c \
-		analysers/build_cmd_structure_utils.c \
-		analysers/print_structures.c \
-		analysers/create_structures.c \
-		analysers/clear_structures.c \
-		analysers/set_cmd_attributes.c \
-		analysers/parsers.c
+PIPEX = pipex
+
+SRC =	_minishell_/minishell.c \
+		_minishell_/prompt.c \
+		enviroment/clear_utils.c \
+		enviroment/alloc_env_hash.c \
+		enviroment/manage_env_structure.c \
+		enviroment/get_env_var.c \
+		enviroment/set_exec_path.c \
+		parser/build_cmd_structure.c \
+		parser/build_cmd_structure_utils.c \
+		parser/print_structures.c \
+		parser/create_structures.c \
+		parser/clear_structures.c \
+		parser/set_cmd_attributes.c \
+		parser/ft_split_but_through_quotes.c \
+		parser/parsers.c \
+		executer/executer.c \
+		executer/fd_utils.c \
+		executer/processes.c \
+		executer/access_utils.c \
+		builtins/exit.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -60,16 +69,17 @@ fclean: clean
 	rm -rf $(NAME)
 
 clean:
-	@rm -rf *.o
-	@rm -rf env_var_utils/*.o
-	@rm -rf exec/*.o
-	@rm -rf analysers/*.o
+	@rm -rf _minishell_/*.o
+	@rm -rf enviroment/*.o
+	@rm -rf parser/*.o
+	@rm -rf executer/*.o
+	@rm -rf builtins/*.o
 
 fclean_all: fclean
 	make fclean -C libft
 
 check: re
-	./run_pr_check.sh
+	dev_utils/run_pr_check.sh
 
 commit: fclean_all
 	@$(GIT)
