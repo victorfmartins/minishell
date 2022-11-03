@@ -6,11 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:43:30 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 19:24:58 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/03 01:22:45 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef ENVIROMENT_H
+#ifndef ENVIROMENT_H
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>

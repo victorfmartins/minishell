@@ -6,12 +6,12 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:29:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 19:24:53 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/03 01:24:14 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef ANALIZER_H
-# define ANALIZER_H
+#ifndef PARSER_H
+# define PARSER_H
 
 typedef struct s_file
 {
