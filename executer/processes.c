@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 18:24:48 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:53:02 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	dup_fds(t_data *data, t_cmd *node)
 	t_inter	*pipes_fds;
 	int		i;
 
-	pipes_fds = &data->pipex.inter;
+	pipes_fds = &data->exec.inter;
 	i = node->index;
 	if (node->infiles)
 		dup2(node->infiles->fd, 0);
@@ -41,13 +41,13 @@ int	ft_exec(t_data *data, t_cmd *node)
 
 void	free_fds(t_data *data, int n_cmds)
 {
-	free(data->pipex.inter.id);
+	free(data->exec.inter.id);
 	while (n_cmds > 0)
 	{
 		n_cmds--;
-		free(data->pipex.inter.fd[n_cmds]);
+		free(data->exec.inter.fd[n_cmds]);
 	}
-	free(data->pipex.inter.fd);
+	free(data->exec.inter.fd);
 }
 
 int	wait_and_free(t_data *data)
@@ -57,15 +57,15 @@ int	wait_and_free(t_data *data)
 	int	n_cmds;
 	int	i;
 
-	n_cmds = data->pipex.n_args;
+	n_cmds = data->exec.n_args;
 	ret = 0;
 	i = 0;
 	status = -1;
 	while (i <= n_cmds)
 	{
-		if (data->pipex.inter.id[i] != -1)
+		if (data->exec.inter.id[i] != -1)
 		{
-			if (waitpid(data->pipex.inter.id[i], &status, 0) < 0)
+			if (waitpid(data->exec.inter.id[i], &status, 0) < 0)
 				ft_printf("Wait fail: %s\n", strerror(errno));
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 19:20:46 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:52:49 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	close_fds(t_data *data)
 	int		**pipes_fds;
 	int		n_cmds;
 
-	n_cmds = data->pipex.n_args;
-	if (data->pipex.inter.fd)
-		pipes_fds = data->pipex.inter.fd;
+	n_cmds = data->exec.n_args;
+	if (data->exec.inter.fd)
+		pipes_fds = data->exec.inter.fd;
 	while (n_cmds > 0)
 	{
 		n_cmds--;
@@ -88,10 +88,10 @@ int	init_fds(t_data *data)
 	int		i;
 
 	get_files_fds(data->cmds);
-	n_cmds = data->pipex.n_args;
+	n_cmds = data->exec.n_args;
 	if (!n_cmds)
 		return (0);
-	inter = &data->pipex.inter;
+	inter = &data->exec.inter;
 	i = 0;
 	while (i < n_cmds)
 	{

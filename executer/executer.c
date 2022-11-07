@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/02 18:24:47 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:52:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	init_proc_data(t_data *data)
 	int		i;
 
 	i = 0;
-	main = &data->pipex;
+	main = &data->exec;
 	if (main->n_args > 0)
 	{
 		main->inter.fd = ft_calloc(sizeof(int *), main->n_args);
@@ -58,8 +58,8 @@ int	get_pid(t_data *data, t_cmd *node)
 	i = node->index;
 	if (verify_cmd(data->path, node))
 	{
-		data->pipex.inter.id[i] = fork();
-		if (data->pipex.inter.id[i] == 0)
+		data->exec.inter.id[i] = fork();
+		if (data->exec.inter.id[i] == 0)
 			ft_exec(data, node);
 		return (1);
 	}
@@ -71,7 +71,7 @@ int	executer(t_data *data)
 	int		i;
 	t_cmd	*node;
 
-	data->pipex.n_args = count_pipes(data->cmds);
+	data->exec.n_args = count_pipes(data->cmds);
 	node = data->cmds;
 	init_proc_data(data);
 	i = 0;
@@ -79,7 +79,7 @@ int	executer(t_data *data)
 	{
 		node->index = i;
 		if (!get_pid(data, node))
-			data->pipex.inter.id[i] = -1;
+			data->exec.inter.id[i] = -1;
 		if (!node->next)
 			break ;
 		else

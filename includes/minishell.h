@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/03 01:23:03 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:49:32 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_data
 	char	**envp;
 	char	*line;
 	char	**path;
-	t_main	pipex;
+	t_main	exec;
 	t_cmd	*cmds;
 	t_env	**hash_table;
 }	t_data;
