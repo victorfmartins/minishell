@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:00:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/07 12:52:49 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/07 13:36:37 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	redir_lst_fd_init(t_file *lst, int mode)
 			lst->fd = open(lst->name, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 		else if (lst->type == APPEND)
 			lst->fd = open(lst->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
-		else
+		else if (lst->type == I_REDIR)
 			lst->fd = open(lst->name, O_RDONLY);
+		else
+			lst->fd = open(heredoc(lst), O_RDONLY);
 		verify_access(lst->name, mode);
 		if (lst->next)
 			lst = lst->next;
