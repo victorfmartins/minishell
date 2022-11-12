@@ -6,57 +6,55 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:00:23 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/07 14:24:31 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/12 16:22:42 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*heredoc(t_file *lst)
+void	treat_empty_line(int fd)
+{
+	char	*endl;
+
+	endl = calloc(sizeof(char), 2);
+	endl[0] = '\n';
+	ft_putstr_fd(endl, fd);
+	free(endl);
+}
+
+void	heredoc_readline(char *file_name, int fd)
 {
 	char	*line;
-	char	*history_1;
-	char	*history_2;
-	char	*aux;
+
+	line = NULL;
+	while (1)
+	{
+		if (line)
+			free(line);
+		line = readline("> ");
+		if (!*line)
+		{
+			treat_empty_line(fd);
+			continue ;
+		}
+		if (!ft_strncmp(file_name, line, ft_strlen(line)))
+			break ;
+		ft_putendl_fd(line, fd);
+	}
+	free(line);
+}
+
+char	*heredoc(t_file *lst)
+{
 	int		fd;
-	int		i;
 
 	fd = open(lst->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
-	line = readline("> ");
-	history_1 = ft_strdup(line); //add_history[last_*char]
-	while (ft_strncmp(lst->name, line, ft_strlen(line)))
-	{
-		aux = ft_strdup(line);
-		i = ft_strlen(aux);
-		// aux[i] = '\n';
-		write(fd, aux, i);
-		write(fd, "\n", 1);
-		
-		//add history
-		history_2 = ft_strjoin(history_1, aux);
-		free(history_1);
-		history_1 = ft_strjoin(history_2, "\n");
-		free(history_2);
-		// -----
-		
-		free(aux);
-		free(line);
-		line = readline("> ");
-	}
-	//add history
-	history_2 = ft_strjoin(history_1, line);
-	free(history_1);
-	add_history(history_2);
-	free(history_2);
-	// -----
-	write(fd, line, ft_strlen(line));
-	free(line);
+	heredoc_readline(lst->name, fd);
 	close(fd);
 	return (lst->name);
 }
 // [TODO]
+// - make ft that creates a not existing file
 // - put file in /tmp/ or something like that
-// - make history works
-		//*it most record data->line and not repeat firt heredoc line
 // - remove file after execution
 // - valgrind full checking
