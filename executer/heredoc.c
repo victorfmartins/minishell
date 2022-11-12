@@ -6,11 +6,27 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:00:23 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/12 16:22:42 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/12 17:02:01 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*find_file_name(char *delimiter)
+{
+	char	*file_name;
+	char	*aux;
+
+	file_name = ft_strdup(delimiter);
+	while (!access(file_name, F_OK))
+	{
+		aux = ft_strjoin(file_name, "x");
+		free(file_name);
+		file_name = ft_strdup(aux);
+		free(aux);
+	}
+	return (file_name);
+}
 
 void	treat_empty_line(int fd)
 {
@@ -46,15 +62,18 @@ void	heredoc_readline(char *file_name, int fd)
 
 char	*heredoc(t_file *lst)
 {
+	char	*file_name;
 	int		fd;
 
-	fd = open(lst->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
-	heredoc_readline(lst->name, fd);
+	file_name = find_file_name(lst->name);
+	fd = open(file_name, O_APPEND | O_CREAT | O_WRONLY, 0644);
+	heredoc_readline(file_name, fd);
 	close(fd);
-	return (lst->name);
+	return (file_name);
 }
 // [TODO]
-// - make ft that creates a not existing file
-// - put file in /tmp/ or something like that
+// - free history and file name
+// - strncmp is not working as espected(review)
+		// -> most end just with entyre word comparison not just partial
 // - remove file after execution
 // - valgrind full checking
