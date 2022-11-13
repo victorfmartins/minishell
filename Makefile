@@ -25,11 +25,11 @@ LIBFT = libft.a
 
 SRC =	_minishell_/minishell.c \
 		_minishell_/prompt.c \
-		enviroment/clear_utils.c \
-		enviroment/alloc_env_hash.c \
-		enviroment/manage_env_structure.c \
-		enviroment/get_env_var.c \
-		enviroment/set_exec_path.c \
+		environment/clear_utils.c \
+		environment/alloc_env_hash.c \
+		environment/manage_env_structure.c \
+		environment/get_env_var.c \
+		environment/set_exec_path.c \
 		parser/build_cmd_structure.c \
 		parser/build_cmd_structure_utils.c \
 		parser/print_structures.c \
@@ -76,7 +76,7 @@ clean:
 fclean_all: fclean
 	make fclean -C libft
 
-check: re
+check: fclean_all
 	dev_utils/run_pr_check.sh
 
 commit: fclean_all

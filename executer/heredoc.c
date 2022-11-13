@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:00:23 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/12 17:02:01 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/13 03:04:57 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	treat_empty_line(int fd)
 	free(endl);
 }
 
-void	heredoc_readline(char *file_name, int fd)
+void	heredoc_readline(char *delimiter, int fd)
 {
 	char	*line;
 
@@ -53,7 +53,8 @@ void	heredoc_readline(char *file_name, int fd)
 			treat_empty_line(fd);
 			continue ;
 		}
-		if (!ft_strncmp(file_name, line, ft_strlen(line)))
+		if (ft_strlen(delimiter) == ft_strlen(line) && \
+			!ft_strncmp(delimiter, line, ft_strlen(line)))
 			break ;
 		ft_putendl_fd(line, fd);
 	}
@@ -67,13 +68,7 @@ char	*heredoc(t_file *lst)
 
 	file_name = find_file_name(lst->name);
 	fd = open(file_name, O_APPEND | O_CREAT | O_WRONLY, 0644);
-	heredoc_readline(file_name, fd);
+	heredoc_readline(lst->name, fd);
 	close(fd);
 	return (file_name);
 }
-// [TODO]
-// - free history and file name
-// - strncmp is not working as espected(review)
-		// -> most end just with entyre word comparison not just partial
-// - remove file after execution
-// - valgrind full checking
