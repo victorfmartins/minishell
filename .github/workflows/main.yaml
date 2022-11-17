@@ -31,3 +31,5 @@ jobs:
     - name: Linter with Norminette
       run: |
         norminette
+    - name: make check
+      run: make check
