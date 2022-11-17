@@ -68,7 +68,7 @@ fclean: clean
 
 clean:
 	@rm -rf _minishell_/*.o
-	@rm -rf enviroment/*.o
+	@rm -rf environment/*.o
 	@rm -rf parser/*.o
 	@rm -rf executer/*.o
 	@rm -rf builtins/*.o
