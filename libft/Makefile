@@ -23,6 +23,7 @@ SRC =	ft_itoa.c \
 		ft_printf_other_convs.c \
 		ft_printf_int_convs.c \
 		ft_putstr_fd.c \
+		ft_putendl_fd.c \
 		ft_strlcpy.c \
 		ft_lstclear.c \
 		ft_lstdelone.c \
