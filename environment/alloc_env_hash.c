@@ -41,7 +41,7 @@ int	hash_table_insert(t_data *data, char *env)
 	return (1);
 }
 
-void	alloc_env_hash(char **envp, t_data *data)
+void	alloc_env_hash(char **envp, t_data *data) // [TODO] if (!envp) ??
 {
 	int		i;
 

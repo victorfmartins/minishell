@@ -20,7 +20,9 @@ void	set_exec_paths(t_data *data)
 	int		i;
 
 	value = get_env_var(data, "PATH");
-	paths = ft_split(value, ':');
+	// [TODO]
+	// if (value) -> nao tem path em envp
+		paths = ft_split(value, ':');
 	lines = free_and_count_array(paths, 0) + 1;
 	data->path = malloc(lines * sizeof(char *));
 	i = 0;

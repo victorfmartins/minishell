@@ -45,6 +45,11 @@ int	verify_cmd(char **path, t_cmd *node)
 	}
 	write(2, "bash: ", 6);
 	ft_putstr_fd(node->args[0], 2);
-	write(2, ": command not found\n", 20);
+	// [TODO]
+	// !!!!retorna erro pois está dando fork e wait!!!
+	// if (i = 0) ******----> if there is no path into envp*****
+	// 	write(2, ": nao tem path\n", 20); //colocar messagem padrão
+	// else
+		write(2, ": command not found\n", 20);
 	return (0);
 }
