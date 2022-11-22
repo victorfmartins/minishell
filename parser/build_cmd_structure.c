@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/24 18:29:53 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:28:05 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_cmd	*get_file_structures(t_data *data)
 		cmds_iter->outfiles = extract_files(&cmds_iter, O_REDIR);
 		cmds_iter->infiles = extract_files(&cmds_iter, I_REDIR);
 		get_cmd_attributes(&cmds_iter);
+		expansions(*data, &cmds_iter);
 		cmds_iter = cmds_iter->next;
 	}
 	return (cmds);

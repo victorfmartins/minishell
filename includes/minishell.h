@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/07 13:27:52 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/22 16:22:44 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,9 @@ int		init_fds(t_data *data);
 void	close_fds(t_data *data);
 
 char	*heredoc(t_file *lst);
+
+void	expansions(t_data data, t_cmd **cmds);
+char	*ft_strsubstitute(char *str, char *del, char *insert, int pos);
+char	*ft_strcpy_until(char *str, char *delimiter);
 
 #endif
