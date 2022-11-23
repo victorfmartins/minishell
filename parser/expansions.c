@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:18 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/22 16:12:29 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/23 10:52:39 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,47 @@ void	tilde_expansion(t_data data, char **s)
 					return ;
 				free(*s);
 				*s = word;
-				i = i + ft_strlen(get_env_var(&data, "HOME"));
+				i = i + ft_strlen(get_env_var(&data, "HOME")) - 1;
 			}
 		}
 		i++;
 	}
 }
 
+void	env_var_substitution(t_data data, char ***s, size_t *i)
+{
+	char	*word;
+	char	*s_new;
+	char	*env_var;
+
+	word = ft_strcpy_until((*(*s)) + (*i), " /:");
+	if (!word)
+		return ;
+	if (word[1])
+	{
+		env_var = get_env_var(&data, word + 1);
+		if (!env_var)
+			return (free(word));
+		s_new = ft_strsubstitute((*(*s)), word, env_var, *i);
+		free((*(*s)));
+		(*(*s)) = s_new;
+		if (!s_new)
+			return (free(word));
+		*i = *i + ft_strlen(env_var) - 1;
+	}
+	free(word);
+}
+
 void	env_var_expansion(t_data data, char **s)
 {
 	size_t	i;
-	char	*word;
-	char	*s_new;
 
 	i = 0;
 	while ((*s)[i])
 	{
 		pass_through_quotes(*s, &i, NULL);
 		if ((*s)[i] == '$')
-		{
-			word = ft_strcpy_until(*s + i + 1, " /:");
-			if (!word)
-				return ;
-			if (get_env_var(&data, word))
-			{
-				s_new = ft_strsubstitute(*s, word, get_env_var(&data, word), i);
-				if (!s_new)
-					return ;
-				free(*s);
-				*s = s_new;
-				i = i + ft_strlen(get_env_var(&data, word));
-			}
-		}
+			env_var_substitution(data, &s, &i);
 		i++;
 	}
 }

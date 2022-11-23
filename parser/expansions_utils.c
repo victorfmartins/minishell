@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/22 16:09:54 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/23 09:03:48 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strsubstitute(char *str, char *del, char *insert, int pos)
 
 	i = 0;
 	j = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(str) + ft_strlen(insert) + 1));
+	new_str = malloc(ft_strlen(str) - ft_strlen(del) + ft_strlen(insert) + 1);
 	if (!new_str)
 		return (NULL);
 	while (str[i] && i < pos)
@@ -42,16 +42,20 @@ char	*ft_strsubstitute(char *str, char *del, char *insert, int pos)
 char	*ft_strcpy_until(char *str, char *delimiter)
 {
 	int		i;
-	int		j;
 	char	*new_str;
 
 	i = 0;
-	j = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	while (str[i] && !ft_strchr(delimiter, str[i]))
+		i++;
+	new_str = malloc(sizeof(char) * (i + 1));
 	if (!new_str)
 		return (NULL);
+	i = 0;
 	while (str[i] && !ft_strchr(delimiter, str[i]))
-		new_str[j++] = str[i++];
-	new_str[j] = '\0';
+	{
+		new_str[i] = str[i];
+		i++;
+	}
+	new_str[i] = '\0';
 	return (new_str);
 }

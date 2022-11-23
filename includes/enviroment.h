@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
+/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:43:30 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/03 01:22:45 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/23 08:14:14 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <string.h>
 # define ENVIROMENT_H
 
-# define TABLE_SIZE 10
+# define TABLE_SIZE 5382
 
 typedef struct s_env
 {
