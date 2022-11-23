@@ -38,7 +38,8 @@ SRC =	_minishell_/minishell.c \
 		parser/set_cmd_attributes.c \
 		parser/ft_split_but_through_quotes.c \
 		parser/parsers.c \
-		parser/expansions.c \
+		parser/expansions_call.c \
+		parser/expansions_exec.c \
 		parser/expansions_utils.c \
 		executer/executer.c \
 		executer/fd_utils.c \
