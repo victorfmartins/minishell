@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:18 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/23 10:58:52 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:32:15 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,3 @@ void	expansions(t_data data, t_cmd **cmds)
 	expand_file(data, &cmds, I_REDIR);
 	expand_args(data, &cmds);
 }
-
-// it is missing the expansion of the exec_cmd
