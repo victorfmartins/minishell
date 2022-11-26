@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
 /*   Updated: 2022/11/23 12:43:43 by vfranco-         ###   ########.fr       */
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include "parser.h"
 # include "executer.h"
-# include "enviroment.h"
+# include "environment.h"
 # define MINISHELL_H
 
 # define I_REDIR 1
