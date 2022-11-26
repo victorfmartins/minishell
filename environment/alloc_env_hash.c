@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_env_hash.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/20 08:49:40 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/26 15:06:38 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ unsigned int	hash(char *name)
 		name++;
 	}
 	return (hash);
+}
+
+int	hash_table_delete(t_data *data, char *key)
+{
+	t_env	var;
+
+	var = get_env_var(data, key);
+	ft_envdelone(var, free);
+	return (1);
 }
 
 int	hash_table_insert(t_data *data, char *env)
