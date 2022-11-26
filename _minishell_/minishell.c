@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	alloc_env_hash(envp, &data);
+	data.envp = envp;
 	while (1)
 	{
 		set_exec_paths(&data);
