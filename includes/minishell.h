@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/07 13:27:52 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 14:52:45 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include "parser.h"
 # include "executer.h"
-# include "enviroment.h"
+# include "environment.h"
 # define MINISHELL_H
 
 # define I_REDIR 1
@@ -54,5 +54,11 @@ int		init_fds(t_data *data);
 void	close_fds(t_data *data);
 
 char	*heredoc(t_file *lst);
+
+void	expansions(t_data data, t_cmd **cmds);
+void	tilde_expansion(t_data data, char **s);
+void	env_var_expansion(t_data data, char **s);
+char	*ft_strsubstitute(char *str, char *del, char *insert, int pos);
+char	*ft_strcpy_until(char *str, char *delimiter);
 
 #endif
