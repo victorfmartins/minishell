@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   access_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/23 15:02:21 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/26 16:34:42 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print_cmd_error(char *arg, int message)
+{
+	write(2, "bash: ", 6);
+	ft_putstr_fd(arg, 2);
+	if (!message)
+		ft_putendl_fd(": No such file or directory", 2);
+	else
+		ft_putendl_fd(": command not found", 2);
+}
 
 int	verify_access(char *path, int mode)
 {
@@ -23,28 +33,16 @@ int	verify_access(char *path, int mode)
 	return (1);
 }
 
-static int	is_absolute_path(char *arg)
+int	is_absolute_path(char *arg)
 {
 	if (*arg == '/')
 	{
 		if (verify_access(arg, F_OK))
-			return (1);
+			return (7);
 		else
-		{
-			write(2, "bash: ", 6);
-			ft_putstr_fd(arg, 2);
-			write(2, ": No such file or directory\n", 28);
-			return (-1);
-		}
+			return (0);
 	}
-	return (0);
-}
-
-void	print_cmd_error(char *arg)
-{
-	write(2, "bash: ", 6);
-	ft_putstr_fd(arg, 2);
-	write(2, ": command not found\n", 20);
+	return (-1);
 }
 
 int	verify_cmd(char **path, t_cmd *node)
@@ -52,16 +50,15 @@ int	verify_cmd(char **path, t_cmd *node)
 	char	*join_cmd;
 	int		i;
 
+	i = 0;
 	if (!node->exec_cmd)
 		return (0);
-	i = is_absolute_path(node->args[0]);
-	if (i == 1)
-		return (1);
-	if (i == -1)
-		return (0);
-	i = 0;
 	while (path[i])
 	{
+		if (!is_absolute_path(node->args[0]))
+			break ;
+		else if (is_absolute_path(node->args[0]) > 0)
+			return (1);
 		join_cmd = ft_strjoin(path[i], node->args[0]);
 		if (verify_access(join_cmd, F_OK))
 		{
@@ -72,6 +69,6 @@ int	verify_cmd(char **path, t_cmd *node)
 		free(join_cmd);
 		i++;
 	}
-	print_cmd_error(node->args[0]);
+	print_cmd_error(node->args[0], is_absolute_path(node->args[0]));
 	return (0);
 }

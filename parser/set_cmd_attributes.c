@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_attributes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 20:36:35 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/23 14:53:21 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/11/26 16:28:11 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int	is_absolute_path(char *arg)
-{
-	if (*arg == '/')
-	{
-		if (verify_access(arg, F_OK))
-			return (1);
-		else
-			return (-1);
-	}
-	return (0);
-}
 
 int	get_cmd_type(char *line)
 {
@@ -41,9 +29,7 @@ int	get_cmd_type(char *line)
 		|| (ft_strncmp(trimed_line, "env", 3) == 0)
 		|| (ft_strncmp(trimed_line, "exit", 4) == 0))
 		type = BUILTIN;
-	else if (type == 1)
-		type = ABSPATH;
-	else if (type == -1)
+	if (type == -1)
 		type = 0;
 	free(trimed_line);
 	return (type);
