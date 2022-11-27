@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 21:09:10 by lufelip2          #+#    #+#             */
-/*   Updated: 2022/11/02 19:06:38 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 21:32:35 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ void	prompt(t_data *data)
 		free(data->line);
 		return ;
 	}
-	if (!ft_strncmp("exit", data->line, 4))
-		exit_program(data);
 	analize_line(data);
 }

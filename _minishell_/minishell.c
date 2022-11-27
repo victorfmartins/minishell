@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 21:23:41 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 22:40:41 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	alloc_env_hash(envp, &data);
-	data.envp = envp;
+
 	while (1)
 	{
 		set_exec_paths(&data);
-		// print_table(data.hash_table);
 		prompt(&data);
-		// data.envp = update_env_vars(data); -> deve atualizar para passar no execve
 	}
 	(void)argc;
 	(void)argv;
@@ -31,11 +29,9 @@ int	main(int argc, char **argv, char **envp)
 
 // [TODO]
 // - testar variaveis vazias
-// - começar codando unset e export como comando simples
-// - builtins(echo, exit, cd, unset e export) devem continuar funcionando mesmo quando de PATH foi unset
-	// - echo(manda caminho absoluto em execve), unset e export executa mas tambem mostra menssagem de erro -cut-
-	// - env não executa -> env é executado em execve normal
-			// bash: env: Arquivo ou diretório inexistente
-			// bash: cut: Arquivo ou diretório inexistente
-// - tratar quanto PATH foi unset
-
+// - export deve funcionar unicamente com formato key=value
+		// - quando usado com pipe retorna menssagem
+			// export HH+JJ | ls
+			// bash: export: `HH+JJ': not a valid identifier
+			// avaliações  mini_merge  pipeline  pipex_adapt  printa_struc  print_data_struct  projetos_fase1
+// - unset -> seg fault

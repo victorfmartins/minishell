@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 17:12:54 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 21:23:11 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	verify_cmd(char **path, t_cmd *node)
 	char	*join_cmd;
 	int		i;
 
+	if (node->type == BUILTIN && ft_strncmp(node->args[0], "echo", 4))
+		return (1);
 	if (!node->exec_cmd)
 		return (0);
 	i = 0;

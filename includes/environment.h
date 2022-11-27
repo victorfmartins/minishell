@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:43:30 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 14:53:03 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 20:43:58 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <string.h>
 # define ENVIRONMENT_H
 
-# define TABLE_SIZE 5382
+# define TABLE_SIZE 10
 
 typedef struct s_env
 {

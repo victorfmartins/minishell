@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/13 03:00:40 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 22:15:31 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@ int	ft_exec(t_data *data, t_cmd *node)
 {
 	dup_fds(data, node);
 	close_fds(data);
-	execve(node->exec_cmd, node->args, data->envp);
-	perror("Execve fail");
-	return (1);
+	if (!exec_builtin(data, node, 1))
+	{
+		execve(node->exec_cmd, node->args, 0);
+		ft_printf("%s", node->exec_cmd);
+		perror(" : Execve fail\n");
+		exit (1);
+	}
+	exit (0);
 }
 
 void	free_and_unlink_hd_files(t_data *data)

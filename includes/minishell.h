@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 14:52:45 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 21:02:24 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ char	*get_env_var(t_data *data, char *key);
 void	alloc_env_hash(char **envp, t_data *data);
 void	set_exec_paths(t_data *data);
 void	free_hash_table(t_data *data);
+int		hash_table_delete(t_data *data, char *key);
+int		hash_table_insert(t_data *data, char *env);
 
-int		executer(t_data *data);
+void	executer(t_data *data);
 int		ft_exec(t_data *data, t_cmd *node);
 int		verify_cmd(char **path, t_cmd *node);
 int		wait_and_free( t_data *data);
+int		exec_builtin(t_data *data, t_cmd *node, int flag);
 
 int		init_fds(t_data *data);
 void	close_fds(t_data *data);
