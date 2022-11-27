@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/26 22:29:25 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/27 14:44:59 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	exec_builtin(t_data *data, t_cmd *node, int flag)
 	{
 		exec_one_cmd(data, node, 2);
 		return (1);
-		// exit (0);
 	}
 	else
 		return (0);

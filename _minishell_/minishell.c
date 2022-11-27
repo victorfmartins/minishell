@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 22:40:41 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/27 14:12:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	alloc_env_hash(envp, &data);
-
 	while (1)
 	{
 		set_exec_paths(&data);

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 15:42:49 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 15:07:21 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/27 14:11:39 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_env	*ft_envnew(char	*key, char *value)
 	lst = malloc(sizeof(t_env));
 	if (!lst)
 		return (NULL);
-	lst->key = ft_strdup(key);
+	if (key)
+		lst->key = ft_strdup(key);
+	else
+		lst->key = NULL;
 	if (value)
 		lst->value = ft_strdup(value);
 	else
