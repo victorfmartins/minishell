@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/27 14:32:34 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/27 19:07:41 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,21 @@ int	hash_table_delete(t_data *data, char *key)
 	return (0);
 }
 
+int	valid_env_var(char *env)
+{
+	if (!ft_strrchr(env, '='))
+		return (0);
+	return (1);
+}
+
 int	hash_table_insert(t_data *data, char *env)
 {
 	unsigned int	index;
 	t_env			*node;
 	char			**split_line;
 
+	if (!valid_env_var(env))
+		return (0);
 	split_line = ft_split(env, '=');
 	index = hash(split_line[0]);
 	node = ft_envnew(split_line[0], split_line[1]);
