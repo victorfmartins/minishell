@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/27 14:12:19 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:25:52 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	main(int argc, char **argv, char **envp)
 // [TODO]
 // - testar variaveis vazias
 // - export deve funcionar unicamente com formato key=value
-		// - quando usado com pipe retorna menssagem
+		// - quando usado com pipe retorna menssagem | tmbm passando so = ou 1=2 
 			// export HH+JJ | ls
 			// bash: export: `HH+JJ': not a valid identifier
 			// avaliações  mini_merge  pipeline  pipex_adapt  printa_struc  print_data_struct  projetos_fase1
-// - unset -> seg fault
+// - unset -> is not working
+// // try these:
+		// export PATH=$PATH:/something/bin
