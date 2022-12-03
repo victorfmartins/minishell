@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/23 12:43:43 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/03 16:01:20 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define O_REDIR 3
 # define APPEND 4
 # define BUILTIN 6
-# define ABSPATH 7
 
 typedef struct s_data
 {

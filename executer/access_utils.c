@@ -6,11 +6,13 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 16:34:42 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 16:28:49 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 void	print_cmd_error(char *arg, int message)
 {
@@ -18,8 +20,10 @@ void	print_cmd_error(char *arg, int message)
 	ft_putstr_fd(arg, 2);
 	if (!message)
 		ft_putendl_fd(": No such file or directory", 2);
-	else
+	else if (message == -1)
 		ft_putendl_fd(": command not found", 2);
+	else
+		ft_putendl_fd(": Is a directory", 2);
 }
 
 int	verify_access(char *path, int mode)
@@ -33,16 +37,32 @@ int	verify_access(char *path, int mode)
 	return (1);
 }
 
-int	is_absolute_path(char *arg)
+int	is_directory(char *path)
 {
-	if (*arg == '/')
+	struct stat	path_info;
+
+	if (stat(path, &path_info))
+		ft_printf("stat error: %s\n", strerror(errno));
+	else
 	{
-		if (verify_access(arg, F_OK))
-			return (7);
+		if (S_ISDIR(path_info.st_mode))
+			return (1);
+	}
+	return (0);
+}
+
+int	is_absolute_path(char *path)
+{
+	if (*path == '/')
+	{
+		if (is_directory(path))
+			return (-1);
+		if (verify_access(path, F_OK))
+			return (1);
 		else
 			return (0);
 	}
-	return (-1);
+	return (2);
 }
 
 int	verify_cmd(char **path, t_cmd *node)
@@ -55,9 +75,9 @@ int	verify_cmd(char **path, t_cmd *node)
 		return (0);
 	while (path[i])
 	{
-		if (!is_absolute_path(node->args[0]))
+		if (is_absolute_path(node->args[0]) <= 0)
 			break ;
-		else if (is_absolute_path(node->args[0]) > 0)
+		else if (is_absolute_path(node->args[0]) == 1)
 			return (1);
 		join_cmd = ft_strjoin(path[i], node->args[0]);
 		if (verify_access(join_cmd, F_OK))

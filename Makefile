@@ -79,7 +79,7 @@ clean:
 fclean_all: fclean
 	make fclean -C libft
 
-check: fclean_all
+check:
 	dev_utils/run_pr_check.sh
 
 commit: fclean_all
