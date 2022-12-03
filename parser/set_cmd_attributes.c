@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_attributes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 20:36:35 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/25 12:31:10 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/03 16:06:43 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 int	get_cmd_type(char *line)
 {
 	char	*trimed_line;
+	int		type;
 
+	type = 0;
 	trimed_line = ft_strtrim(line, " \f\n\r\t\v");
+	if (!trimed_line)
+		return (0);
 	if ((ft_strncmp(trimed_line, "echo", 4) == 0)
 		|| (ft_strncmp(trimed_line, "cd", 2) == 0)
 		|| (ft_strncmp(trimed_line, "pwd", 3) == 0)
@@ -24,12 +28,9 @@ int	get_cmd_type(char *line)
 		|| (ft_strncmp(trimed_line, "unset", 5) == 0)
 		|| (ft_strncmp(trimed_line, "env", 3) == 0)
 		|| (ft_strncmp(trimed_line, "exit", 4) == 0))
-	{
-		free(trimed_line);
-		return (BUILTIN);
-	}
+		type = BUILTIN;
 	free(trimed_line);
-	return (0);
+	return (type);
 }
 
 void	get_cmd_attributes(t_cmd **cmd)
@@ -38,7 +39,7 @@ void	get_cmd_attributes(t_cmd **cmd)
 	if (*(*cmd)->args)
 	{
 		(*cmd)->type = get_cmd_type((*cmd)->args[0]);
-		(*cmd)->exec_cmd = ft_strjoin("/usr/bin/", (*cmd)->args[0]);
+		(*cmd)->exec_cmd = ft_strdup((*cmd)->args[0]);
 	}
 	else
 	{
