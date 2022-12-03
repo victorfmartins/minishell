@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 16:28:49 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 16:34:58 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_cmd_error(char *arg, int message)
 	ft_putstr_fd(arg, 2);
 	if (!message)
 		ft_putendl_fd(": No such file or directory", 2);
-	else if (message == -1)
+	else if (message == 2)
 		ft_putendl_fd(": command not found", 2);
 	else
 		ft_putendl_fd(": Is a directory", 2);
@@ -41,13 +41,9 @@ int	is_directory(char *path)
 {
 	struct stat	path_info;
 
-	if (stat(path, &path_info))
-		ft_printf("stat error: %s\n", strerror(errno));
-	else
-	{
-		if (S_ISDIR(path_info.st_mode))
-			return (1);
-	}
+	stat(path, &path_info);
+	if (S_ISDIR(path_info.st_mode))
+		return (1);
 	return (0);
 }
 
