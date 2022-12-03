@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/27 19:07:41 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 23:48:37 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	hash_table_delete(t_data *data, char *key)
 		{
 			if (prev)
 				prev->next = node->next;
-			ft_envdelone(node, free); 
-			break;
+			ft_envdelone(node, free);
+			break ;
 		}
 		prev = node;
 		node = node->next;
@@ -74,7 +74,7 @@ int	hash_table_insert(t_data *data, char *env)
 	return (1);
 }
 
-void	alloc_env_hash(char **envp, t_data *data) // [TODO] if (!envp) ??
+void	alloc_env_hash(char **envp, t_data *data)
 {
 	int		i;
 
@@ -83,26 +83,6 @@ void	alloc_env_hash(char **envp, t_data *data) // [TODO] if (!envp) ??
 	while (envp[i])
 	{
 		hash_table_insert(data, envp[i]);
-		i++;
-	}
-}
-
-void	print_table(t_env *hash_table[TABLE_SIZE])
-{
-	int	i;
-
-	i = 0;
-	while (i < TABLE_SIZE)
-	{
-		if (hash_table[i])
-			print_env_lst(hash_table[i]);
-		// if (hash_table[i] == NULL)
-		// 	ft_printf("\t%i\t---\n", i);
-		// else
-		// {
-		// 	// ft_printf("\t%i\t", i);
-		// 	// print_env_lst(hash_table[i]);
-		// }
 		i++;
 	}
 }

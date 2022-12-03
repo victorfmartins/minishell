@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:43:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/27 14:32:25 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 23:47:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	set_exec_paths(t_data *data)
 	int		i;
 
 	value = get_env_var(data, "PATH");
-	// [TODO]
-	// if (value) -> nao tem path em envp
 	paths = ft_split(value, ':');
 	lines = free_and_count_array(paths, 0) + 1;
 	data->path = malloc(lines * sizeof(char *));

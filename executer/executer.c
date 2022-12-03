@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/12/03 23:26:32 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 23:40:55 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,47 +63,6 @@ int	get_pid(t_data *data, t_cmd *node)
 			ft_exec(data, node);
 		return (1);
 	}
-	return (0);
-}
-
-void	exec_one_cmd(t_data *data, t_cmd *node, int flag)
-{
-	if (!ft_strncmp(node->args[0], "env", 3))
-	{
-		print_table(data->hash_table);
-		return ;
-	}
-	if (flag == 1)
-	{
-		if (!ft_strncmp(node->args[0], "unset", 5))
-			hash_table_delete(data, node->args[1]);
-		else if (!ft_strncmp(node->args[0], "export", 6))
-			hash_table_insert(data, node->args[1]);
-		else if (!ft_strncmp(node->args[0], "exit", 4))
-			exit_program(data);
-	}
-	return ;
-}
-
-int	exec_builtin(t_data *data, t_cmd *node, int flag)
-{
-	if (node->type == BUILTIN && !flag)
-	{
-		if (!data->exec.n_args)
-		{
-			exec_one_cmd(data, node, 1);
-			return (1);
-		}
-	}
-	if (!ft_strncmp(node->args[0], "echo", 4))
-		return (0);
-	if (flag == 1 && node->type == BUILTIN)
-	{
-		exec_one_cmd(data, node, 2);
-		return (1);
-	}
-	else
-		return (0);
 	return (0);
 }
 

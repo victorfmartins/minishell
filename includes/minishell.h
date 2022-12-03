@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 23:26:45 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/03 23:42:23 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_data
 
 void	prompt(t_data *data);
 void	exit_program(t_data *data);
+int		exec_builtin(t_data *data, t_cmd *node, int flag);
 
 t_cmd	*get_file_structures(t_data *data);
 
