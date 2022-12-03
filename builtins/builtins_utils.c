@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:40:27 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 23:45:52 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/04 00:07:56 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,14 @@ void	exec_one_cmd(t_data *data, t_cmd *node, int flag)
 
 int	exec_builtin(t_data *data, t_cmd *node, int flag)
 {
-	if (node->type == BUILTIN && !flag)
-	{
-		if (!data->exec.n_args)
-		{
-			exec_one_cmd(data, node, 1);
-			return (1);
-		}
-	}
 	if (!ft_strncmp(node->args[0], "echo", 4))
 		return (0);
-	if (flag == 1 && node->type == BUILTIN)
+	if (node->type == BUILTIN && !flag && !data->exec.n_args)
+	{
+		exec_one_cmd(data, node, 1);
+		return (1);
+	}
+	if (flag && node->type == BUILTIN)
 	{
 		exec_one_cmd(data, node, 2);
 		return (1);
