@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 23:42:23 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/04 00:15:48 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		exec_builtin(t_data *data, t_cmd *node, int flag);
 
 t_cmd	*get_file_structures(t_data *data);
 
-char	*get_env_var(t_data *data, char *key);
+char	*get_env_var(t_data *data, char *key, char *new_value);
 void	alloc_env_hash(char **envp, t_data *data);
 void	set_exec_paths(t_data *data);
 void	free_hash_table(t_data *data);

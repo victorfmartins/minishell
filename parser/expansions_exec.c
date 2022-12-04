@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:08:18 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/23 10:59:12 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/04 01:18:24 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	tilde_expansion(t_data data, char **s)
 {
 	size_t	i;
 	char	*word;
+	char	*home;
 
 	i = 0;
 	while ((*s)[i])
@@ -26,12 +27,13 @@ void	tilde_expansion(t_data data, char **s)
 		{
 			if ((*s)[i + 1] == '/' || (*s)[i + 1] == '\0' || (*s)[i + 1] == ':')
 			{
-				word = ft_strsubstitute(*s, "~", get_env_var(&data, "HOME"), i);
+				home = get_env_var(&data, "HOME", 0);
+				word = ft_strsubstitute(*s, "~", home, i);
 				if (!word)
 					return ;
 				free(*s);
 				*s = word;
-				i = i + ft_strlen(get_env_var(&data, "HOME")) - 1;
+				i = i + ft_strlen(get_env_var(&data, "HOME", 0)) - 1;
 			}
 		}
 		i++;
@@ -49,7 +51,7 @@ void	env_var_substitution(t_data data, char ***s, size_t *i)
 		return ;
 	if (word[1])
 	{
-		env_var = get_env_var(&data, word + 1);
+		env_var = get_env_var(&data, word + 1, 0);
 		if (!env_var)
 			return (free(word));
 		s_new = ft_strsubstitute((*(*s)), word, env_var, *i);
