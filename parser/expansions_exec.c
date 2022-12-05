@@ -16,7 +16,7 @@ void	tilde_expansion(t_data data, char **s)
 {
 	size_t	i;
 	char	*word;
-	char	*home;
+	t_env	*home;
 
 	i = 0;
 	while ((*s)[i])
@@ -27,13 +27,13 @@ void	tilde_expansion(t_data data, char **s)
 		{
 			if ((*s)[i + 1] == '/' || (*s)[i + 1] == '\0' || (*s)[i + 1] == ':')
 			{
-				home = get_env_var(&data, "HOME", 0);
-				word = ft_strsubstitute(*s, "~", home, i);
+				home = get_env_var(&data, "HOME");
+				word = ft_strsubstitute(*s, "~", home->value, i);
 				if (!word)
 					return ;
 				free(*s);
 				*s = word;
-				i = i + ft_strlen(get_env_var(&data, "HOME", 0)) - 1;
+				i = i + ft_strlen(home->value) - 1;
 			}
 		}
 		i++;
@@ -44,22 +44,22 @@ void	env_var_substitution(t_data data, char ***s, size_t *i)
 {
 	char	*word;
 	char	*s_new;
-	char	*env_var;
+	t_env	*env_var;
 
 	word = ft_strcpy_until((*(*s)) + (*i), " /:");
 	if (!word)
 		return ;
 	if (word[1])
 	{
-		env_var = get_env_var(&data, word + 1, 0);
+		env_var = get_env_var(&data, word + 1);
 		if (!env_var)
 			return (free(word));
-		s_new = ft_strsubstitute((*(*s)), word, env_var, *i);
+		s_new = ft_strsubstitute((*(*s)), word, env_var->value, *i);
 		free((*(*s)));
 		(*(*s)) = s_new;
 		if (!s_new)
 			return (free(word));
-		*i = *i + ft_strlen(env_var) - 1;
+		*i = *i + ft_strlen(env_var->value) - 1;
 	}
 	free(word);
 }

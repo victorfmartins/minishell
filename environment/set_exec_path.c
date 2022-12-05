@@ -14,13 +14,13 @@
 
 void	set_exec_paths(t_data *data)
 {
-	char	*value;
+	t_env	*node;
 	char	**paths;
 	int		lines;
 	int		i;
 
-	value = get_env_var(data, "PATH", 0);
-	paths = ft_split(value, ':');
+	node = get_env_var(data, "PATH");
+	paths = ft_split(node->value, ':');
 	lines = free_and_count_array(paths, 0) + 1;
 	data->path = malloc(lines * sizeof(char *));
 	i = 0;

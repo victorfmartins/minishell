@@ -40,7 +40,7 @@ int		exec_builtin(t_data *data, t_cmd *node, int flag);
 
 t_cmd	*get_file_structures(t_data *data);
 
-char	*get_env_var(t_data *data, char *key, char *new_value);
+t_env	*get_env_var(t_data *data, char *key);
 void	alloc_env_hash(char **envp, t_data *data);
 void	set_exec_paths(t_data *data);
 void	free_hash_table(t_data *data);

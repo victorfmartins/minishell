@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*get_env_var(t_data *data, char *key, char *new_value)
+t_env	*get_env_var(t_data *data, char *key)
 {
 	unsigned int	i;
 	int				len;
@@ -29,10 +29,5 @@ char	*get_env_var(t_data *data, char *key, char *new_value)
 			return (0);
 		aux = aux->next;
 	}
-	if (new_value)
-	{
-		free(aux->value);
-		aux->value = ft_strdup(new_value);
-	}
-	return (aux->value);
+	return (aux);
 }

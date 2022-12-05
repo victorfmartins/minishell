@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/12/04 01:15:34 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/04 03:10:48 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ int	hash_table_delete(t_data *data, char *key)
 	{
 		if (ft_strncmp(key, node->key, ft_strlen(key)))
 		{
-			if (prev)
+			if (prev && node->next)
 				prev->next = node->next;
-			ft_envdelone(node, free);
+			if (!node->next)
+				prev->next = NULL;
+			node->next = NULL;
+			ft_envclear(&node, free);
 			break ;
 		}
 		prev = node;
@@ -51,27 +54,13 @@ int	hash_table_delete(t_data *data, char *key)
 	return (0);
 }
 
-int	valid_env_var(char *env)
-{
-	if (!ft_strrchr(env, '='))
-		return (0);
-	return (1);
-}
-
 int	hash_table_insert(t_data *data, char *env)
 {
 	unsigned int	index;
 	t_env			*node;
 	char			**split_line;
 
-	if (!valid_env_var(env))
-		return (0);
 	split_line = ft_split(env, '=');
-	if (get_env_var(data, split_line[0], split_line[1]))
-	{
-		free_and_count_array(split_line, free);
-		return (0);
-	}
 	index = hash(split_line[0]);
 	node = ft_envnew(split_line[0], split_line[1]);
 	free_and_count_array(split_line, free);
