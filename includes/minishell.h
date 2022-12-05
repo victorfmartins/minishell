@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/04 00:15:48 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 21:29:42 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ typedef struct s_data
 }	t_data;
 
 void	prompt(t_data *data);
-void	exit_program(t_data *data);
+
 int		exec_builtin(t_data *data, t_cmd *node, int flag);
+void	builtin_exit(t_data *data);
+void	builtin_export(t_data *data, char *arg);
+int		builtin_unset(t_data *data, char *key);
+void	builtin_env(t_env *hash_table[TABLE_SIZE]);
 
 t_cmd	*get_file_structures(t_data *data);
 
@@ -51,7 +55,6 @@ void	executer(t_data *data);
 int		ft_exec(t_data *data, t_cmd *node);
 int		verify_cmd(char **path, t_cmd *node);
 int		wait_and_free( t_data *data);
-int		exec_builtin(t_data *data, t_cmd *node, int flag);
 
 int		init_fds(t_data *data);
 void	close_fds(t_data *data);

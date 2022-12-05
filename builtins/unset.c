@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 22:57:17 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/05 21:19:59 by asoler           ###   ########.fr       */
+/*   Created: 2022/12/05 21:21:51 by asoler            #+#    #+#             */
+/*   Updated: 2022/12/05 21:27:32 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	builtin_unset(t_data *data, char *key)
 {
-	t_data	data;
+	unsigned int	index;
+	t_env			*node;
+	t_env			*prev;
 
-	alloc_env_hash(envp, &data);
-	while (1)
+	index = hash(key);
+	node = data->hash_table[index];
+	prev = NULL;
+	while (node)
 	{
-		set_exec_paths(&data);
-		prompt(&data);
+		if (ft_strncmp(key, node->key, ft_strlen(key)))
+		{
+			if (prev && node->next)
+				prev->next = node->next;
+			if (!node->next)
+				prev->next = NULL;
+			node->next = NULL;
+			ft_envclear(&node, free);
+			break ;
+		}
+		prev = node;
+		node = node->next;
 	}
-	(void)argc;
-	(void)argv;
+	return (0);
 }

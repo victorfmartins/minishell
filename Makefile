@@ -47,6 +47,9 @@ SRC =	_minishell_/minishell.c \
 		executer/access_utils.c \
 		executer/heredoc.c \
 		builtins/exit.c \
+		builtins/export.c \
+		builtins/unset.c \
+		builtins/env.c \
 		builtins/builtins_utils.c
 
 OBJ = $(SRC:.c=.o)
