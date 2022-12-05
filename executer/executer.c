@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:57:10 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/12/03 23:40:55 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 23:20:16 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_pid(t_data *data, t_cmd *node)
 	int	i;
 
 	i = node->index;
-	if (verify_cmd(data->path, node))
+	if (!data->path || verify_cmd(data->path, node))
 	{
 		data->exec.inter.id[i] = fork();
 		if (data->exec.inter.id[i] == 0)

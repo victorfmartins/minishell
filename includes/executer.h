@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:35:51 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/26 16:26:59 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 22:59:44 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # define EXECUTER_H
 
 typedef struct s_inter
@@ -34,7 +36,8 @@ typedef struct s_main
 	t_inter	inter;
 }	t_main;
 
-int	verify_access(char *path, int mode);
-int	is_absolute_path(char *arg);
+int		verify_access(char *path, int mode);
+int		is_absolute_path(char *arg);
+void	print_cmd_error(char *arg, int message);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/27 14:49:24 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 23:12:18 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int	ft_exec(t_data *data, t_cmd *node)
 	if (!exec_builtin(data, node, 1))
 	{
 		execve(node->exec_cmd, node->args, 0);
-		ft_printf("%s", node->exec_cmd);
-		perror(" : Execve fail\n");
-		exit (1);
+		print_cmd_error(node->args[0], 0);
 	}
 	free_and_count_array(data->path, free);
 	free_hash_table(data);
