@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 21:11:27 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/10 20:05:50 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/10 21:05:14 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@ int	valid_env_var(char *env)
 	return (1);
 }
 
-int	builtin_export(t_data *data, char *arg)
+void	create_replace_var(t_data *data, char *arg)
 {
 	unsigned int	i;
 	t_env			*node;
 	char			**key_value;
 
-	if (!arg)
-		builtin_env(data->hash_table, 1);
-	if (!valid_env_var(arg))
-		return (1);
 	key_value = ft_split(arg, '=');
 	node = get_env_var(data, key_value[0]);
 	if (!node)
@@ -43,6 +39,18 @@ int	builtin_export(t_data *data, char *arg)
 		node->value = ft_strdup(key_value[1]);
 	}
 	free_and_count_array(key_value, free);
+}
+
+int	builtin_export(t_data *data, char *arg)
+{
+	if (!arg)
+	{
+		builtin_env(data->hash_table, 1);
+		return (0);
+	}
+	if (!valid_env_var(arg))
+		return (1);
+	create_replace_var(data, arg);
 	return (0);
 }
 

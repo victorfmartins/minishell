@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/10 20:04:08 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/10 21:11:03 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ typedef struct s_data
 
 void	prompt(t_data *data);
 
-int		exec_builtin(t_data *data, t_cmd *node, int flag);
+int		exec_builtin(t_data *data, t_cmd *node, int is_single);
 void	builtin_exit(t_data *data);
 int		builtin_export(t_data *data, char *arg);
 int		builtin_unset(t_data *data, char *key);
-void	builtin_env(t_env *hash_table[TABLE_SIZE], int flag);
+void	builtin_env(t_env *hash_table[TABLE_SIZE], int flag_export);
 void	builtin_cd(char *path);
 
 t_cmd	*get_file_structures(t_data *data);
