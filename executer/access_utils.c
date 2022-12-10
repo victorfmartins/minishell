@@ -6,25 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/05 23:22:14 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/10 14:25:41 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-
-void	print_cmd_error(char *arg, int message)
-{
-	write(2, "bash: ", 6);
-	ft_putstr_fd(arg, 2);
-	if (!message)
-		ft_putendl_fd(": No such file or directory", 2);
-	else if (message == 2)
-		ft_putendl_fd(": command not found", 2);
-	else
-		ft_putendl_fd(": Is a directory", 2);
-}
 
 void	print_cmd_error(char *arg, int message)
 {
