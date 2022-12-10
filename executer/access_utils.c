@@ -11,6 +11,20 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+
+void	print_cmd_error(char *arg, int message)
+{
+	write(2, "bash: ", 6);
+	ft_putstr_fd(arg, 2);
+	if (!message)
+		ft_putendl_fd(": No such file or directory", 2);
+	else if (message == 2)
+		ft_putendl_fd(": command not found", 2);
+	else
+		ft_putendl_fd(": Is a directory", 2);
+}
 
 void	print_cmd_error(char *arg, int message)
 {
