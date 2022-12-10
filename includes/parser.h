@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:29:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/13 02:24:25 by asoler           ###   ########.fr       */
+/*   Updated: 2022/11/26 20:06:54 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-// void	print_lst(t_list *lst);
 t_cmd	*ft_split_to_cmd_lst(char *line, char delimiter);
 size_t	ft_new_line_size(char *str, int mode);
 void	get_cmd_attributes(t_cmd **cmd);

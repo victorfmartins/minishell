@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 16:01:20 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 22:59:23 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 typedef struct s_data
 {
-	char	**envp;
 	char	*line;
 	char	**path;
 	t_main	exec;
@@ -36,16 +35,23 @@ typedef struct s_data
 }	t_data;
 
 void	prompt(t_data *data);
-void	exit_program(t_data *data);
+
+int		exec_builtin(t_data *data, t_cmd *node, int flag);
+void	builtin_exit(t_data *data);
+void	builtin_export(t_data *data, char *arg);
+int		builtin_unset(t_data *data, char *key);
+void	builtin_env(t_env *hash_table[TABLE_SIZE]);
 
 t_cmd	*get_file_structures(t_data *data);
 
-char	*get_env_var(t_data *data, char *key);
+t_env	*get_env_var(t_data *data, char *key);
 void	alloc_env_hash(char **envp, t_data *data);
 void	set_exec_paths(t_data *data);
 void	free_hash_table(t_data *data);
+int		hash_table_delete(t_data *data, char *key);
+int		hash_table_insert(t_data *data, char *env);
 
-int		executer(t_data *data);
+void	executer(t_data *data);
 int		ft_exec(t_data *data, t_cmd *node);
 int		verify_cmd(char **path, t_cmd *node);
 int		wait_and_free( t_data *data);

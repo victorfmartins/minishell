@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_var.c                                      :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 16:54:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/05 22:43:28 by asoler           ###   ########.fr       */
+/*   Created: 2022/04/07 20:40:36 by asoler            #+#    #+#             */
+/*   Updated: 2022/05/24 14:28:51 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-t_env	*get_env_var(t_data *data, char *key)
+char	*ft_strrchr(const char *s, int c)
 {
-	unsigned int	i;
-	int				len;
-	t_env			*aux;
+	int				i;
+	int				result;
+	unsigned char	a;
 
-	i = hash(key);
-	len = ft_strlen(key);
-	aux = data->hash_table[i];
-	if (!aux)
-		return (0);
-	while (ft_strncmp(key, aux->key, len))
+	if (c == 0)
+		return ((char *)&s[ft_strlen(s)]);
+	a = (unsigned char)c;
+	i = 0;
+	result = -1;
+	while (*s)
 	{
-		if (!aux->next)
-			return (0);
-		aux = aux->next;
+		if (*s == a)
+			result = i;
+		s++;
+		i++;
 	}
-	return (aux);
+	if (result == -1)
+		return ((char *)0);
+	else
+	{
+		i -= result;
+		return ((char *)s - i);
+	}
 }

@@ -6,13 +6,11 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:21:37 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/03 16:34:58 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/10 14:25:41 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <sys/types.h>
-#include <sys/stat.h>
 
 void	print_cmd_error(char *arg, int message)
 {

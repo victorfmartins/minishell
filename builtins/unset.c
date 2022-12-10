@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_var.c                                      :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 16:54:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/05 22:43:28 by asoler           ###   ########.fr       */
+/*   Created: 2022/12/05 21:21:51 by asoler            #+#    #+#             */
+/*   Updated: 2022/12/05 22:47:16 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*get_env_var(t_data *data, char *key)
+int	builtin_unset(t_data *data, char *key)
 {
-	unsigned int	i;
+	unsigned int	index;
+	t_env			*node;
+	t_env			*prev;
 	int				len;
-	t_env			*aux;
 
-	i = hash(key);
+	index = hash(key);
+	node = data->hash_table[index];
+	prev = NULL;
 	len = ft_strlen(key);
-	aux = data->hash_table[i];
-	if (!aux)
-		return (0);
-	while (ft_strncmp(key, aux->key, len))
+	while (node)
 	{
-		if (!aux->next)
-			return (0);
-		aux = aux->next;
+		if (!ft_strncmp(key, node->key, len))
+		{
+			if (prev && node->next)
+				prev->next = node->next;
+			if (!node->next)
+				prev->next = NULL;
+			ft_envdelone(node, free);
+			break ;
+		}
+		prev = node;
+		node = node->next;
 	}
-	return (aux);
+	return (0);
 }

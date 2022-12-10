@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 21:35:51 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/02 19:04:21 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/05 23:10:36 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	free_and_count_array(char **array, void (*f)(void *))
 	int	n;
 
 	n = 0;
+	if (!array)
+		return (-1);
 	while (array[n])
 	{
 		if (f)

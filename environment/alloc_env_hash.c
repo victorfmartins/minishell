@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_env_hash.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 08:00:54 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/20 08:49:40 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/05 21:22:19 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,6 @@ void	alloc_env_hash(char **envp, t_data *data)
 	while (envp[i])
 	{
 		hash_table_insert(data, envp[i]);
-		i++;
-	}
-}
-
-void	print_table(t_env *hash_table[TABLE_SIZE])
-{
-	int	i;
-
-	i = 0;
-	while (i < TABLE_SIZE)
-	{
-		if (hash_table[i] == NULL)
-			ft_printf("\t%i\t---\n", i);
-		else
-		{
-			ft_printf("\t%i\t", i);
-			print_env_lst(hash_table[i]);
-		}
 		i++;
 	}
 }

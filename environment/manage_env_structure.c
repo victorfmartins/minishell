@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env_structure.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 15:42:49 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 13:18:07 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/04 03:07:37 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_env	*ft_envnew(char	*key, char *value)
 	lst = malloc(sizeof(t_env));
 	if (!lst)
 		return (NULL);
-	lst->key = ft_strdup(key);
+	if (key)
+		lst->key = ft_strdup(key);
+	else
+		lst->key = NULL;
 	if (value)
 		lst->value = ft_strdup(value);
 	else
