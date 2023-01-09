@@ -6,7 +6,7 @@
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:01:50 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/13 03:00:40 by asoler           ###   ########.fr       */
+/*   Updated: 2022/12/10 21:11:18 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,6 @@ void	dup_fds(t_data *data, t_cmd *node)
 	else if (node->next)
 		dup2(pipes_fds->fd[i][1], 1);
 	return ;
-}
-
-int	ft_exec(t_data *data, t_cmd *node)
-{
-	dup_fds(data, node);
-	close_fds(data);
-	execve(node->exec_cmd, node->args, data->envp);
-	perror("Execve fail");
-	return (1);
 }
 
 void	free_and_unlink_hd_files(t_data *data)
@@ -71,6 +62,23 @@ void	free_fds(t_data *data, int n_cmds)
 	}
 	free_and_unlink_hd_files(data);
 	free(data->exec.inter.fd);
+}
+
+int	ft_exec(t_data *data, t_cmd *node)
+{
+	dup_fds(data, node);
+	close_fds(data);
+	if (!exec_builtin(data, node, 0))
+	{
+		execve(node->exec_cmd, node->args, 0);
+		print_cmd_error(node->args[0], 0);
+	}
+	free_and_count_array(data->path, free);
+	free_hash_table(data);
+	ft_cmdclear(&data->cmds, free);
+	free(data->line);
+	free_fds(data, data->exec.n_args);
+	exit (0);
 }
 
 int	wait_and_free(t_data *data)

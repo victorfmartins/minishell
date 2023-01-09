@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_var.c                                      :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 16:54:26 by asoler            #+#    #+#             */
-/*   Updated: 2022/12/05 22:43:28 by asoler           ###   ########.fr       */
+/*   Created: 2022/12/05 21:29:01 by asoler            #+#    #+#             */
+/*   Updated: 2022/12/10 20:28:09 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*get_env_var(t_data *data, char *key)
+void	builtin_env(t_env *hash_table[TABLE_SIZE], int flag_export)
 {
-	unsigned int	i;
-	int				len;
-	t_env			*aux;
+	int	i;
 
-	i = hash(key);
-	len = ft_strlen(key);
-	aux = data->hash_table[i];
-	if (!aux)
-		return (0);
-	while (ft_strncmp(key, aux->key, len))
+	i = 0;
+	while (i < TABLE_SIZE)
 	{
-		if (!aux->next)
-			return (0);
-		aux = aux->next;
+		if (hash_table[i])
+			print_env_lst(hash_table[i], flag_export);
+		i++;
 	}
-	return (aux);
 }

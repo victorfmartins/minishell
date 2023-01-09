@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:43:30 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/23 08:14:14 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/10 20:26:22 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
+#ifndef ENVIRONMENT_H
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# define ENVIROMENT_H
+# define ENVIRONMENT_H
 
-# define TABLE_SIZE 5382
+# define TABLE_SIZE 10
 
 typedef struct s_env
 {
@@ -27,12 +27,11 @@ typedef struct s_env
 }	t_env;
 
 unsigned int	hash(char *name);
-void			print_table(t_env *hash_table[TABLE_SIZE]);
 t_env			*ft_envnew(char	*key, char *value);
 void			ft_env_addback(t_env **lst, t_env *new);
 void			ft_envdelone(t_env *env, void (*del)(void*));
 void			ft_envclear(t_env **env, void (*del)(void *));
-void			print_env_lst(t_env *env);
+void			print_env_lst(t_env *env, int flag_export);
 void			free_lst(t_env *env);
 int				free_and_count_array(char **array, void (*f)(void *));
 

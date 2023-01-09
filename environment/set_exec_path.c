@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_exec_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:43:42 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/10/23 17:46:44 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/05 22:50:37 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 void	set_exec_paths(t_data *data)
 {
-	char	*value;
+	t_env	*node;
 	char	**paths;
 	int		lines;
 	int		i;
 
-	value = get_env_var(data, "PATH");
-	paths = ft_split(value, ':');
+	node = get_env_var(data, "PATH");
+	if (!node)
+	{
+		data->path = NULL;
+		return ;
+	}
+	paths = ft_split(node->value, ':');
 	lines = free_and_count_array(paths, 0) + 1;
 	data->path = malloc(lines * sizeof(char *));
 	i = 0;

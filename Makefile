@@ -47,7 +47,12 @@ SRC =	_minishell_/minishell.c \
 		executer/processes.c \
 		executer/access_utils.c \
 		executer/heredoc.c \
-		builtins/exit.c
+		builtins/exit.c \
+		builtins/export.c \
+		builtins/unset.c \
+		builtins/env.c \
+		builtins/cd.c \
+		builtins/builtins_utils.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -80,7 +85,7 @@ clean:
 fclean_all: fclean
 	make fclean -C libft
 
-check: fclean_all
+check:
 	dev_utils/run_pr_check.sh
 
 commit: fclean_all

@@ -12,6 +12,7 @@ SRC =	ft_itoa.c \
 		ft_strchr.c \
 		ft_split.c \
 		ft_strnstr.c \
+		ft_strrchr.c \
 		ft_strtrim.c \
 		ft_substr.c \
 		ft_strncmp.c \

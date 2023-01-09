@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env_structure.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asoler <asoler@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 15:42:49 by asoler            #+#    #+#             */
-/*   Updated: 2022/10/20 13:18:07 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/10 20:50:21 by asoler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <signal.h>
 
 t_env	*ft_envnew(char	*key, char *value)
 {
@@ -19,7 +20,10 @@ t_env	*ft_envnew(char	*key, char *value)
 	lst = malloc(sizeof(t_env));
 	if (!lst)
 		return (NULL);
-	lst->key = ft_strdup(key);
+	if (key)
+		lst->key = ft_strdup(key);
+	else
+		lst->key = NULL;
 	if (value)
 		lst->value = ft_strdup(value);
 	else
@@ -71,12 +75,17 @@ void	ft_envclear(t_env **env, void (*del)(void *))
 	*env = NULL;
 }
 
-void	print_env_lst(t_env *env)
+void	print_env_lst(t_env *env, int flag_export)
 {
 	while (env)
 	{
+		if (flag_export)
+			ft_printf("declare -x ");
 		ft_printf("%s=", env->key);
-		ft_printf("%s\n", env->value);
+		if (!flag_export)
+			ft_printf("%s\n", env->value);
+		else
+			ft_printf("\"%s\"\n", env->value);
 		env = env->next;
 	}
 }
