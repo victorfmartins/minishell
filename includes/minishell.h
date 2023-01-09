@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 22:57:04 by asoler            #+#    #+#             */
-/*   Updated: 2022/11/23 12:43:43 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:12:04 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void	env_var_expansion(t_data data, char **s);
 char	*ft_strsubstitute(char *str, char *del, char *insert, int pos);
 char	*ft_strcpy_until(char *str, char *delimiter);
 
+void	lexical_analysis(t_data *data);
 #endif

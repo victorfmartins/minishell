@@ -6,7 +6,7 @@
 /*   By: vfranco- <vfranco-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:37:21 by vfranco-          #+#    #+#             */
-/*   Updated: 2022/11/21 11:28:05 by vfranco-         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:09:36 by vfranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_cmd	*get_file_structures(t_data *data)
 	t_cmd	*cmds;
 	t_cmd	*cmds_iter;
 
+	lexical_analysis(data);
 	cmds = ft_split_to_cmd_lst(data->line, '|');
 	cmds_iter = cmds;
 	while (cmds_iter)

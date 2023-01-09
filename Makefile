@@ -41,6 +41,7 @@ SRC =	_minishell_/minishell.c \
 		parser/expansions_call.c \
 		parser/expansions_exec.c \
 		parser/expansions_utils.c \
+		parser/lexical_analysis.c \
 		executer/executer.c \
 		executer/fd_utils.c \
 		executer/processes.c \
